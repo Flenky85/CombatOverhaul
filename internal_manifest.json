@@ -1,0 +1,17 @@
+{
+  "Name": "Combat Overhaul",
+  "Author": "Flenky",
+  "Id": {
+    "Id": "CombatOverhaul",
+    "Type": "UMM"
+  },
+  "Service": {
+    "GitHub": {
+      "Owner": "Flenky",
+      "RepoName": "CombatOverhaul"
+    }
+  },
+  "About": "Combat Overhaul.",
+  "HomepageUrl": "https://github.com/Flenky85/CombatOverhaul",
+  "Tags": [ "Gameplay" ]
+}

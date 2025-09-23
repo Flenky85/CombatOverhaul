@@ -1,0 +1,14 @@
+{
+  "Id": "CombatOverhaul",
+  "DisplayName": "Combat Overhaul",
+  "Author": "Flenky",
+  "Version": "0.0.1",
+  "Description": "Combat Overhaul.",
+  "GameId": "wrath",
+  "Requirements": [],
+  "AssemblyName": "CombatOverhaul.dll",
+  "EntryMethod": "CombatOverhaul.Main.Load",
+  "HomePage": "https://github.com/flenky85/CombatOverhaul",
+  "LoadAfter": [],
+  "LoadBefore": []
+}
