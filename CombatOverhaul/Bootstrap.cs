@@ -1,6 +1,10 @@
 ﻿using Kingmaker.PubSubSystem;
 using CombatOverhaul.Handlers;
 
+// +++ usings nuevos +++
+using Kingmaker;
+using Kingmaker.Items;
+
 namespace CombatOverhaul
 {
     internal static class Bootstrap
@@ -8,12 +12,19 @@ namespace CombatOverhaul
         private static bool _subscribed;
         private static ForceDexForAttack _handler;
 
+        // evita doble recalculo
+        private static bool _recalcDone;
+
         internal static void Init()
         {
             if (_subscribed) return;
+
             _handler = new ForceDexForAttack();
-            EventBus.Subscribe(_handler);  
+            EventBus.Subscribe(_handler);
             _subscribed = true;
+
+            // Recalibra una vez piezas ya equipadas (armadura/escudo) para quitar limitadores previos.
+            RecalcMaxDexAllUnitsOnce();
         }
 
         internal static void Dispose()
@@ -22,6 +33,31 @@ namespace CombatOverhaul
             EventBus.Unsubscribe(_handler);
             _handler = null;
             _subscribed = false;
+            _recalcDone = false;
+        }
+
+        private static void RecalcMaxDexAllUnitsOnce()
+        {
+            if (_recalcDone) return;
+            _recalcDone = true;
+
+            try
+            {
+                var game = Game.Instance;
+                if (game?.State?.Units == null) return;
+
+                foreach (var u in game.State.Units)
+                {
+                    var armor = u?.Body?.Armor?.MaybeArmor;
+                    if (armor != null)
+                        armor.RecalculateMaxDexBonus();
+
+                    var shieldArmor = u?.Body?.SecondaryHand?.MaybeShield?.ArmorComponent;
+                    if (shieldArmor != null)
+                        shieldArmor.RecalculateMaxDexBonus();
+                }
+            }
+            catch { /* no romper nada si aún no hay estado */ }
         }
     }
 }
