@@ -25,6 +25,7 @@ namespace CombatOverhaul
             {
                 Harmony = new Harmony(modEntry.Info.Id);
                 Harmony.PatchAll();
+                Bootstrap.Init();
                 modEntry.Logger.Log("CombatOverhaul loaded with Harmony");
             }
             catch (System.Exception ex)
@@ -36,7 +37,9 @@ namespace CombatOverhaul
         static bool OnToggle(UnityModManager.ModEntry modEntry, bool value)
         {
             Enabled = value && !FatalError;
-            return true; 
+            if (Enabled) Bootstrap.Init();
+            else Bootstrap.Dispose();
+            return true;
         }
 
         private static void OnGUIWrapper(UnityModManager.ModEntry entry)
