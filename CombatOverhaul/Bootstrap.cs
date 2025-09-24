@@ -11,7 +11,10 @@ namespace CombatOverhaul
     {
         private static bool _subscribed;
         private static ForceDexForAttack _handler;
-
+        
+        // Recalcula los stats de armadura/escudo ya equipados para reflejar ArmorBonus=0
+        private static bool _armorRecalcDone;
+        
         // evita doble recalculo
         private static bool _recalcDone;
 
@@ -25,6 +28,7 @@ namespace CombatOverhaul
 
             // Recalibra una vez piezas ya equipadas (armadura/escudo) para quitar limitadores previos.
             RecalcMaxDexAllUnitsOnce();
+            RecalcAllArmorOnce();
         }
 
         internal static void Dispose()
@@ -58,6 +62,27 @@ namespace CombatOverhaul
                 }
             }
             catch { /* no romper nada si aún no hay estado */ }
+        }
+        private static void RecalcAllArmorOnce()
+        {
+            if (_armorRecalcDone) return;
+            _armorRecalcDone = true;
+
+            try
+            {
+                var units = Game.Instance?.State?.Units;
+                if (units == null) return;
+
+                foreach (var u in units)
+                {
+                    var armor = u?.Body?.Armor?.MaybeArmor;
+                    armor?.RecalculateStats();
+
+                    var shieldArmor = u?.Body?.SecondaryHand?.MaybeShield?.ArmorComponent;
+                    shieldArmor?.RecalculateStats();
+                }
+            }
+            catch { /* silencioso */ }
         }
     }
 }
