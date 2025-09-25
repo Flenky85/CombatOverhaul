@@ -1,9 +1,9 @@
-﻿using System;
-using System.Text;
-using HarmonyLib;
+﻿using HarmonyLib;
 using Kingmaker.Blueprints.Items.Armors;
 using Kingmaker.Items;
 using Kingmaker.RuleSystem.Rules.Damage;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CombatOverhaul.Patches
@@ -12,7 +12,7 @@ namespace CombatOverhaul.Patches
     /// - 5% por punto de armadura base.
     /// - 100% contra físico (P/S/B), 50% contra el resto.
     [HarmonyPatch(typeof(RuleCalculateDamage))]
-    static class Patch_ArmorDR_BeforeDifficulty
+    static partial class Patch_ArmorDR_BeforeDifficulty
     {
         private const float MaxFinalReduction = 1.0f; // 1.0f = sin tope
         private const string LOGTAG = "[CO][ArmorDR] ";
@@ -55,44 +55,34 @@ namespace CombatOverhaul.Patches
                     return;
                 }
 
+                // Acumulamos líneas para mostrarlas luego en el tooltip del combat log
+                var lines = new List<string>();
+                var factors = new List<float>();
+
                 for (int i = 0; i < list.Count; i++)
                 {
                     var dv = list[i];
-
                     int finalNow = dv.FinalValue;
-                    if (finalNow <= 0)
-                    {
-                        Debug.Log($"{LOGTAG} i={i} FinalValue<=0 (saltado)");
-                        continue;
-                    }
+                    if (finalNow <= 0) continue;
 
                     bool isPhysical = dv.Source is PhysicalDamage;
                     float appliedRD = isPhysical ? rdBase : rdBase * 0.5f;
-                    float factor = 1f - Mathf.Min(appliedRD, MaxFinalReduction);
-                    factor = Mathf.Clamp01(factor);
+                    float factor = Mathf.Clamp01(1f - Mathf.Min(appliedRD, MaxFinalReduction));
 
+                    // recalcula ValueWithoutReduction como ya haces…
                     int targetFinal = Mathf.RoundToInt(finalNow * factor);
                     int reduction = dv.Reduction;
                     int newVWR = Mathf.Max(0, targetFinal + reduction);
 
-                    // Log por entrada
-                    Debug.Log(
-                      $"{LOGTAG} i={i} type={(isPhysical ? "PHYS" : "NONPHYS")} " +
-                      $"finalNow={finalNow} reduction={reduction} factor={factor:0.###} " +
-                      $"targetFinal={targetFinal} newVWR={newVWR}"
-                    );
+                    list[i] = new DamageValue(dv.Source, newVWR, dv.RollAndBonusValue, dv.RollResult, dv.TacticalCombatDRModifier);
 
-                    // Reconstrucción del DamageValue
-                    var newDV = new DamageValue(
-                      dv.Source,
-                      newVWR,
-                      dv.RollAndBonusValue,
-                      dv.RollResult,
-                      dv.TacticalCombatDRModifier
-                    );
-
-                    list[i] = newDV;
+                    // guarda el factor para el tooltip
+                    factors.Add(factor);
                 }
+
+                
+                if (factors.Count > 0)
+                    ArmorDR_FactorStore.Set(__instance.ParentRule, factors);
             }
             catch (Exception ex)
             {
@@ -104,27 +94,22 @@ namespace CombatOverhaul.Patches
         {
             try
             {
-                var bp = armorItem?.Blueprint;                         // BlueprintItemArmor
+                var bp = armorItem?.Blueprint; // BlueprintItemArmor
                 if (bp == null) return 0;
 
-                // 1) Bono base del tipo de armadura (lo que queremos)
-                //   Ej.: Full Plate ⇒ ~9; Chain Shirt ⇒ ~4, etc.
                 int fromType = 0;
                 try { fromType = bp.Type != null ? bp.Type.ArmorBonus : 0; } catch { }
 
-                // 2) Bono en el propio item (normalmente 0 en vanilla para "base")
                 int fromItem = 0;
                 try { fromItem = bp.ArmorBonus; } catch { }
 
-                // Logging útil para verificar
                 try
                 {
                     var typeName = bp.Type != null ? bp.Type.name : "NULL";
                     Debug.Log($"[CO][ArmorDR] Armor blueprint: {bp.name} | Type={typeName} | Type.ArmorBonus={fromType} | Item.ArmorBonus={fromItem}");
                 }
-                catch {  }
+                catch { }
 
-                // Preferimos el valor del TIPO; si no hay, caemos al del item
                 return fromType > 0 ? fromType : fromItem;
             }
             catch (System.Exception ex)
