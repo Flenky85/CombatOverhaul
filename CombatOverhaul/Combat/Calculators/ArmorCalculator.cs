@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Reflection;
 using Kingmaker.Blueprints.Items.Armors;
+using Kingmaker.Enums;
 using Kingmaker.Items;
 using Kingmaker.RuleSystem.Rules.Damage;
 
@@ -8,7 +8,7 @@ namespace CombatOverhaul.Combat.Calculators
 {
     internal static class ArmorCalculator
     {
-        // --- Lectura base de la armadura ---
+        // --- Lectura base de la armadura (sin reflexión) ---
         public static int GetArmorBase(ItemEntityArmor armorItem)
         {
             try
@@ -16,6 +16,7 @@ namespace CombatOverhaul.Combat.Calculators
                 var bp = armorItem != null ? armorItem.Blueprint as BlueprintItemArmor : null;
                 if (bp == null) return 0;
 
+                // Prioriza el bonus definido en el "Type" (catálogo), si existe.
                 int fromType = 0;
                 try { fromType = bp.Type != null ? bp.Type.ArmorBonus : 0; } catch { }
 
@@ -40,57 +41,26 @@ namespace CombatOverhaul.Combat.Calculators
         }
 
         // --- UI: porcentaje DR mostrado (baseReal * 5) ---
-        public static int ComputeArmorDrDisplayPercent(ItemEntityArmor armor) // ex: ComputeArmorDR
+        public static int ComputeArmorDrDisplayPercent(ItemEntityArmor armor)
         {
             var bpArmor = armor != null ? armor.Blueprint as BlueprintItemArmor : null;
             int baseReal = bpArmor != null && bpArmor.Type != null ? bpArmor.Type.ArmorBonus : 0;
             return Math.Max(0, baseReal * 5);
         }
 
-        // --- UI: MaxDex y penalización asociada ---
+        // --- UI: MaxDex sin reflexión (usa el tipo efectivo que ya contempla mithral) ---
         public static int GetArmorMaxDex(ItemEntityArmor armor)
         {
-            var bpArmor = armor != null ? armor.Blueprint as BlueprintItemArmor : null;
-            var type = bpArmor != null ? bpArmor.Type : null;
-            if (type == null) return 0;
+            if (armor == null) return 0;
 
-            var intNames = new[] { "MaxDexterityBonus", "MaxDexterity", "MaxDexBonus", "MaxDex" };
-
-            // Propiedades
-            foreach (var name in intNames)
+            // ItemEntityArmor.ArmorType() ya aplica la lógica de mithral (publicized).
+            switch (armor.ArmorType())
             {
-                var p = type.GetType().GetProperty(name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                if (p != null && p.PropertyType == typeof(int))
-                {
-                    try { return (int)p.GetValue(type); } catch { }
-                }
+                case ArmorProficiencyGroup.Light: return 6;
+                case ArmorProficiencyGroup.Medium: return 3;
+                case ArmorProficiencyGroup.Heavy: return 1;
+                default: return 6; // fallback sensato
             }
-
-            // Campos
-            foreach (var name in intNames)
-            {
-                var f = type.GetType().GetField(name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                if (f != null && f.FieldType == typeof(int))
-                {
-                    try { return (int)f.GetValue(type); } catch { }
-                }
-            }
-
-            // Heurística final
-            var fields = type.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            foreach (var f in fields)
-            {
-                if (f.FieldType == typeof(int))
-                {
-                    var n = f.Name.ToLowerInvariant();
-                    if (n.Contains("dex") && n.Contains("max"))
-                    {
-                        try { return (int)f.GetValue(type); } catch { }
-                    }
-                }
-            }
-
-            return 0;
         }
 
         // Mapeo lineal: 27 - 3*MaxDex (guardarraíles)
@@ -105,10 +75,10 @@ namespace CombatOverhaul.Combat.Calculators
         // --- Utilidad: ¿es físico? ---
         public static bool IsPhysical(DamageValue dv)
         {
-            // dv es struct; dv.Source puede ser null, el patrón 'is' ya devuelve false si lo es
             return dv.Source is PhysicalDamage;
         }
-        // Heurística por grupo de armadura si no localizamos el MaxDex real
+
+        // Heurística por grupo (ya no necesaria si usas GetArmorMaxDex arriba, la dejo por si la llamas en otro sitio)
         public static int GuessDexMaxByArmorGroup(ItemEntityArmor armorEntity)
         {
             try
