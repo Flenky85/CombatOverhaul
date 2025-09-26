@@ -1,42 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
+using System.Collections;
 using HarmonyLib;
-using Kingmaker.EntitySystem.Entities;
-using Kingmaker.Items;
-using Kingmaker.RuleSystem.Rules;
 using Kingmaker.EntitySystem.Stats;
+using Kingmaker.Items;
 using UnityEngine; // Mathf
 
 namespace CombatOverhaul.Patches
 {
-    [HarmonyPatch(typeof(RuleCalculateAC), "OnTrigger")]
-    internal static class Patch_ArmorACReduction
+    [HarmonyPatch(typeof(ModifiableValueArmorClass), "OnUpdate")]
+    internal static class Patch_AC_UniversalReduction
     {
-        [HarmonyPostfix]
-        private static void Postfix(RuleCalculateAC __instance)
+        [HarmonyPostfix, HarmonyPriority(Priority.Last)]
+        private static void Postfix(ModifiableValueArmorClass __instance)
         {
             try
             {
-                if (__instance == null) return;
-                var unit = __instance.Target;
+                var unit = __instance?.Stats?.Owner?.Unit;
                 if (unit == null) return;
 
-                int totalAC = __instance.Result;
-                if (totalAC <= 0) return;
-
                 // Armadura equipada
-                ItemEntity armorItem = unit.Body?.Armor?.Item;
-                var armorEntity = armorItem as Kingmaker.Items.ItemEntityArmor;
+                var armorEntity = unit.Body?.Armor?.Item as ItemEntityArmor;
                 if (armorEntity == null) return;
 
-                // Limiter real del ítem; fallback: leer del AC si aún no está aplicado
+                // Limite real de DEX del ítem (post-mithral/feats/etc.)
                 int? dexLimiter = armorEntity.DexBonusLimeterAC?.Value;
+
+                // Fallback: leer del propio AC (limiter SourceType.Armor)
                 if (!dexLimiter.HasValue)
                 {
-                    var ac = unit.Stats?.AC;
                     var f = AccessTools.Field(typeof(ModifiableValueArmorClass), "m_BaseAttributeBonusLimiters");
-                    var list = f?.GetValue(ac) as System.Collections.IEnumerable;
+                    var list = f?.GetValue(__instance) as IEnumerable;
                     if (list != null)
                     {
                         foreach (var it in list)
@@ -56,23 +49,30 @@ namespace CombatOverhaul.Patches
                 // Último fallback heurístico por grupo
                 int dexMax = Mathf.Clamp(dexLimiter ?? GuessDexMaxByArmorGroup(armorEntity), 0, 8);
 
-                // Porcentaje = 27 - 3*dexMax
+                // porcentaje = 27 - 3 * dexMax
                 int percent = Mathf.Clamp(27 - 3 * dexMax, 0, 27);
                 if (percent <= 0) return;
 
-                // Reducción = ceil(totalAC * percent / 100), mínimo 1 si percent>0
-                int reduction = (totalAC * percent + 99) / 100;
-                if (reduction <= 0) reduction = 1;
+                // Reducción = ceil(v * percent / 100), mínimo 1 si v>0
+                int Reduce(int v)
+                {
+                    if (v <= 0) return v;
+                    int r = (v * percent + 99) / 100; // ceil
+                    if (r <= 0) r = 1;
+                    int res = v - r;
+                    return res < 0 ? 0 : res;
+                }
 
-                __instance.Result = Math.Max(0, totalAC - reduction);
+                // Reducimos todos los valores que usa juego + UI
+                __instance.Touch = Reduce(__instance.Touch);
+                __instance.FlatFootedTouch = Reduce(__instance.FlatFootedTouch);
+                __instance.FlatFooted = Reduce(__instance.FlatFooted);
+                __instance.ModifiedValue = Reduce(__instance.ModifiedValue); // AC total mostrada/consultada
             }
-            catch
-            {
-                // Silencioso
-            }
+            catch { /* silencioso */ }
         }
 
-        private static int GuessDexMaxByArmorGroup(Kingmaker.Items.ItemEntityArmor armorEntity)
+        private static int GuessDexMaxByArmorGroup(ItemEntityArmor armorEntity)
         {
             try
             {
