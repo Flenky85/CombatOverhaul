@@ -1,90 +1,86 @@
-﻿using HarmonyLib;
-using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using HarmonyLib;
 using UnityModManagerNet;
+using CombatOverhaul.Utils;
+using Kingmaker.PubSubSystem; // EventBus
 
 namespace CombatOverhaul
-{   
-    //test
-    public static class Main
+{
+    internal static class Main
     {
-        public static bool Enabled;
+        private const string HarmonyId = "com.combatoverhaul.core";
+        private static Harmony _harmony;
+        private static UnityModManager.ModEntry _mod;
+        private static bool _enabled;
 
-        public static UnityModManager.ModEntry ModEntry;
-        public static Harmony Harmony;
-        public static bool FatalError;
-        public static string FatalMessage;
+        // Mantén una lista de tokens para poder desuscribir
+        private static readonly List<IDisposable> _busSubs = new List<IDisposable>();
 
-        public static void Load(UnityModManager.ModEntry modEntry)
+        static bool Load(UnityModManager.ModEntry entry)
         {
-            ModEntry = modEntry;
-
-            modEntry.OnToggle = OnToggle;
-            modEntry.OnGUI = OnGUIWrapper;
-
-            try
-            {
-                Harmony = new Harmony(modEntry.Info.Id);
-                Harmony.PatchAll();
-                Bootstrap.Init();
-                modEntry.Logger.Log("CombatOverhaul loaded with Harmony");
-            }
-            catch (System.Exception ex)
-            {
-                FailMod("Failed to initialize Harmony patches.\n" + ex);
-            }
-        }
-
-        static bool OnToggle(UnityModManager.ModEntry modEntry, bool value)
-        {
-            Enabled = value && !FatalError;
-            if (Enabled) Bootstrap.Init();
-            else Bootstrap.Dispose();
+            _mod = entry;
+            entry.OnToggle = OnToggle;
+            entry.OnUnload = OnUnload;
+            Log.Info("UMM entry loaded.");
             return true;
         }
 
-        private static void OnGUIWrapper(UnityModManager.ModEntry entry)
+        private static bool OnToggle(UnityModManager.ModEntry entry, bool value)
         {
-            if (!FatalError) return;
-
-            GUILayout.BeginVertical("box");
-            var boldWrap = new GUIStyle(GUI.skin.label) { wordWrap = true, fontStyle = FontStyle.Bold };
-            var wrap = new GUIStyle(GUI.skin.label) { wordWrap = true };
-
-            GUILayout.Label(
-                "CombatOverhaul has been disabled due to a GUID collision or initialization error.",
-                boldWrap, GUILayout.Width(600f)
-            );
-
-            if (!string.IsNullOrEmpty(FatalMessage))
+            if (_enabled == value) return true;
+            try
             {
-                GUILayout.Space(6);
-                GUILayout.Label(FatalMessage, wrap, GUILayout.Width(600f));
-            }
+                _enabled = value;
+                if (value)
+                {
+                    _harmony = new Harmony(HarmonyId);
+                    _harmony.PatchAll(typeof(Main).Assembly);
 
-            GUILayout.EndVertical();
+                    // SUSCRIPCIONES AL EVENTBUS
+                    _busSubs.Add(EventBus.Subscribe(new CombatOverhaul.Patches.Attack.ForceDexForAttack()));
+
+                    Log.Info("Enabled. Harmony patches applied and handlers subscribed.");
+                }
+                else
+                {
+                    // DESUSCRIBIR HANDLERS
+                    for (int i = 0; i < _busSubs.Count; i++)
+                        if (_busSubs[i] != null) _busSubs[i].Dispose();
+                    _busSubs.Clear();
+
+                    if (_harmony != null) _harmony.UnpatchAll(HarmonyId);
+                    _harmony = null;
+
+                    Log.Info("Disabled. Handlers unsubscribed and patches removed.");
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Toggle failed.", ex);
+                return false;
+            }
         }
 
-        public static void FailMod(string message)
+        private static bool OnUnload(UnityModManager.ModEntry entry)
         {
-            FatalError = true;
-            FatalMessage = message ?? "Unknown error.";
-            Enabled = false;
-
-            if (ModEntry != null)
+            try
             {
-                try { ModEntry.Logger?.Error(FatalMessage); } catch { }
+                for (int i = 0; i < _busSubs.Count; i++)
+                    if (_busSubs[i] != null) _busSubs[i].Dispose();
+                _busSubs.Clear();
 
-                try { Harmony?.UnpatchAll(ModEntry.Info.Id); } catch { }
-
-                try
-                {
-                    if (ModEntry.OnToggle != null)
-                        ModEntry.OnToggle(ModEntry, false);
-
-                    ModEntry.Enabled = false;
-                }
-                catch { /* ignore */ }
+                if (_harmony != null) _harmony.UnpatchAll(HarmonyId);
+                _harmony = null;
+                _enabled = false;
+                Log.Info("Unloaded.");
             }
+            catch (Exception ex)
+            {
+                Log.Error("Error on unload.", ex);
+            }
+            return true;
         }
     }
 }

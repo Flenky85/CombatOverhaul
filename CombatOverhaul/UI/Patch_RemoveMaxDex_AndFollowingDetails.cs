@@ -1,5 +1,4 @@
-﻿// File: Patch_RemoveMaxDex_AndFollowingDetails.cs
-using HarmonyLib;
+﻿using HarmonyLib;
 using Kingmaker.Items;
 using Kingmaker.UI.MVVM._VM.Tooltip.Templates;
 using Kingmaker.UI.Tooltip;

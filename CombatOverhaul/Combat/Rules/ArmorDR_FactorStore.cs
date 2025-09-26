@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Kingmaker.RuleSystem.Rules.Damage;
 
-namespace CombatOverhaul.Patches
+namespace CombatOverhaul.Combat.Rules
 {
     internal static class ArmorDR_FactorStore
     {

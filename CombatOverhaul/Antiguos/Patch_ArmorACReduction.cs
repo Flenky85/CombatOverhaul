@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections;
 using HarmonyLib;
 using Kingmaker.EntitySystem.Stats;
@@ -69,7 +69,7 @@ namespace CombatOverhaul.Patches
                 __instance.FlatFooted = Reduce(__instance.FlatFooted);
                 __instance.ModifiedValue = Reduce(__instance.ModifiedValue); // AC total mostrada/consultada
             }
-            catch { /* silencioso */ }
+            catch {  }
         }
 
         private static int GuessDexMaxByArmorGroup(ItemEntityArmor armorEntity)
@@ -88,4 +88,4 @@ namespace CombatOverhaul.Patches
             catch { return 6; }
         }
     }
-}
+}*/

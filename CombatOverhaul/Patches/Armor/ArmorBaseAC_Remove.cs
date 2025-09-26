@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using Kingmaker.Blueprints.Items.Armors;
 
-namespace CombatOverhaul.Patches
+namespace CombatOverhaul.Patches.Armor
 {
     /// <summary>
     /// Elimina el bono base de AC de las armaduras (mantiene el de los escudos).

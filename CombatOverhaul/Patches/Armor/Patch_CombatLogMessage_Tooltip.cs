@@ -1,11 +1,12 @@
-﻿using HarmonyLib;
+﻿using CombatOverhaul.Combat.Rules;
+using HarmonyLib;
 using Kingmaker.Blueprints.Root.Strings.GameLog; // DamageLogMessage
 using Kingmaker.RuleSystem.Rules.Damage;
 using Kingmaker.UI.Common;
 using System.Text;
 using UnityEngine;
 
-namespace CombatOverhaul.Patches
+namespace CombatOverhaul.Patches.Armor
 {
     // Pega tras tu clase ArmorDR_FactorStore
     [HarmonyPatch(typeof(DamageLogMessage))]

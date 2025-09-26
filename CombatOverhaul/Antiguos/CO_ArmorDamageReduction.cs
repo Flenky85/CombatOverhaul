@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+﻿/*using HarmonyLib;
 using Kingmaker.Blueprints.Items.Armors;
 using Kingmaker.Items;
 using Kingmaker.RuleSystem.Rules.Damage;
@@ -120,3 +120,4 @@ namespace CombatOverhaul.Patches
         }
     }
 }
+*/

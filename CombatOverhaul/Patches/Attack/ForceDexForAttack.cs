@@ -7,7 +7,7 @@ using Kingmaker.RuleSystem.Rules;
 using System;
 using System.Collections.Generic;
 
-namespace CombatOverhaul.Handlers
+namespace CombatOverhaul.Patches.Attack
 {
     // Fuerza nunca aporta al ataque. Destreza aporta siempre, melee y a distancia.
     internal sealed class ForceDexForAttack :

@@ -1,9 +1,9 @@
 ﻿using Kingmaker.PubSubSystem;
-using CombatOverhaul.Handlers;
 
 // +++ usings nuevos +++
 using Kingmaker;
 using Kingmaker.Items;
+using CombatOverhaul.Patches.Attack;
 
 namespace CombatOverhaul
 {

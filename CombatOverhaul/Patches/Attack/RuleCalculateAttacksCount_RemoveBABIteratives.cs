@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using Kingmaker.RuleSystem.Rules;
 
-namespace CombatOverhaul.Patches
+namespace CombatOverhaul.Patches.Attack
 {
     [HarmonyPatch(typeof(RuleCalculateAttacksCount), "CalculatePenalizedAttacksCount")]
     internal static class RuleCalculateAttacksCount_RemoveBABIteratives

@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+﻿/*using HarmonyLib;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.Items;
 using Kingmaker.RuleSystem;
@@ -39,7 +39,6 @@ namespace CombatOverhaul.Patches
                 case 9: return 0.0334f;
                 case 10: return 0.03f;
                 default:
-                    // De momento usa el valor de 6 como “tope” hasta que pases más filas.
                     return 0.03f;
             }
         }
@@ -175,4 +174,4 @@ namespace CombatOverhaul.Patches
             return sides > 0 ? sides : 0;
         }
     }
-}
+}*/

@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using Kingmaker.RuleSystem.Rules;
 
-namespace CombatOverhaul.Patches
+namespace CombatOverhaul.Patches.Armor
 {
     /// <summary>
     /// Desactiva el límite de DEX para la CA.

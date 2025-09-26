@@ -1,5 +1,4 @@
-﻿// File: Patch_AddArmorDRBrick.cs
-using HarmonyLib;
+﻿using HarmonyLib;
 using Kingmaker.Items; // ItemEntityArmor
 using Kingmaker.UI.Common;
 using Kingmaker.UI.MVVM._VM.Tooltip.Bricks;
@@ -11,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Kingmaker.Blueprints.Items.Armors;
+using CombatOverhaul.Combat.Calculators; // ArmorCalculator
 
 namespace CombatOverhaul.UI
 {
@@ -33,7 +32,7 @@ namespace CombatOverhaul.UI
             var armor = __instance.m_Item as ItemEntityArmor;
             if (armor == null) return;
 
-            int dr = ComputeArmorDR(armor);
+            int dr = ArmorCalculator.ComputeArmorDrDisplayPercent(armor);
             if (dr <= 0) return;
 
             var bricks = __result.ToList();
@@ -41,7 +40,7 @@ namespace CombatOverhaul.UI
             // 1) Brick DR
             var drBrick = new TooltipBrickIconValueStat(
                 name: "Damage Reduction",
-                value: $"{dr}%",
+                value: dr.ToString() + "%",
                 icon: null,
                 type: TooltipIconValueStatType.Normal,
                 tooltip: null);
@@ -49,11 +48,11 @@ namespace CombatOverhaul.UI
             // 2) Separador SMALL
             var sep1 = new TooltipBrickSeparator(TooltipBrickElementType.Small);
 
-            // 3) Brick IconValueStat "Armor class penalty" con valor calculado
-            int armorClassPenalty = ComputeArmorClassPenalty(armor);
+            // 3) Brick IconValueStat "Armor class penalty"
+            int armorClassPenalty = ArmorCalculator.ComputeArmorClassPenaltyFromMaxDex(ArmorCalculator.GetArmorMaxDex(armor));
             var penaltyBrick = new TooltipBrickIconValueStat(
                 name: "Armor class penalty",
-                value: $"{armorClassPenalty}%",
+                value: armorClassPenalty.ToString() + "%",
                 icon: null,
                 type: TooltipIconValueStatType.Normal,
                 tooltip: null);
@@ -115,77 +114,6 @@ namespace CombatOverhaul.UI
                 }
             }
             return -1;
-        }
-
-        // -----------------------
-        // Cálculos
-        // -----------------------
-
-        private static int ComputeArmorDR(ItemEntityArmor armor)
-        {
-            var bpArmor = armor?.Blueprint as BlueprintItemArmor;
-            int baseReal = bpArmor?.Type?.ArmorBonus ?? 0;
-            return Math.Max(0, baseReal * 5);
-        }
-
-        // Mapea MaxDex → reducción AC según tu tabla (lineal: 27 - 3*MaxDex)
-        private static int ComputeArmorClassPenalty(ItemEntityArmor armor)
-        {
-            int maxDex = GetArmorMaxDex(armor);
-            // Tabla: 8→3, 7→6, ..., 0→27  =>  27 - 3*Dex
-            int reduction = 27 - 3 * maxDex;
-            if (reduction < 0) reduction = 0;
-            if (reduction > 999) reduction = 999; // guardarraíl
-            return reduction;
-        }
-
-        // Intenta leer el MaxDex de la armadura desde el blueprint/type
-        private static int GetArmorMaxDex(ItemEntityArmor armor)
-        {
-            // Ruta más probable
-            var bpArmor = armor?.Blueprint as BlueprintItemArmor;
-            var type = bpArmor?.Type;
-            if (type == null) return 0;
-
-            // Propiedades/comunes entre builds
-            // Prioriza propiedades públicas, luego campos, con varios alias conocidos.
-            var intNames = new[] { "MaxDexterityBonus", "MaxDexterity", "MaxDexBonus", "MaxDex" };
-
-            // 1) Propiedades
-            foreach (var name in intNames)
-            {
-                var p = type.GetType().GetProperty(name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                if (p != null && p.PropertyType == typeof(int))
-                {
-                    try { return (int)p.GetValue(type); } catch { }
-                }
-            }
-
-            // 2) Campos
-            foreach (var name in intNames)
-            {
-                var f = type.GetType().GetField(name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                if (f != null && f.FieldType == typeof(int))
-                {
-                    try { return (int)f.GetValue(type); } catch { }
-                }
-            }
-
-            // 3) Último recurso: escanea cualquier int con nombre que contenga "dex" y "max"
-            var fields = type.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            foreach (var f in fields)
-            {
-                if (f.FieldType == typeof(int))
-                {
-                    var n = f.Name.ToLowerInvariant();
-                    if (n.Contains("dex") && n.Contains("max"))
-                    {
-                        try { return (int)f.GetValue(type); } catch { }
-                    }
-                }
-            }
-
-            return 0;
         }
     }
 }
