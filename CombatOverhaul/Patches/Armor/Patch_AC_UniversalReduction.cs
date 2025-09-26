@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections;
 using HarmonyLib;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Items;
 using UnityEngine; // Mathf
 using CombatOverhaul.Combat.Calculators; // ArmorCalculator
-using CombatOverhaul.Utils;              // Log (opcional, si quieres cambiar Debug por Log)
 
 namespace CombatOverhaul.Patches.Armor
 {
@@ -17,40 +15,29 @@ namespace CombatOverhaul.Patches.Armor
         {
             try
             {
-                var unit = __instance != null && __instance.Stats != null && __instance.Stats.Owner != null
-                    ? __instance.Stats.Owner.Unit
-                    : null;
+                var unit = __instance?.Stats?.Owner?.Unit;
                 if (unit == null) return;
 
                 // Armadura equipada
-                var armorEntity = unit.Body != null && unit.Body.Armor != null
-                    ? unit.Body.Armor.Item as ItemEntityArmor
-                    : null;
+                var armorEntity = unit.Body?.Armor?.Item as ItemEntityArmor;
                 if (armorEntity == null) return;
 
-                // Limite real de DEX del ítem (post-mithral/feats/etc.)
+                // Límite real de DEX aplicado por el ítem (si existe ya aplicado)
                 int? dexLimiter = armorEntity.DexBonusLimeterAC != null
                     ? (int?)armorEntity.DexBonusLimeterAC.Value
                     : null;
 
-                // Fallback: leer del propio AC (limiter SourceType.Armor)
+                // Fallback: leer del propio AC el limitador con SourceType.Armor (sin reflexión)
                 if (!dexLimiter.HasValue)
                 {
-                    var f = AccessTools.Field(typeof(ModifiableValueArmorClass), "m_BaseAttributeBonusLimiters");
-                    var list = f != null ? f.GetValue(__instance) as IEnumerable : null;
-                    if (list != null)
+                    var limiters = __instance.m_BaseAttributeBonusLimiters; // publicized
+                    if (limiters != null)
                     {
-                        foreach (var it in list)
+                        foreach (var it in limiters)
                         {
-                            var t = it.GetType();
-                            var srcProp = AccessTools.Property(t, "Source");
-                            var valProp = AccessTools.Property(t, "Value");
-                            if (srcProp == null || valProp == null) continue;
-
-                            var src = (ModifiableValueArmorClass.DexBonusLimiter.SourceType)srcProp.GetValue(it, null);
-                            if (src == ModifiableValueArmorClass.DexBonusLimiter.SourceType.Armor)
+                            if (it.Source == ModifiableValueArmorClass.DexBonusLimiter.SourceType.Armor)
                             {
-                                dexLimiter = (int)valProp.GetValue(it, null);
+                                dexLimiter = it.Value;
                                 break;
                             }
                         }
@@ -65,20 +52,20 @@ namespace CombatOverhaul.Patches.Armor
                 if (percent <= 0) return;
 
                 // Reducción = ceil(v * percent / 100), mínimo 1 si v>0
-                int Reduce(int v)
+                static int Reduce(int v, int pct)
                 {
                     if (v <= 0) return v;
-                    int r = (v * percent + 99) / 100; // ceil
+                    int r = (v * pct + 99) / 100; // ceil
                     if (r <= 0) r = 1;
                     int res = v - r;
                     return res < 0 ? 0 : res;
                 }
 
                 // Reducimos todos los valores que usa juego + UI
-                __instance.Touch = Reduce(__instance.Touch);
-                __instance.FlatFootedTouch = Reduce(__instance.FlatFootedTouch);
-                __instance.FlatFooted = Reduce(__instance.FlatFooted);
-                __instance.ModifiedValue = Reduce(__instance.ModifiedValue); // AC total mostrada/consultada
+                __instance.Touch = Reduce(__instance.Touch, percent);
+                __instance.FlatFootedTouch = Reduce(__instance.FlatFootedTouch, percent);
+                __instance.FlatFooted = Reduce(__instance.FlatFooted, percent);
+                __instance.ModifiedValue = Reduce(__instance.ModifiedValue, percent); // AC total mostrada/consultada
             }
             catch
             {
