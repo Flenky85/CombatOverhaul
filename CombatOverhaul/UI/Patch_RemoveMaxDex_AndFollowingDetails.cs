@@ -1,20 +1,20 @@
 ﻿using HarmonyLib;
 using Kingmaker.Items;
+using Kingmaker.UI.Common;
+using Kingmaker.UI.MVVM._VM.Tooltip.Bricks;
 using Kingmaker.UI.MVVM._VM.Tooltip.Templates;
+using Kingmaker.UI.MVVM._VM.Tooltip.Utils;
 using Kingmaker.UI.Tooltip;
 using Owlcat.Runtime.UI.Tooltips;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace CombatOverhaul.UI
 {
     [HarmonyPatch(typeof(TooltipTemplateItem), nameof(TooltipTemplateItem.GetBody))]
     static class Patch_RemoveMaxDex_AndFollowingDetails
     {
-        private static readonly string[] StringFieldCandidates = { "m_Name", "m_Text", "m_Value" };
-
         static void Postfix(TooltipTemplateItem __instance, TooltipTemplateType type, ref IEnumerable<ITooltipBrick> __result)
         {
             if (__result == null) return;
@@ -40,9 +40,7 @@ namespace CombatOverhaul.UI
 
                 // 3) borra el primer Separator inmediatamente después de los Details
                 if (j < bricks.Count && IsSeparator(bricks[j]))
-                {
                     toRemove.Add(j);
-                }
             }
 
             if (toRemove.Count > 0)
@@ -54,75 +52,36 @@ namespace CombatOverhaul.UI
             }
         }
 
-        // --- Detectores ---
+        // --- Detectores sin reflexión ---
 
         private static bool IsMaxDexIcon(ITooltipBrick brick)
         {
-            if (brick == null) return false;
-
-            var tip = GetAnyTooltipTemplate(brick);
-            if (tip != null)
+            // Nos centramos en IconValueStat y comparamos por el nombre “bonito” del glosario
+            if (brick is TooltipBrickIconValueStat ivs)
             {
-                var elem = GetAnyTooltipElement(tip);
-                if (elem.HasValue && elem.Value == TooltipElement.MaxDexterity) return true;
+                var name = ivs.m_Name ?? string.Empty;
 
-                var key = GetAnyStringField(tip, "m_GlossaryKey", "m_Key", "m_Entry", "m_GlossaryEntry", "m_Name");
-                if (string.Equals(key, "MaxDexterity", StringComparison.Ordinal)) return true;
-            }
+                // Nombre de glosario localizado de MaxDexterity
+                // Esto evita depender de campos internos del template
+                var expected = UIUtility.GetGlossaryEntryName(TooltipElement.MaxDexterity.ToString());
+                if (string.Equals(name, expected, StringComparison.Ordinal))
+                    return true;
 
-            var text = GetAnyStringField(brick, StringFieldCandidates);
-            if (!string.IsNullOrEmpty(text))
-            {
-                if (text.IndexOf("Encyclopedia:MaxDexterity", StringComparison.OrdinalIgnoreCase) >= 0) return true;
-                if (text.IndexOf("Destreza máxima", StringComparison.OrdinalIgnoreCase) >= 0) return true;
-                if (text.IndexOf("Max Dexterity", StringComparison.OrdinalIgnoreCase) >= 0) return true;
+                // Fallbacks: por si el glosario no coincide en algunos idiomas/mods
+                if (name.IndexOf("Max Dexterity", StringComparison.OrdinalIgnoreCase) >= 0) return true;
+                if (name.IndexOf("Destreza máxima", StringComparison.OrdinalIgnoreCase) >= 0) return true;
+                if (name.IndexOf("Encyclopedia:MaxDexterity", StringComparison.OrdinalIgnoreCase) >= 0) return true;
+
+                // Si algún día necesitas usar el TooltipBaseTemplate:
+                // var tip = ivs.m_Tooltip; // acceso directo (publicized)
+                // Evitamos inspeccionar campos internos del template para no reintroducir reflexión.
             }
 
             return false;
         }
 
-        private static bool IsSeparator(ITooltipBrick brick)
-            => brick != null && brick.GetType().Name.EndsWith("TooltipBrickSeparator", StringComparison.Ordinal);
+        private static bool IsSeparator(ITooltipBrick brick) => brick is TooltipBrickSeparator;
 
-        private static bool IsTextBrick(ITooltipBrick brick)
-            => brick != null && brick.GetType().Name.EndsWith("TooltipBrickText", StringComparison.Ordinal);
-
-        // --- Reflexión utilitaria ---
-
-        private static TooltipBaseTemplate GetAnyTooltipTemplate(ITooltipBrick brick)
-        {
-            if (brick == null) return null;
-            var fields = brick.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            foreach (var f in fields)
-                if (typeof(TooltipBaseTemplate).IsAssignableFrom(f.FieldType))
-                    return f.GetValue(brick) as TooltipBaseTemplate;
-            return null;
-        }
-
-        private static TooltipElement? GetAnyTooltipElement(TooltipBaseTemplate tip)
-        {
-            if (tip == null) return null;
-            var fields = tip.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            foreach (var f in fields)
-                if (f.FieldType == typeof(TooltipElement))
-                    return (TooltipElement)f.GetValue(tip);
-            return null;
-        }
-
-        private static string GetAnyStringField(object obj, params string[] names)
-        {
-            if (obj == null) return null;
-            var t = obj.GetType();
-            foreach (var n in names)
-            {
-                var f = t.GetField(n, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-                if (f != null && f.FieldType == typeof(string))
-                {
-                    var s = f.GetValue(obj) as string;
-                    if (!string.IsNullOrEmpty(s)) return s;
-                }
-            }
-            return null;
-        }
+        private static bool IsTextBrick(ITooltipBrick brick) => brick is TooltipBrickText;
     }
 }

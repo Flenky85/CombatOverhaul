@@ -9,7 +9,6 @@ using Owlcat.Runtime.UI.Tooltips;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using CombatOverhaul.Combat.Calculators; // ArmorCalculator
 
 namespace CombatOverhaul.UI
@@ -17,14 +16,6 @@ namespace CombatOverhaul.UI
     [HarmonyPatch(typeof(TooltipTemplateItem), nameof(TooltipTemplateItem.GetBody))]
     static class Patch_AddArmorDRBrick
     {
-        private static readonly FieldInfo NameField =
-            AccessTools.Field(typeof(TooltipBrickIconValueStat), "m_Name");
-        private static readonly FieldInfo TipField =
-            AccessTools.Field(typeof(TooltipBrickIconValueStat), "m_Tooltip");
-
-        private static readonly string[] GlossaryKeyCandidateFields = new[]
-        { "m_GlossaryKey", "m_Key", "m_Entry", "m_GlossaryEntry", "m_Name" };
-
         static void Postfix(TooltipTemplateItem __instance, TooltipTemplateType type, ref IEnumerable<ITooltipBrick> __result)
         {
             if (__result == null) return;
@@ -68,8 +59,8 @@ namespace CombatOverhaul.UI
                 insertIdx = bricks.FindIndex(b =>
                 {
                     var s = b as TooltipBrickIconValueStat;
-                    if (s == null || NameField == null) return false;
-                    var name = NameField.GetValue(s) as string ?? "";
+                    if (s == null) return false;
+                    var name = s.m_Name ?? "";
                     return name == acpLabel
                         || name.IndexOf("Penalizador", StringComparison.OrdinalIgnoreCase) >= 0
                         || name.IndexOf("Armor Check", StringComparison.OrdinalIgnoreCase) >= 0;
@@ -94,23 +85,19 @@ namespace CombatOverhaul.UI
             __result = bricks;
         }
 
+        // Sin reflexión: comparamos contra el nombre “bonito” que devuelve el glosario
         private static int FindBrickIndexByGlossaryKey(List<ITooltipBrick> bricks, string key)
         {
+            var expected = UIUtility.GetGlossaryEntryName(key);
             for (int i = 0; i < bricks.Count; i++)
             {
-                var s = bricks[i] as TooltipBrickIconValueStat;
-                if (s == null || TipField == null) continue;
-
-                var tip = TipField.GetValue(s) as TooltipBaseTemplate;
-                if (tip == null) continue;
-
-                var t = tip.GetType();
-                foreach (var fname in GlossaryKeyCandidateFields)
+                if (bricks[i] is TooltipBrickIconValueStat s)
                 {
-                    var f = AccessTools.Field(t, fname);
-                    if (f == null || f.FieldType != typeof(string)) continue;
-                    var k = f.GetValue(tip) as string;
-                    if (string.Equals(k, key, StringComparison.Ordinal)) return i;
+                    var name = s.m_Name ?? "";
+                    if (string.Equals(name, expected, StringComparison.Ordinal)) return i;
+
+                    // Fallbacks ligeros por localización o variaciones menores
+                    if (name.IndexOf(expected, StringComparison.OrdinalIgnoreCase) >= 0) return i;
                 }
             }
             return -1;
