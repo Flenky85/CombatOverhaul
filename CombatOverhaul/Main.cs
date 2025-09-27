@@ -2,21 +2,23 @@
 using System.Collections.Generic;
 using HarmonyLib;
 using UnityModManagerNet;
-using CombatOverhaul.Utils;
 using Kingmaker.PubSubSystem; // EventBus
+using CombatOverhaul.Utils;
 
 namespace CombatOverhaul
 {
     internal static class Main
     {
         private const string HarmonyId = "com.combatoverhaul.core";
+
         private static Harmony _harmony;
         private static UnityModManager.ModEntry _mod;
         private static bool _enabled;
 
-        // Mantén una lista de tokens para poder desuscribir
+        // Guardamos los IDisposable devueltos por EventBus.Subscribe
         private static readonly List<IDisposable> _busSubs = new List<IDisposable>();
 
+        // ---------- UMM entry ----------
         static bool Load(UnityModManager.ModEntry entry)
         {
             _mod = entry;
@@ -26,29 +28,31 @@ namespace CombatOverhaul
             return true;
         }
 
+        // ---------- Toggle ----------
         private static bool OnToggle(UnityModManager.ModEntry entry, bool value)
         {
             if (_enabled == value) return true;
+
             try
             {
                 _enabled = value;
                 if (value)
                 {
+                    // 1) Aplicar parches
                     _harmony = new Harmony(HarmonyId);
                     _harmony.PatchAll(typeof(Main).Assembly);
 
-                    // SUSCRIPCIONES AL EVENTBUS
-                    _busSubs.Add(EventBus.Subscribe(new CombatOverhaul.Patches.Attack.ForceDexForAttack()));
+                    // 2) Suscribirse a EventBus
+                    SubscribeHandlers();
 
                     Log.Info("Enabled. Harmony patches applied and handlers subscribed.");
                 }
                 else
                 {
-                    // DESUSCRIBIR HANDLERS
-                    for (int i = 0; i < _busSubs.Count; i++)
-                        if (_busSubs[i] != null) _busSubs[i].Dispose();
-                    _busSubs.Clear();
+                    // 1) Desuscribir handlers
+                    UnsubscribeHandlers();
 
+                    // 2) Retirar parches
                     if (_harmony != null) _harmony.UnpatchAll(HarmonyId);
                     _harmony = null;
 
@@ -63,16 +67,16 @@ namespace CombatOverhaul
             }
         }
 
+        // ---------- Unload ----------
         private static bool OnUnload(UnityModManager.ModEntry entry)
         {
             try
             {
-                for (int i = 0; i < _busSubs.Count; i++)
-                    if (_busSubs[i] != null) _busSubs[i].Dispose();
-                _busSubs.Clear();
+                UnsubscribeHandlers();
 
                 if (_harmony != null) _harmony.UnpatchAll(HarmonyId);
                 _harmony = null;
+
                 _enabled = false;
                 Log.Info("Unloaded.");
             }
@@ -81,6 +85,40 @@ namespace CombatOverhaul
                 Log.Error("Error on unload.", ex);
             }
             return true;
+        }
+
+        // ---------- Suscripciones ----------
+        private static void SubscribeHandlers()
+        {
+            _busSubs.Clear();
+
+            TrySub(() => EventBus.Subscribe(new CombatOverhaul.Patches.Attack.ForceDexForAttack()));
+            TrySub(() => EventBus.Subscribe(new CombatOverhaul.Combat.Rules.IntelligenceMagicDamageScaling()));
+
+            Log.Info($"Subscribed {_busSubs.Count} handlers.");
+        }
+
+        private static void TrySub(Func<IDisposable> subscribeFn)
+        {
+            try
+            {
+                var d = subscribeFn();
+                if (d != null) _busSubs.Add(d);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Subscribe failed.", ex);
+            }
+        }
+
+        private static void UnsubscribeHandlers()
+        {
+            foreach (var d in _busSubs)
+            {
+                try { d?.Dispose(); }
+                catch (Exception ex) { Log.Error("Unsubscribe failed.", ex); }
+            }
+            _busSubs.Clear();
         }
     }
 }
