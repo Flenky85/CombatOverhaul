@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+﻿/*using HarmonyLib;
 using Kingmaker.RuleSystem.Rules;
 using CombatOverhaul.Combat.Calculators;
 
@@ -20,4 +20,4 @@ namespace CombatOverhaul.Patches.Weapon
             }
         }
     }
-}
+}*/

@@ -1,4 +1,4 @@
-﻿using Kingmaker.Blueprints.Items.Weapons;
+﻿/*using Kingmaker.Blueprints.Items.Weapons;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.Items;
 using Kingmaker.RuleSystem;          // DiceType
@@ -66,4 +66,4 @@ namespace CombatOverhaul.Combat.Calculators
             return 1.0f;
         }
     }
-}
+}*/

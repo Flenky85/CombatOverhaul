@@ -95,6 +95,10 @@ namespace CombatOverhaul
             TrySub(() => EventBus.Subscribe(new CombatOverhaul.Patches.Attack.ForceDexForAttack()));
             TrySub(() => EventBus.Subscribe(new CombatOverhaul.Combat.Rules.IntelligenceMagicDamageScaling()));
             TrySub(() => EventBus.Subscribe(new CombatOverhaul.Combat.Rules.WisdomHealingScaling()));
+            TrySub(() => EventBus.Subscribe(new CombatOverhaul.Combat.Rules.BABDice_WeaponStats()));
+            /*TrySub(() => EventBus.Subscribe(new CombatOverhaul.Combat.Rules.BABDice_PrepareDamage())); */
+            TrySub(() => EventBus.Subscribe(new CombatOverhaul.Combat.Rules.StrengthPercentPerPoint()));
+
 
             Log.Info($"Subscribed {_busSubs.Count} handlers.");
         }
