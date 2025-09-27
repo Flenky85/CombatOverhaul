@@ -94,6 +94,7 @@ namespace CombatOverhaul
 
             TrySub(() => EventBus.Subscribe(new CombatOverhaul.Patches.Attack.ForceDexForAttack()));
             TrySub(() => EventBus.Subscribe(new CombatOverhaul.Combat.Rules.IntelligenceMagicDamageScaling()));
+            TrySub(() => EventBus.Subscribe(new CombatOverhaul.Combat.Rules.WisdomHealingScaling()));
 
             Log.Info($"Subscribed {_busSubs.Count} handlers.");
         }
