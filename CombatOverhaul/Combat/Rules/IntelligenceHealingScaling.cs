@@ -6,13 +6,13 @@ using UnityEngine;
 
 namespace CombatOverhaul.Combat.Rules
 {
-    /// +30% de curación por cada punto de bonificador de WIS del lanzador.
+    /// +30% de curación por cada punto de bonificador de INT del lanzador.
     /// Afecta a toda curación que pase por RuleHealDamage (hechizos, canalizar, varitas, etc.).
-    internal sealed class WisdomHealingScaling :
+    internal sealed class IntelligenceHealingScaling :
         IGlobalRulebookHandler<RuleHealDamage>,
         ISubscriber, IGlobalSubscriber
     {
-        private const float PerWisMod = 0.30f;
+        private const float PerMod = 0.30f;
 
         public void OnEventAboutToTrigger(RuleHealDamage evt)
         {
@@ -21,10 +21,10 @@ namespace CombatOverhaul.Combat.Rules
                 var healer = evt?.Initiator;
                 if (healer == null) return;
 
-                int wisMod = healer.Stats?.Wisdom?.Bonus ?? 0;
-                if (wisMod <= 0) return;
+                int intMod = healer.Stats?.Intelligence?.Bonus ?? 0;
+                if (intMod <= 0) return;
 
-                float multAdd = PerWisMod * wisMod; // p. ej. WIS +4 => +1.2 (120%)
+                float multAdd = PerMod * intMod; // p. ej. INT +4 => +1.2 (120%)
                 if (multAdd <= 0f) return;
 
                 // Suma al multiplicador interno (num = 1 + ModifierBonus)
@@ -33,7 +33,7 @@ namespace CombatOverhaul.Combat.Rules
             }
             catch (Exception ex)
             {
-                Debug.LogError("[CombatOverhaul][WIS-HealScale] " + ex);
+                Debug.LogError("[CombatOverhaul][INT-HealScale] " + ex);
             }
         }
 
