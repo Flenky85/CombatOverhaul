@@ -6,17 +6,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using CombatOverhaul.Combat.Calculators;
 using CombatOverhaul.Combat.Rules; // ArmorCalculator
+using CombatOverhaul.Utils;         // MarkerRefs
+using Kingmaker.UnitLogic;          // HasFact()
 
 namespace CombatOverhaul.Patches.DamageReduction
 {
-    /// RD por armadura ANTES de la dificultad (global).
-    /// - 5% por punto de armadura base.
-    /// - 100% contra físico (P/S/B), 50% contra el resto.
     [HarmonyPatch(typeof(RuleCalculateDamage))]
     static partial class Patch_ArmorDR_BeforeDifficulty
     {
-        private const float MaxFinalReduction = 1.0f; // 1.0f = sin tope
-        private const string LOGTAG = "[CO][ArmorDR] ";
+        private const float MaxFinalReduction = 1.0f;
 
         [HarmonyPatch("ApplyDifficultyForDamageReduction")]
         [HarmonyPrefix]
@@ -24,42 +22,47 @@ namespace CombatOverhaul.Patches.DamageReduction
         {
             try
             {
-                if (__instance == null)
-                {
-                    Debug.Log(LOGTAG + "Prefix: __instance NULL");
-                    return;
-                }
+                if (__instance == null) return;
 
                 var list = __instance.CalculatedDamage;
-                if (list == null)
-                {
-                    Debug.Log(LOGTAG + "Prefix: CalculatedDamage NULL");
-                    return;
-                }
-
-                if (list.Count == 0)
-                {
-                    Debug.Log(LOGTAG + "Prefix: CalculatedDamage vacío");
-                    return;
-                }
+                if (list == null || list.Count == 0) return;
 
                 var target = __instance.Target;
-                var armorItem = target != null && target.Body != null && target.Body.Armor != null
-                                ? target.Body.Armor.MaybeArmor
-                                : null;
+                if (target == null) return;
 
-                int armorBase = ArmorCalculator.GetArmorBase(armorItem);
-                float rdBase = ArmorCalculator.GetBaseRdPercentFromArmorBase(armorBase);
+                // === Obtener armadura de forma segura ===
+                var armorSlot = target.Body?.Armor;
+                ItemEntityArmor armorItem = (armorSlot != null && armorSlot.HasArmor) ? armorSlot.MaybeArmor : null;
 
-                Debug.Log($"{LOGTAG}Prefix: target={(target != null ? target.CharacterName : "NULL")} listCount={list.Count} armorBase={armorBase} rdBase={rdBase:0.###}");
+                // === rdBase: de armadura real O de feat marcador ===
+                float rdBase = 0f;
 
-                if (armorBase <= 0)
+                if (armorItem != null)
                 {
-                    Debug.Log(LOGTAG + "Prefix: armorBase <= 0, no aplico RD");
-                    return;
+                    // Tu lógica actual para armadura real
+                    int armorBase = ArmorCalculator.GetArmorBase(armorItem);
+                    if (armorBase <= 0) return;
+
+                    rdBase = ArmorCalculator.GetBaseRdPercentFromArmorBase(armorBase);
+                }
+                else
+                {
+                    // Sin armadura: mirar feats Medium/Heavy (instancias canónicas)
+                    var desc = target.Descriptor;
+                    if (desc == null) return;
+
+                    var heavyRef = MarkerRefs.HeavyRef;
+                    var mediumRef = MarkerRefs.MediumRef;
+
+                    if (heavyRef != null && desc.HasFact(heavyRef))
+                        rdBase = 0.40f;    // Heavy
+                    else if (mediumRef != null && desc.HasFact(mediumRef))
+                        rdBase = 0.20f;    // Medium
+
+                    if (rdBase <= 0f) return; // sin marcador: no RD
                 }
 
-                var factors = new List<float>();
+                var factors = new List<float>(list.Count);
 
                 for (int i = 0; i < list.Count; i++)
                 {
@@ -68,7 +71,10 @@ namespace CombatOverhaul.Patches.DamageReduction
                     if (finalNow <= 0) continue;
 
                     bool isPhysical = ArmorCalculator.IsPhysical(dv);
+
+                    // mismo escalado que ya usas para armaduras
                     float appliedRD = ArmorCalculator.ApplyTypeScaling(rdBase, isPhysical);
+
                     float factor = Mathf.Clamp01(1f - Math.Min(appliedRD, MaxFinalReduction));
 
                     int targetFinal = Mathf.RoundToInt(finalNow * factor);
@@ -83,10 +89,7 @@ namespace CombatOverhaul.Patches.DamageReduction
                 if (factors.Count > 0)
                     ArmorDR_FactorStore.Set(__instance.ParentRule, factors);
             }
-            catch (Exception ex)
-            {
-                Debug.LogError(LOGTAG + "Prefix EX: " + ex);
-            }
+            catch (Exception) { /* silencioso */ }
         }
     }
 }

@@ -1,9 +1,7 @@
-﻿using Kingmaker.PubSubSystem;
-
-// +++ usings nuevos +++
+﻿using CombatOverhaul.Patches.Attack;
 using Kingmaker;
 using Kingmaker.Items;
-using CombatOverhaul.Patches.Attack;
+using Kingmaker.PubSubSystem;
 
 namespace CombatOverhaul
 {
@@ -29,6 +27,7 @@ namespace CombatOverhaul
             // Recalibra una vez piezas ya equipadas (armadura/escudo) para quitar limitadores previos.
             RecalcMaxDexAllUnitsOnce();
             RecalcAllArmorOnce();
+            //RangedFeatFamily.Configure();
         }
 
         internal static void Dispose()

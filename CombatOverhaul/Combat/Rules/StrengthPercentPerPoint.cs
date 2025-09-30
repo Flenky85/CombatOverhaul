@@ -28,7 +28,7 @@ namespace CombatOverhaul.Combat.Rules
             0.075f,// 4
             0.06f, // 5
             0.05f, // 6
-            0.0429f,//7
+            0.0428f,//7
             0.0375f,//8
             0.0333f,//9
             0.03f   // 10+
@@ -63,15 +63,27 @@ namespace CombatOverhaul.Combat.Rules
                 float perPoint = 0f;
                 if (isManufacturedAttack)
                 {
-                    if (hasPrimaryManuf && !hasOffManuf) perPoint = 0.30f;          // 1 arma
-                    else if (hasPrimaryManuf && hasOffManuf) perPoint = 0.20f;      // dual: 20% tanto primaria como off
-                    else perPoint = 0.30f;                                          // caso raro → 1 arma
+                    if (hasPrimaryManuf && !hasOffManuf)
+                    {
+                        // 1 arma
+                        perPoint = 0.15f;
+                    }
+                    else if (hasPrimaryManuf && hasOffManuf)
+                    {
+                        // Dual: 30% primaria, 15% secundaria
+                        perPoint = isOffhandAttack ? 0.075f : 0.15f;
+                    }
+                    else
+                    {
+                        // Caso raro → tratar como 1 arma
+                        perPoint = 0.15f;
+                    }
                 }
                 else if (isNaturalAttack)
                 {
                     int naturals = CountNaturalWeapons(attacker);
                     if (naturals <= 0) naturals = 1;
-                    naturals = anyManufEquipped ? Math.Min(naturals + 2, 10) : Math.Min(naturals, 10);
+                    naturals = anyManufEquipped ? Math.Min(naturals + 3, 10) : Math.Min(naturals, 10);
                     perPoint = NaturalPct[naturals];
                 }
                 else
@@ -96,8 +108,9 @@ namespace CombatOverhaul.Combat.Rules
                 }
 
 #if DEBUG
-                Debug.Log($"[CO][STR%→Phys+Bonus%] {attacker.CharacterName} STRmod={strMod} perPoint={(perPoint*100):0.#}% extra={extraPercent}% " +
-                          $"{(isManufacturedAttack ? (isOffhandAttack ? "Offhand" : "Primary/Single") : "Natural")}");
+            Debug.Log($"[CO][STR%→Phys+Bonus%] {attacker.CharacterName} STRmod={strMod} perPoint={(perPoint*100):0.#}% extra={extraPercent}% " +
+                      (isManufacturedAttack ? (isOffhandAttack ? "Offhand (dual)" : (hasPrimaryManuf && hasOffManuf ? "Primary (dual)" : "Primary/Single"))
+                                            : "Natural"));
 #endif
             }
             catch (Exception ex)
