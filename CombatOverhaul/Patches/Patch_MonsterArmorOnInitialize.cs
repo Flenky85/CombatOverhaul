@@ -7,7 +7,7 @@ namespace CombatOverhaul.Patches
 {
     // Parchea: UnitDescriptor.Initialize(UnitDescriptor, BlueprintUnit)
     [HarmonyPatch(typeof(UnitDescriptor), "Initialize", new[] { typeof(UnitDescriptor), typeof(BlueprintUnit) })]
-    internal static class Patch_ForceMediumOnInitialize
+    internal static class Patch_MonsterArmorOnInitialize
     {
         static void Postfix(UnitDescriptor unit, BlueprintUnit blueprint)
         {

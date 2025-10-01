@@ -40,7 +40,9 @@ namespace CombatOverhaul.UI
             var sep1 = new TooltipBrickSeparator(TooltipBrickElementType.Small);
 
             // 3) Brick IconValueStat "Armor class penalty"
-            int armorClassPenalty = ArmorCalculator.ComputeArmorClassPenaltyFromMaxDex(ArmorCalculator.GetArmorMaxDex(armor));
+            int maxDex = ArmorCalculator.GetArmorMaxDex(armor);
+            int armorClassPenalty = ArmorCalculator.ComputeAcPenaltyPercentFromMaxDex(maxDex);
+
             var penaltyBrick = new TooltipBrickIconValueStat(
                 name: "Armor class penalty",
                 value: armorClassPenalty.ToString() + "%",
