@@ -35,7 +35,7 @@ namespace CombatOverhaul.Patches.Attack
             int D = __instance.TargetAC;
 
             // Resuelve con nuestros parámetros (α=1.3, β=0.09, floor=5 %, ceil=95 %, step=5 %)
-            var res = OpposedRollCore.ResolveForAttack(A, D, d20);
+            var res = OpposedRollCore.ResolveD20(A, D, d20);
             //OpposedRollStore.Save(__instance, res);
             __result = res.success;
 

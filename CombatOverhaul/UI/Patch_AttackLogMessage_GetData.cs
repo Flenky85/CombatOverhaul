@@ -56,34 +56,61 @@ namespace CombatOverhaul.UI
             if (rule == null) return originalBody ?? string.Empty;
             if (originalBody == null) originalBody = string.Empty;
 
+            // ===== BLOQUE 1 (impacto) con tu modelo =====
             int roll = rule.D20;
             int atkBonus = rule.AttackBonus;
             int ac = rule.TargetAC;
 
-            // === Usa tu modelo de oposición ===
-            var res = OpposedRollCore.ResolveForAttack(atkBonus, ac, roll);
-            int pct = (int)Math.Round(res.p5 * 100.0f); // p5 ya viene granular (5%)
-            int needed = res.TN;                            // clamp 2..20 según tu modelo
+            var res = OpposedRollCore.ResolveD20(atkBonus, ac, roll);
+            int pct = (int)Math.Round(res.p5 * 100.0f);
+            int needed = res.TN;
 
-            // Resultado mostrado: usa el real del juego (regla ya resuelta) o, si prefieres, res.success
-            string resultText = rule.IsHit ? "hit" : roll == 1 ? "critical miss" : "miss";
+            string resultText = rule.IsHit ? "hit" : (roll == 1 ? "critical miss" : "miss");
 
-            string customHeader =
+            string custom =
                 "Attack roll: " + roll + "\n" +
                 "Chance of hit: " + pct + "% (" + needed + ")\n" +
                 "Result: " + resultText;
 
-            // Elimina el bloque vanilla de 3 líneas
-            var rxBlock = new Regex(
+            // ===== BLOQUE 2 (confirmación de crítico) opcional =====
+            if (rule.IsCriticalRoll)
+            {
+                int critD20 = rule.CriticalConfirmationD20;
+                int Acrit = rule.AttackBonus + rule.CriticalConfirmationBonus;
+                int Dcrit = rule.TargetCriticalAC;
+
+                var conf = OpposedRollCore.ResolveD20(Acrit, Dcrit, critD20);
+                int pctCrit = (int)Math.Round(conf.p5 * 100.0f);
+                int neededCrit = conf.TN;
+                string confText = rule.IsCriticalConfirmed ? "confirmed" : "unconfirmed";
+
+                custom +=
+                    "\n\n" +
+                    "Crit roll: " + critD20 + "\n" +
+                    "Chance to confirm: " + pctCrit + "% (" + neededCrit + ")\n" +
+                    "Result: " + confText;
+            }
+
+            // ===== LIMPIEZA DEL CUERPO VANILLA =====
+            // Quita el bloque inicial vanilla “Attack result / Target's AC / Result”
+            var rxAttackBlock = new Regex(
                 @"(?im)^(?:\s*)Attack result:.*\r?\n^Target'?s Armor Class:.*\r?\n^Result:.*\r?\n?",
                 RegexOptions.Multiline);
-            string body = rxBlock.Replace(originalBody, string.Empty);
 
-            // Limpia whitespace inicial y deja DOS saltos entre tu bloque y el breakdown
+            // Quita el bloque vanilla de confirmación “Critical confirmation result / Target's AC / Result …”
+            var rxCritBlock = new Regex(
+                @"(?im)^(?:\s*)Critical confirmation result:.*\r?\n^Target'?s Armor Class:.*\r?\n^Result:.*\r?\n?",
+                RegexOptions.Multiline);
+
+            string body = rxCritBlock.Replace(rxAttackBlock.Replace(originalBody, string.Empty), string.Empty);
+
+            // Limpia whitespace/saltos iniciales
             body = Regex.Replace(body, @"^\s+", "");
 
-            return customHeader + "\n\n" + body;
+            // Ensambla: nuestro(s) bloque(s) + dos saltos + resto (breakdowns, fortificación, etc.)
+            return custom + "\n\n" + body;
         }
+
 
     }
 }

@@ -27,7 +27,7 @@ namespace CombatOverhaul.Combat.Opposed
         }
 
         /// Calcula TN y devuelve el paquete completo para log.
-        internal static Result ResolveForAttack(int attackBonus, int targetAC, int d20)
+        internal static Result ResolveD20(int attackBonus, int targetAC, int d20)
         {
             float A = Math.Max(0, attackBonus);
             float D = Math.Max(0, targetAC);
