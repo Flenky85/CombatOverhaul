@@ -21,20 +21,36 @@ namespace CombatOverhaul.Patches.Armor
 
                 int percent = 0;
 
-                // 1) Armadura real (slot seguro)
-                
+                // 1) Armadura real (vía slot seguro)
                 var armorSlot = unit.Body?.Armor;
                 ItemEntityArmor armorEntity = null;
-                if (armorSlot?.HasArmor == true)
-                    armorEntity = armorSlot.MaybeItem as ItemEntityArmor;
+                if (armorSlot != null && armorSlot.HasArmor)
+                    armorEntity = (ItemEntityArmor)armorSlot.MaybeItem;
 
                 if (armorEntity != null)
                 {
-                    // Max DEX: AC -> ítem -> regla (sin heurísticas)
-                    int dexMax = ArmorCalculator.GetArmorMaxDex(__instance, armorEntity);
-                    // por seguridad, encaja en 0..8
-                    dexMax = Mathf.Clamp(dexMax, 0, 8);
-                    percent = ArmorCalculator.ComputeAcPenaltyPercentFromMaxDex(dexMax);
+                    int? dexLimiter = armorEntity.DexBonusLimeterAC != null
+                        ? (int?)armorEntity.DexBonusLimeterAC.Value
+                        : null;
+
+                    if (!dexLimiter.HasValue)
+                    {
+                        var limiters = __instance.m_BaseAttributeBonusLimiters; // publicized
+                        if (limiters != null)
+                        {
+                            foreach (var it in limiters)
+                            {
+                                if (it.Source == ModifiableValueArmorClass.DexBonusLimiter.SourceType.Armor)
+                                {
+                                    dexLimiter = it.Value;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    int dexMax = Mathf.Clamp(dexLimiter ?? CombatOverhaul.Combat.Calculators.ArmorCalculator.GuessDexMaxByArmorGroup(armorEntity), 0, 8);
+                    percent = CombatOverhaul.Combat.Calculators.ArmorCalculator.ComputeUniversalAcReductionPercent(dexMax);
                 }
                 else
                 {
@@ -46,9 +62,9 @@ namespace CombatOverhaul.Patches.Armor
                         var mediumRef = CombatOverhaul.Utils.MarkerRefs.MediumRef;
 
                         if (heavyRef != null && desc.HasFact(heavyRef))
-                            percent = 24;  // Heavy
+                            percent = 24;
                         else if (mediumRef != null && desc.HasFact(mediumRef))
-                            percent = 12;  // Medium
+                            percent = 12;
                     }
                 }
 
