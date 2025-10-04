@@ -23,7 +23,6 @@ namespace CombatOverhaul.Patches.Movement
             private static bool Prefix(ref bool __result)
             {
                 __result = false;
-                Debug.Log(TAG + "TBMState.EnabledFiveFootStep -> false (forzado)");
                 return false; // saltar original
             }
         }
@@ -37,11 +36,6 @@ namespace CombatOverhaul.Patches.Movement
             private static bool Prefix(UnitEntityData unit, ref bool __result)
             {
                 __result = false;
-                if (unit != null)
-                    Debug.Log(TAG + $"TurnController.GetEnabledFiveFootStep({unit.CharacterName}) -> false (forzado)");
-                else
-                    Debug.Log(TAG + "TurnController.GetEnabledFiveFootStep(<null>) -> false (forzado)");
-
                 return false; // saltar original
             }
         }
