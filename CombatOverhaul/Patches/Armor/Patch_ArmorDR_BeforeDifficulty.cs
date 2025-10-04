@@ -7,9 +7,9 @@ using UnityEngine;                          // Mathf.RoundToInt
 using CombatOverhaul.Combat.Calculators;    // ArmorCalculator
 using CombatOverhaul.Combat.Rules;          // ArmorDR_FactorStore
 using CombatOverhaul.Utils;                 // MarkerRefs
-using Kingmaker.UnitLogic;                  // HasFact()
+using Kingmaker.UnitLogic;
 
-namespace CombatOverhaul.Patches.DamageReduction
+namespace CombatOverhaul.Patches.Armor
 {
     [HarmonyPatch(typeof(RuleCalculateDamage))]
     static partial class Patch_ArmorDR_BeforeDifficulty
@@ -42,7 +42,7 @@ namespace CombatOverhaul.Patches.DamageReduction
 
                 // === Obtener armadura (si la hay) ===
                 var armorSlot = target.Body?.Armor;
-                ItemEntityArmor armorItem = (armorSlot != null && armorSlot.HasArmor) ? armorSlot.MaybeArmor : null;
+                ItemEntityArmor armorItem = armorSlot != null && armorSlot.HasArmor ? armorSlot.MaybeArmor : null;
 
                 // === rdBase: de armadura real o de marcador (heavy/medium) ===
                 float rdBase = 0f;

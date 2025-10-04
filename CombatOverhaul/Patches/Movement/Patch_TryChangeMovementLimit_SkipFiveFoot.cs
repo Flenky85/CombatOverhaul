@@ -2,9 +2,9 @@
 using System.Reflection;
 using HarmonyLib;
 using TurnBased.Controllers;              // TurnController
-using Kingmaker.EntitySystem.Entities;    // UnitEntityData
+using Kingmaker.EntitySystem.Entities;
 
-namespace CombatOverhaul.Patches.TBM
+namespace CombatOverhaul.Patches.Movement
 {
     /// <summary>
     /// Reemplaza la lógica de TurnController.TryChangeMovementLimit()
@@ -15,7 +15,7 @@ namespace CombatOverhaul.Patches.TBM
     {
         // Cache: tamaño del enum (evita Enum.GetValues cada vez)
         private static readonly int s_movementLimitCount =
-            (int)Enum.GetValues(typeof(TurnController.MovementLimit)).Length;
+            Enum.GetValues(typeof(TurnController.MovementLimit)).Length;
 
         // Cache: acceso rápido al campo privado m_NeedNewPredictions sin reflexión por llamada
         private static readonly AccessTools.FieldRef<TurnController, bool> s_needNewPredictionsRef;
