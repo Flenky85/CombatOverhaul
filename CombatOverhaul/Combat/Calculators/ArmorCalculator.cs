@@ -34,12 +34,6 @@ namespace CombatOverhaul.Combat.Calculators
             return Math.Max(0f, armorBase * 0.05f);
         }
 
-        // --- RD aplicada según tipo de daño (100% física, 50% resto) ---
-        public static float ApplyTypeScaling(float rdBase, bool isPhysical)
-        {
-            return isPhysical ? rdBase : rdBase * 0.5f;
-        }
-
         // --- UI: porcentaje DR mostrado (baseReal * 5) ---
         public static int ComputeArmorDrDisplayPercent(ItemEntityArmor armor)
         {

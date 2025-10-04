@@ -4,10 +4,10 @@ using Kingmaker.RuleSystem.Rules.Damage;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using CombatOverhaul.Combat.Calculators;
-using CombatOverhaul.Combat.Rules; // ArmorCalculator
-using CombatOverhaul.Utils;         // MarkerRefs
-using Kingmaker.UnitLogic;          // HasFact()
+using CombatOverhaul.Combat.Calculators; // ArmorCalculator
+using CombatOverhaul.Combat.Rules;
+using CombatOverhaul.Utils;              // MarkerRefs
+using Kingmaker.UnitLogic;               // HasFact()
 
 namespace CombatOverhaul.Patches.DamageReduction
 {
@@ -39,25 +39,20 @@ namespace CombatOverhaul.Patches.DamageReduction
 
                 if (armorItem != null)
                 {
-                    // Tu lógica actual para armadura real
                     int armorBase = ArmorCalculator.GetArmorBase(armorItem);
                     if (armorBase <= 0) return;
-
-                    rdBase = ArmorCalculator.GetBaseRdPercentFromArmorBase(armorBase);
+                    rdBase = ArmorCalculator.GetBaseRdPercentFromArmorBase(armorBase); // p. ej. 5% por punto
                 }
                 else
                 {
-                    // Sin armadura: mirar feats Medium/Heavy (instancias canónicas)
                     var desc = target.Descriptor;
                     if (desc == null) return;
 
                     var heavyRef = MarkerRefs.HeavyRef;
                     var mediumRef = MarkerRefs.MediumRef;
 
-                    if (heavyRef != null && desc.HasFact(heavyRef))
-                        rdBase = 0.40f;    // Heavy
-                    else if (mediumRef != null && desc.HasFact(mediumRef))
-                        rdBase = 0.20f;    // Medium
+                    if (heavyRef != null && desc.HasFact(heavyRef)) rdBase = 0.40f; // Heavy
+                    else if (mediumRef != null && desc.HasFact(mediumRef)) rdBase = 0.20f; // Medium
 
                     if (rdBase <= 0f) return; // sin marcador: no RD
                 }
@@ -70,26 +65,32 @@ namespace CombatOverhaul.Patches.DamageReduction
                     int finalNow = dv.FinalValue;
                     if (finalNow <= 0) continue;
 
-                    bool isPhysical = ArmorCalculator.IsPhysical(dv);
+                    // SOLO aplicamos RD de armadura a daño FÍSICO. No tocamos lo mágico aquí.
+                    if (!ArmorCalculator.IsPhysical(dv))
+                    {
+                        factors.Add(1f); // sin cambio; útil por si otro parche lee estos factores
+                        continue;
+                    }
 
-                    // mismo escalado que ya usas para armaduras
-                    float appliedRD = ArmorCalculator.ApplyTypeScaling(rdBase, isPhysical);
-
-                    float factor = Mathf.Clamp01(1f - Math.Min(appliedRD, MaxFinalReduction));
+                    // factor físico simple: 1 - rdBase (cap)
+                    float appliedRD = Mathf.Min(rdBase, MaxFinalReduction);
+                    float factor = Mathf.Clamp01(1f - appliedRD);
 
                     int targetFinal = Mathf.RoundToInt(finalNow * factor);
                     int reduction = dv.Reduction;
                     int newVWR = Math.Max(0, targetFinal + reduction);
 
                     list[i] = new DamageValue(dv.Source, newVWR, dv.RollAndBonusValue, dv.RollResult, dv.TacticalCombatDRModifier);
-
                     factors.Add(factor);
                 }
 
                 if (factors.Count > 0)
                     ArmorDR_FactorStore.Set(__instance.ParentRule, factors);
             }
-            catch (Exception) { /* silencioso */ }
+            catch (Exception)
+            {
+                // silencioso
+            }
         }
     }
 }
