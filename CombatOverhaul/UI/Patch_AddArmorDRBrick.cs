@@ -31,7 +31,7 @@ namespace CombatOverhaul.UI
             // 1) Brick DR
             var drBrick = new TooltipBrickIconValueStat(
                 name: "Damage Reduction",
-                value: dr.ToString() + "%",
+                value: dr + "%", // baseReal * 5
                 icon: null,
                 type: TooltipIconValueStatType.Normal,
                 tooltip: null);
@@ -40,10 +40,11 @@ namespace CombatOverhaul.UI
             var sep1 = new TooltipBrickSeparator(TooltipBrickElementType.Small);
 
             // 3) Brick IconValueStat "Armor class penalty"
-            int armorClassPenalty = ArmorCalculator.ComputeArmorClassPenaltyFromMaxDex(ArmorCalculator.GetArmorMaxDex(armor));
+            int maxDex = ArmorCalculator.GetArmorMaxDex(armor);
+            int armorClassPenalty = ArmorCalculator.ComputeAcReductionPercentFromMaxDex(maxDex);
             var penaltyBrick = new TooltipBrickIconValueStat(
                 name: "Armor class penalty",
-                value: armorClassPenalty.ToString() + "%",
+                value: armorClassPenalty + "%", // 27 - 3*MaxDex (clamp 0..27)
                 icon: null,
                 type: TooltipIconValueStatType.Normal,
                 tooltip: null);

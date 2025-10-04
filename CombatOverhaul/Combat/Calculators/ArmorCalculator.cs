@@ -13,15 +13,15 @@ namespace CombatOverhaul.Combat.Calculators
         {
             try
             {
-                var bp = armorItem != null ? armorItem.Blueprint as BlueprintItemArmor : null;
+                var bp = armorItem?.Blueprint as BlueprintItemArmor;
                 if (bp == null) return 0;
 
-                // Prioriza el bonus definido en el "Type" (catálogo), si existe.
+                // Prioriza el bonus del catálogo (Type) si existe; si no, usa el del ítem.
                 int fromType = 0;
-                try { fromType = bp.Type != null ? bp.Type.ArmorBonus : 0; } catch { }
+                try { fromType = bp.Type?.ArmorBonus ?? 0; } catch { /*ignore*/ }
 
                 int fromItem = 0;
-                try { fromItem = bp.ArmorBonus; } catch { }
+                try { fromItem = bp.ArmorBonus; } catch { /*ignore*/ }
 
                 return fromType > 0 ? fromType : fromItem;
             }
@@ -43,33 +43,47 @@ namespace CombatOverhaul.Combat.Calculators
         // --- UI: porcentaje DR mostrado (baseReal * 5) ---
         public static int ComputeArmorDrDisplayPercent(ItemEntityArmor armor)
         {
-            var bpArmor = armor != null ? armor.Blueprint as BlueprintItemArmor : null;
-            int baseReal = bpArmor != null && bpArmor.Type != null ? bpArmor.Type.ArmorBonus : 0;
+            var bpArmor = armor?.Blueprint as BlueprintItemArmor;
+            int baseReal = (bpArmor?.Type?.ArmorBonus) ?? 0;
             return Math.Max(0, baseReal * 5);
         }
 
-        // --- UI: MaxDex sin reflexión (usa el tipo efectivo que ya contempla mithral) ---
+        // --- Max Dex real del ítem (intenta ítem -> tipo; fallback heurístico) ---
+        // Nota: si el blueprint del ítem ya incorpora materiales (p.ej. versiones "mithral"),
+        // MaxDexBonus del propio ítem contendrá el +2. Si no, usamos el del Type.
         public static int GetArmorMaxDex(ItemEntityArmor armor)
         {
-            if (armor == null) return 0;
-
-            // ItemEntityArmor.ArmorType() ya aplica la lógica de mithral (publicized).
-            switch (armor.ArmorType())
+            try
             {
-                case ArmorProficiencyGroup.Light: return 6;
-                case ArmorProficiencyGroup.Medium: return 3;
-                case ArmorProficiencyGroup.Heavy: return 1;
-                default: return 6; // fallback sensato
+                if (armor == null) return 0;
+
+                var bp = armor.Blueprint as BlueprintItemArmor;
+                if (bp == null) return 0;
+
+                // 1) MaxDex del ítem (preferente: suele reflejar variaciones como mithral)
+                int fromItem = 0;
+                try { fromItem = GetBlueprintMaxDex(bp); } catch { /*ignore*/ }
+                if (fromItem > 0) return fromItem;
+
+                // 2) MaxDex del catálogo/tipo
+                int fromType = 0;
+                try { fromType = GetTypeMaxDex(bp); } catch { /*ignore*/ }
+                if (fromType > 0) return fromType;
+
+                // 3) Fallback conservador (por si algún blueprint carece del dato)
+                return 6;
             }
+            catch { return 6; }
         }
 
-        // Mapeo lineal: 27 - 3*MaxDex (guardarraíles)
-        public static int ComputeArmorClassPenaltyFromMaxDex(int maxDex)
+        // --- Única función canónica para el % de reducción universal de AC desde Max Dex ---
+        // Fórmula del diseño: 27 - 3*MaxDex, clamp 0..27
+        public static int ComputeAcReductionPercentFromMaxDex(int maxDex)
         {
-            int reduction = 27 - 3 * maxDex;
-            if (reduction < 0) reduction = 0;
-            if (reduction > 999) reduction = 999;
-            return reduction;
+            int p = 27 - 3 * maxDex;
+            if (p < 0) p = 0;
+            if (p > 27) p = 27;
+            return p;
         }
 
         // --- Utilidad: ¿es físico? ---
@@ -78,33 +92,27 @@ namespace CombatOverhaul.Combat.Calculators
             return dv.Source is PhysicalDamage;
         }
 
-        // Heurística por grupo (ya no necesaria si usas GetArmorMaxDex arriba, la dejo por si la llamas en otro sitio)
-        public static int GuessDexMaxByArmorGroup(ItemEntityArmor armorEntity)
+        // ===== Helpers privados =====
+
+        // Lee MaxDex en el propio blueprint del ítem si existe
+        private static int GetBlueprintMaxDex(BlueprintItemArmor bp)
         {
+            // Algunos builds exponen MaxDexBonus en el item directamente
             try
             {
-                var pg = armorEntity != null && armorEntity.Blueprint != null
-                    ? armorEntity.Blueprint.ProficiencyGroup.ToString()
-                    : null;
-
-                switch (pg)
-                {
-                    case "Light": return 6;
-                    case "Medium": return 3;
-                    case "Heavy": return 1;
-                    default: return 6;
-                }
+                // Si tu build no tiene esta propiedad pública, este try devolverá 0 y pasaremos al Type.
+                return (int)bp.MaxDexterityBonus;
             }
-            catch { return 6; }
+            catch { /* ignore */ }
+
+            return 0;
         }
 
-        // Porcentaje universal para reducir AC mostrado: 27 - 3*MaxDex (cap 0..27)
-        public static int ComputeUniversalAcReductionPercent(int maxDex)
+        // Lee MaxDex en el Type (catálogo). Útil como fallback.
+        private static int GetTypeMaxDex(BlueprintItemArmor bp)
         {
-            int p = 27 - 3 * maxDex;
-            if (p < 0) p = 0;
-            if (p > 27) p = 27;
-            return p;
+            try { return (int)(bp.Type?.MaxDexterityBonus ?? 0); }
+            catch { return 0; }
         }
     }
 }

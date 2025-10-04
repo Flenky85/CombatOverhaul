@@ -29,6 +29,7 @@ namespace CombatOverhaul.Patches.Armor
 
                 if (armorEntity != null)
                 {
+                    // Preferimos el limitador efectivo si el juego lo expone; si no, usamos MaxDex del ítem.
                     int? dexLimiter = armorEntity.DexBonusLimeterAC != null
                         ? (int?)armorEntity.DexBonusLimeterAC.Value
                         : null;
@@ -49,8 +50,13 @@ namespace CombatOverhaul.Patches.Armor
                         }
                     }
 
-                    int dexMax = Mathf.Clamp(dexLimiter ?? CombatOverhaul.Combat.Calculators.ArmorCalculator.GuessDexMaxByArmorGroup(armorEntity), 0, 8);
-                    percent = CombatOverhaul.Combat.Calculators.ArmorCalculator.ComputeUniversalAcReductionPercent(dexMax);
+                    // Si no hay limitador expuesto, caemos al Max Dex real del ítem (mithral, etc.)
+                    int dexMax = Mathf.Clamp(
+                        dexLimiter ?? ArmorCalculator.GetArmorMaxDex(armorEntity),
+                        0, 8
+                    );
+
+                    percent = ArmorCalculator.ComputeAcReductionPercentFromMaxDex(dexMax);
                 }
                 else
                 {
