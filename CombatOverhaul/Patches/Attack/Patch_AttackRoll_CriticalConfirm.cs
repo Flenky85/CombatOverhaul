@@ -40,7 +40,7 @@ namespace CombatOverhaul.Patches.Attack
                 __instance.CriticalConfirmationD20
             );
 
-            bool confirmed = res.success;
+            bool confirmed = res.Success;
 
             // 5) Fortificación puede anular el crítico confirmado
             if (__instance.TargetUseFortification && __instance.FortificationRoll > 0 && !__instance.FortificationOvercomed)

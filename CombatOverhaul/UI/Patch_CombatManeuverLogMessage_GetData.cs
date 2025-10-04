@@ -57,7 +57,7 @@ namespace CombatOverhaul.UI
             int D = rule.TargetCMD;
 
             var res = OpposedRollCore.ResolveD20(A, D, roll);
-            int pct = (int)Math.Round(res.p5 * 100.0f);
+            int pct = (int)Math.Round(res.P5 * 100.0f);
             int needed = res.TN;
 
             string resultText = rule.Result switch

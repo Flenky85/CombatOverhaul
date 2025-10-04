@@ -26,14 +26,14 @@ namespace CombatOverhaul.Patches.Attack
             if (__instance.AutoHit)
             {
                 var r = OpposedRollCore.ResolveD20(A, D, d20);
-                TbmCombatTextContext.Set(r.TN, (int)System.Math.Round(r.p5 * 100f));
+                TbmCombatTextContext.Set(r.TN, (int)System.Math.Round(r.P5 * 100f));
                 __result = true;
                 return false;
             }
             if (__instance.AutoMiss)
             {
                 var r = OpposedRollCore.ResolveD20(A, D, d20);
-                TbmCombatTextContext.Set(r.TN, (int)System.Math.Round(r.p5 * 100f));
+                TbmCombatTextContext.Set(r.TN, (int)System.Math.Round(r.P5 * 100f));
                 __result = false;
                 return false;
             }
@@ -49,9 +49,9 @@ namespace CombatOverhaul.Patches.Attack
 
             // Resuelve con nuestros parámetros (α=1.3, β=0.09, floor=5 %, ceil=95 %, step=5 %)
             var res = OpposedRollCore.ResolveD20(A, D, d20);
-            TbmCombatTextContext.Set(res.TN, (int)System.Math.Round(res.p5 * 100f));
+            TbmCombatTextContext.Set(res.TN, (int)System.Math.Round(res.P5 * 100f));
             //OpposedRollStore.Save(__instance, res);
-            __result = res.success;
+            __result = res.Success;
 
             // Saltamos la lógica original
             return false;

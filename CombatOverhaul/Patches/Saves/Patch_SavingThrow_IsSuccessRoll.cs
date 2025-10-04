@@ -19,7 +19,7 @@ namespace CombatOverhaul.Patches.Saves
             int D = __instance.DifficultyClass;
 
             var res = OpposedRollCore.ResolveD20(A, D, d20);
-            __result = res.success;
+            __result = res.Success;
             return false; // saltar lógica original
         }
     }

@@ -62,7 +62,7 @@ namespace CombatOverhaul.UI
             int ac = rule.TargetAC;
 
             var res = OpposedRollCore.ResolveD20(atkBonus, ac, roll);
-            int pct = (int)Math.Round(res.p5 * 100.0f);
+            int pct = (int)Math.Round(res.P5 * 100.0f);
             int needed = res.TN;
 
             string resultText = rule.IsHit ? "hit" : (roll == 1 ? "critical miss" : "miss");
@@ -80,7 +80,7 @@ namespace CombatOverhaul.UI
                 int Dcrit = rule.TargetCriticalAC;
 
                 var conf = OpposedRollCore.ResolveD20(Acrit, Dcrit, critD20);
-                int pctCrit = (int)Math.Round(conf.p5 * 100.0f);
+                int pctCrit = (int)Math.Round(conf.P5 * 100.0f);
                 int neededCrit = conf.TN;
                 string confText = rule.IsCriticalConfirmed ? "confirmed" : "unconfirmed";
 

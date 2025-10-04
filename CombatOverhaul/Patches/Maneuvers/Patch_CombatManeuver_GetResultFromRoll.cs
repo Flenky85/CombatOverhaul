@@ -56,7 +56,7 @@ namespace CombatOverhaul.Patches.Maneuvers
             var res = OpposedRollCore.ResolveD20(A, D, d20);
             //OpposedRollStore.Save(__instance, res);
 
-            __result = res.success ? CombatManeuverResult.Success : CombatManeuverResult.Fail;
+            __result = res.Success ? CombatManeuverResult.Success : CombatManeuverResult.Fail;
 
             // Saltamos la lógica original
             return false;
