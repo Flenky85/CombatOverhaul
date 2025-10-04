@@ -30,6 +30,16 @@ namespace CombatOverhaul.Patches.DamageReduction
                 var target = __instance.Target;
                 if (target == null) return;
 
+                // === Early-out previo: si NO hay daño físico con FinalValue>0, salimos ya ===
+                bool hasPhysical = false;
+                int count = list.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    var dv0 = list[i];
+                    if (dv0.FinalValue > 0 && ArmorCalculator.IsPhysical(dv0)) { hasPhysical = true; break; }
+                }
+                if (!hasPhysical) return;
+
                 // === Obtener armadura (si la hay) ===
                 var armorSlot = target.Body?.Armor;
                 ItemEntityArmor armorItem = (armorSlot != null && armorSlot.HasArmor) ? armorSlot.MaybeArmor : null;
@@ -59,42 +69,45 @@ namespace CombatOverhaul.Patches.DamageReduction
                 if (rdBase <= 0f) return;
 
                 // Factor constante para todo daño físico
-                float appliedRD = rdBase > MaxFinalReduction ? MaxFinalReduction : rdBase;
-                float factorPhysical = 1f - appliedRD;
-                if (factorPhysical < 0f) factorPhysical = 0f;
-                else if (factorPhysical > 1f) factorPhysical = 1f;
+                float factorPhysical = Mathf.Clamp01(1f - (rdBase > MaxFinalReduction ? MaxFinalReduction : rdBase));
 
-                // Preparar factores sólo si se aplica RD a algo
+                // Preparar factores sólo si se aplica RD a algo;
+                // usamos un contador para pre-rellenar 1f y evitar un while de relleno posterior.
                 List<float> factors = null;
                 bool anyApplied = false;
+                int pendingOnes = 0;
 
-                int count = list.Count;
                 for (int i = 0; i < count; i++)
                 {
                     var dv = list[i];
                     int finalNow = dv.FinalValue;
+
                     if (finalNow <= 0)
                     {
-                        // Sólo creamos factors si ya se aplicó algo antes
-                        if (factors != null) factors.Add(1f);
+                        if (factors != null) factors.Add(1f); else pendingOnes++;
                         continue;
                     }
 
                     // Sólo para daño físico; lo mágico se ignora aquí
                     if (!ArmorCalculator.IsPhysical(dv))
                     {
-                        if (factors != null) factors.Add(1f);
+                        if (factors != null) factors.Add(1f); else pendingOnes++;
                         continue;
                     }
 
                     // A partir de aquí vamos a aplicar: aseguramos lista factors
-                    if (factors == null) factors = new List<float>(count);
+                    if (factors == null)
+                    {
+                        factors = new List<float>(count);
+                        // pre-rellenamos los "1f" que quedaron pendientes antes de crear la lista
+                        if (pendingOnes > 0) { for (int k = 0; k < pendingOnes; k++) factors.Add(1f); }
+                    }
 
                     int targetFinal = Mathf.RoundToInt(finalNow * factorPhysical);
                     int reduction = dv.Reduction;
                     int newVWR = Math.Max(0, targetFinal + reduction);
 
-                    if (newVWR != (dv.ValueWithoutReduction)) anyApplied = true;
+                    if (newVWR != dv.ValueWithoutReduction) anyApplied = true;
 
                     // Sustituimos el DamageValue con el nuevo VWR
                     list[i] = new DamageValue(dv.Source, newVWR, dv.RollAndBonusValue, dv.RollResult, dv.TacticalCombatDRModifier);
@@ -106,10 +119,8 @@ namespace CombatOverhaul.Patches.DamageReduction
                 // Si no hemos aplicado RD a ningún entry, no guardamos factors
                 if (anyApplied && factors != null && factors.Count > 0)
                 {
-                    // Si hubo entradas no físicas o sin cambio y no añadimos factor en su momento,
-                    // completamos con 1f para mantener longitud
+                    // Si todavía faltan posiciones (poco probable), prellenamos
                     while (factors.Count < count) factors.Add(1f);
-
                     ArmorDR_FactorStore.Set(__instance.ParentRule, factors);
                 }
             }
@@ -118,5 +129,6 @@ namespace CombatOverhaul.Patches.DamageReduction
                 // silencioso en release
             }
         }
+
     }
 }
