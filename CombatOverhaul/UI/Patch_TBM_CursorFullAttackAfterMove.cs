@@ -29,6 +29,9 @@ namespace CombatOverhaul.UI
             var tbm = selected?.CombatState?.TBM;
             if (turn == null || selected == null || tbm == null) return;
 
+            if (!selected.HasStandardAction())
+                return;
+
             if (turn.EnableDeliverTouch && turn.TouchAbility?.Data == turn.CurrentAbility) return;
 
             var actionState = tbm.ActionState;
