@@ -9,7 +9,7 @@ using Owlcat.Runtime.UI.Tooltips;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CombatOverhaul.Combat.Calculators; // ArmorCalculator
+using CombatOverhaul.Calculators; // ArmorCalculator
 
 namespace CombatOverhaul.UI
 {

@@ -1,10 +1,11 @@
-﻿using CombatOverhaul.Utils;
+﻿using CombatOverhaul.Rules;
+using CombatOverhaul.Utils;
 using Kingmaker.PubSubSystem;
 using Kingmaker.RuleSystem.Rules;
 using System;
 using UnityEngine;
 
-namespace CombatOverhaul.Combat.Rules.Bus
+namespace CombatOverhaul.Bus
 {
     internal sealed class BABDice_WeaponStats :
         IGlobalRulebookHandler<RuleCalculateWeaponStats>,

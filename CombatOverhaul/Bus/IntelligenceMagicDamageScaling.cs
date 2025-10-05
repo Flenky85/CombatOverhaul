@@ -3,7 +3,7 @@ using Kingmaker.PubSubSystem;
 using Kingmaker.RuleSystem.Rules.Damage;
 using UnityEngine;
 
-namespace CombatOverhaul.Combat.Rules.Bus
+namespace CombatOverhaul.Bus
 {
     internal sealed class IntelligenceMagicDamageScaling :
         IGlobalRulebookHandler<RuleCalculateDamage>,

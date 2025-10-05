@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using Kingmaker.Armies.TacticalCombat;
 using Kingmaker.RuleSystem.Rules;
-using CombatOverhaul.Combat.Calculators;
+using CombatOverhaul.Calculators;
 
 namespace CombatOverhaul.Patches.Attack
 {

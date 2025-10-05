@@ -3,8 +3,8 @@ using HarmonyLib;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Items;
 using UnityEngine; // Mathf
-using CombatOverhaul.Combat.Calculators; // ArmorCalculator
-using Kingmaker.UnitLogic;               // HasFact()
+using Kingmaker.UnitLogic;
+using CombatOverhaul.Calculators;               // HasFact()
 
 namespace CombatOverhaul.Patches.Armor
 {

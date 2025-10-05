@@ -2,7 +2,7 @@
 using Kingmaker.Items;
 using Kingmaker.RuleSystem.Rules.Damage;
 
-namespace CombatOverhaul.Combat.Calculators
+namespace CombatOverhaul.Calculators
 {
     internal static class ArmorCalculator
     {
@@ -44,7 +44,7 @@ namespace CombatOverhaul.Combat.Calculators
 
         public static int ComputeAcReductionPercentFromMaxDex(int maxDex)
         {
-            var p = 27 - (3 * maxDex);
+            var p = 27 - 3 * maxDex;
             if (p < 0) p = 0;
             if (p > 27) p = 27;
             return p;
@@ -60,10 +60,10 @@ namespace CombatOverhaul.Combat.Calculators
 
         private static int SafeMaxDexFromItem(BlueprintItemArmor bp)
         {
-            return (int?)bp?.MaxDexterityBonus ?? 0;
+            return bp?.MaxDexterityBonus ?? 0;
         }
 
         private static int SafeMaxDexFromType(BlueprintItemArmor bp)
-            => (int?)(bp?.Type?.MaxDexterityBonus) ?? 0;
+            => (bp?.Type?.MaxDexterityBonus) ?? 0;
     }
 }

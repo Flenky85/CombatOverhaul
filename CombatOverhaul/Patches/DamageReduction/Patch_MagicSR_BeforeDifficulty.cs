@@ -6,8 +6,8 @@ using Kingmaker.UnitLogic.Mechanics;
 using UnityEngine; // Debug, Mathf
 using System;
 using System.Collections.Generic;                // <-- NUEVO
-using CombatOverhaul.Combat.Calculators;         // MagicSrCalc
-using CombatOverhaul.Combat.Rules;               // <-- NUEVO: ArmorDR_FactorStore
+using CombatOverhaul.Calculators;
+using CombatOverhaul.Rules;               // <-- NUEVO: ArmorDR_FactorStore
 
 namespace CombatOverhaul.Patches.DamageReduction
 {

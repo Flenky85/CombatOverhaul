@@ -1,4 +1,4 @@
-﻿using CombatOverhaul.Combat.Rules;
+﻿using CombatOverhaul.Rules;
 using HarmonyLib;
 using Kingmaker.Blueprints.Root.Strings.GameLog; // DamageLogMessage
 using Kingmaker.RuleSystem.Rules.Damage;

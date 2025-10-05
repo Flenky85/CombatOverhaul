@@ -1,7 +1,7 @@
 ﻿using System;
-using CombatOverhaul.Utils; 
+using CombatOverhaul.Utils;
 
-namespace CombatOverhaul.Combat.Calculators
+namespace CombatOverhaul.Calculators
 {
     internal static class OpposedRollCore
     {

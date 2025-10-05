@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Kingmaker.RuleSystem;
 
-namespace CombatOverhaul.Combat.Rules
+namespace CombatOverhaul.Rules
 {
     internal static class DiceSizeProgression
     {

@@ -4,7 +4,7 @@ using Kingmaker.EntitySystem.Stats;
 using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Parts;
 
-namespace CombatOverhaul.Combat.Calculators
+namespace CombatOverhaul.Calculators
 {
     internal static class MagicSrCalc
     {
@@ -23,7 +23,7 @@ namespace CombatOverhaul.Combat.Calculators
                 int srRaw = 0;
                 try
                 {
-                    srRaw = srPart.GetValue((Kingmaker.UnitLogic.Abilities.Blueprints.BlueprintAbility)null, initiatorForRaw);
+                    srRaw = srPart.GetValue(null, initiatorForRaw);
                 }
                 catch { /* fallback 0 */ }
                 return Clamp01_100(srRaw);

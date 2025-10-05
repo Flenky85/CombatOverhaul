@@ -4,10 +4,10 @@ using Kingmaker.RuleSystem.Rules.Damage;
 using System;
 using System.Collections.Generic;
 using UnityEngine;                          // Mathf.RoundToInt
-using CombatOverhaul.Combat.Calculators;    // ArmorCalculator
-using CombatOverhaul.Combat.Rules;          // ArmorDR_FactorStore
 using CombatOverhaul.Utils;                 // MarkerRefs
 using Kingmaker.UnitLogic;
+using CombatOverhaul.Calculators;
+using CombatOverhaul.Rules;
 
 namespace CombatOverhaul.Patches.Armor
 {

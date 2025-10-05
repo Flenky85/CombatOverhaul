@@ -5,7 +5,7 @@ using Kingmaker.PubSubSystem;
 using Kingmaker.RuleSystem.Rules.Damage;
 using System;
 
-namespace CombatOverhaul.Combat.Rules.Bus
+namespace CombatOverhaul.Bus
 {
     internal sealed class StrengthPercentPerPoint :
         IGlobalRulebookHandler<RuleCalculateDamage>,

@@ -1,4 +1,4 @@
-﻿using CombatOverhaul.Combat.Calculators;
+﻿using CombatOverhaul.Calculators;
 using HarmonyLib;
 using Kingmaker.Blueprints.Root.Strings.GameLog;
 using Kingmaker.RuleSystem.Rules;

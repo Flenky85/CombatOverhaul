@@ -1,4 +1,4 @@
-﻿using CombatOverhaul.Combat.Calculators;
+﻿using CombatOverhaul.Calculators;
 using CombatOverhaul.UI;
 using HarmonyLib;
 using Kingmaker.Armies.TacticalCombat;
