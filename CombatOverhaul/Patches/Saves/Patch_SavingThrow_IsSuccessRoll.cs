@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 using Kingmaker.RuleSystem.Rules;
-using CombatOverhaul.Combat.Opposed;
+using CombatOverhaul.Combat.Calculators;
 
 namespace CombatOverhaul.Patches.Saves
 {

@@ -8,11 +8,6 @@ namespace CombatOverhaul.Combat.Calculators
 {
     internal static class MagicSrCalc
     {
-        /// Con contexto:
-        ///   - Si inmune -> int.MaxValue.
-        ///   - Devuelve déficit = clamp(SR_efectiva - Penetration, 0..100) (sin d20).
-        /// Sin contexto:
-        ///   - Devuelve SR cruda (0..100) contra el initiator (si se pasa), o cruda genérica.
         internal static int ComputeSrDeficitNoRoll(
             MechanicsContext context,
             UnitEntityData target,
@@ -23,7 +18,6 @@ namespace CombatOverhaul.Combat.Calculators
             var srPart = target.Get<UnitPartSpellResistance>();
             if (srPart == null) return 0;
 
-            // SIN CONTEXTO: SR cruda razonable
             if (context == null)
             {
                 int srRaw = 0;
@@ -35,7 +29,6 @@ namespace CombatOverhaul.Combat.Calculators
                 return Clamp01_100(srRaw);
             }
 
-            // CON CONTEXTO
             try
             {
                 if (srPart.IsImmune(context, false))
@@ -43,7 +36,7 @@ namespace CombatOverhaul.Combat.Calculators
             }
             catch
             {
-                // Si falla la comprobación de inmunidad, seguimos como no inmune.
+                
             }
 
             int srEff = 0;
@@ -59,7 +52,6 @@ namespace CombatOverhaul.Combat.Calculators
 
             int penetration = casterLevel;
 
-            // Reemplazo de chequeo por stat/progresión (si existe)
             var caster = context.MaybeCaster;
             var replace = caster?.Get<UnitPartSpellResistanceCheckReplace>();
             if (replace != null && caster != null)
@@ -71,7 +63,7 @@ namespace CombatOverhaul.Combat.Calculators
                     int progVl = replace.Progression.CalculateValue(statVl);
                     if (progVl > penetration) penetration = progVl;
                 }
-                catch { /* ignorar: dejamos penetration tal cual */ }
+                catch {  }
             }
 
             int deficit = srEff - penetration;

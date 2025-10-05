@@ -1,18 +1,17 @@
 ﻿using System;
 using CombatOverhaul.Utils; // Log opcional
 
-namespace CombatOverhaul.Combat.Opposed
+namespace CombatOverhaul.Combat.Calculators
 {
     internal static class OpposedRollCore
     {
-        // === Parámetros por defecto para ATAQUES (exponibles a config) ===
-        internal static float Alpha = 1.3f;   // pendiente
-        internal static float Beta = 0.09f;  // sesgo atacante
-        internal static float Floor = 0.05f;  // 5 %
-        internal static float Ceil = 0.95f;  // 95 %
-        internal static float Step = 0.05f;  // granulado a 5 %
+        internal static float Alpha = 1.3f;   // slope
+        internal static float Beta = 0.09f;   // attacker bias
+        internal static float Floor = 0.05f;  // 5%
+        internal static float Ceil = 0.95f;   // 95%
+        internal static float Step = 0.05f;   // 5% step size (quantization)
 
-        // Toggle de depuración (puedes mapearlo a tu config)
+        // Debug toggle (you can hook this to your config)
         internal static bool EnableDebugLog = false;
 
         private const float EPS = 0.0001f;
@@ -21,21 +20,20 @@ namespace CombatOverhaul.Combat.Opposed
         {
             public float A { get; set; }
             public float D { get; set; }
-            public float BaseP { get; set; }  // A/(A+D)
-            public float PAdj { get; set; }   // tras Alpha/Beta y topes
-            public float P5 { get; set; }     // redondeado a Step
-            public int TN { get; set; }       // 21 - p5*20 (clamp 2..20)
-            public int D20 { get; set; }      // tirada
-            public bool Success { get; set; } // d20 >= TN
+            public float BaseP { get; set; }  
+            public float PAdj { get; set; }   
+            public float P5 { get; set; }     
+            public int TN { get; set; }       
+            public int D20 { get; set; }      
+            public bool Success { get; set; } 
         }
 
-        /// Calcula TN y devuelve el paquete completo.
         internal static Result ResolveD20(int attackBonus, int targetAC, int d20)
         {
             float A = Math.Max(0, attackBonus);
             float D = Math.Max(0, targetAC);
 
-            float baseP = (A + D <= EPS) ? 0.5f : (A / (A + D));
+            float baseP = A + D <= EPS ? 0.5f : A / (A + D);
 
             float pAdj = Clamp(baseP * Alpha + Beta, Floor, Ceil);
             float p5 = RoundToStep(pAdj, Step);
@@ -64,7 +62,6 @@ namespace CombatOverhaul.Combat.Opposed
             return res;
         }
 
-        // ===== Helpers =====
 
         private static int Clamp(int v, int min, int max)
         {
@@ -82,7 +79,7 @@ namespace CombatOverhaul.Combat.Opposed
 
         private static float RoundToStep(float value, float step)
         {
-            if (step <= 0f) return value; // evita división por cero
+            if (step <= 0f) return value; 
             return (float)Math.Round(value / step) * step;
         }
     }
