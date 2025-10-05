@@ -1,9 +1,7 @@
 ﻿using BlueprintCore.Blueprints.CustomConfigurators.Classes;
 using BlueprintCore.Utils;
-using BlueprintCore.Utils.Localization;
 using Kingmaker.Blueprints;
-using Kingmaker.Blueprints.Classes;
-using Kingmaker.Localization; // LocalizedString
+using Kingmaker.Localization; 
 
 namespace CombatOverhaul.Features
 {
@@ -27,22 +25,21 @@ namespace CombatOverhaul.Features
 
         public static void Register()
         {
-            if (_registered) return;    // <--- evita dobles registros
+            if (_registered) return;    
             _registered = true;
 
-            // Crea strings en runtime (sin pack externo)
             LocalizedString medName = LocalizationTool.CreateString(K_Med_Name, "Medium Armor Monster", tagEncyclopediaEntries: false);
-            LocalizedString medDesc = LocalizationTool.CreateString(K_Med_Desc, "Debug: marker for monsters treated as wearing medium armor.", false);
+            LocalizedString medDesc = LocalizationTool.CreateString(K_Med_Desc, "Reduces physical damage taken by 20% and AC by 12%.", false);
             LocalizedString hevName = LocalizationTool.CreateString(K_Hev_Name, "Heavy Armor Monster", false);
-            LocalizedString hevDesc = LocalizationTool.CreateString(K_Hev_Desc, "Debug: marker for monsters treated as wearing heavy armor.", false);
+            LocalizedString hevDesc = LocalizationTool.CreateString(K_Hev_Desc, "Reduces physical damage taken by 40% and AC by 24%.", false);
 
             var medium = FeatureConfigurator
                 .New(MediumName, MediumGuid)
                 .SetDisplayName(medName)
                 .SetDescription(medDesc)
                 .SetRanks(1)
-                .SetIsClassFeature(true)     // visible para inspección
-                .SetHideInUI(false)          // visible
+                .SetIsClassFeature(true)     
+                .SetHideInUI(false)          
                 .SetHideNotAvailibleInUI(false)
                 .Configure();
 
@@ -51,8 +48,8 @@ namespace CombatOverhaul.Features
                 .SetDisplayName(hevName)
                 .SetDescription(hevDesc)
                 .SetRanks(1)
-                .SetIsClassFeature(true)     // visible para inspección
-                .SetHideInUI(false)          // visible
+                .SetIsClassFeature(true)     
+                .SetHideInUI(false)          
                 .SetHideNotAvailibleInUI(false)
                 .Configure();
 
