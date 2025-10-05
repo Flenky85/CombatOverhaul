@@ -17,7 +17,7 @@ namespace CombatOverhaul.Patches.UI
         {
             try
             {
-                if (ArmorDR_FactorStore.TryDequeue(rule, out float factor))
+                if (DamageReduction_FactorStore.TryDequeue(rule, out float factor))
                 {
                     if (factor > 0f && factor < 0.9999f)
                     {

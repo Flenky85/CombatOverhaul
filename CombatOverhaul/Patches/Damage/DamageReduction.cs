@@ -140,7 +140,7 @@ namespace CombatOverhaul.Patches.Damage
                 if (anyApplied && factors != null)
                 {
                     while (factors.Count < count) factors.Add(1f);
-                    ArmorDR_FactorStore.Set(__instance.ParentRule, factors);
+                    DamageReduction_FactorStore.Set(__instance.ParentRule, factors);
                 }
             }
             catch

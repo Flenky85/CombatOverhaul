@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Kingmaker.RuleSystem;
 
 namespace CombatOverhaul.Rules
 {
     internal static class DiceSizeProgression
     {
-        private static readonly (int r, DiceType d)[] Gen = new (int r, DiceType d)[]
+        private static readonly (int r, DiceType d)[] Gen =
         {
             (0, DiceType.One),
             (1, DiceType.D2),
@@ -22,7 +23,7 @@ namespace CombatOverhaul.Rules
         };
 
         private static readonly Dictionary<(int r, DiceType d), int> GenIndexMap =
-            new Dictionary<(int r, DiceType d), int>();
+            new Dictionary<(int r, DiceType d), int>(capacity: 32);
 
         private static readonly Dictionary<(int r, DiceType d), (int r, DiceType d)[]> Branches =
             new Dictionary<(int, DiceType), (int, DiceType)[]>
@@ -47,9 +48,7 @@ namespace CombatOverhaul.Rules
         static DiceSizeProgression()
         {
             for (int i = 0; i < Gen.Length; i++)
-            {
                 GenIndexMap[Gen[i]] = i;
-            }
         }
 
         public static DiceFormula Promote(DiceFormula current, int steps)
@@ -58,30 +57,24 @@ namespace CombatOverhaul.Rules
 
             var key = (current.Rolls, current.Dice);
 
-            if (Branches.TryGetValue(key, out (int r, DiceType d)[] chain))
+            if (Branches.TryGetValue(key, out var chain))
             {
                 var (r, d) = PromoteAlong(chain, steps, key);
                 return new DiceFormula(r, d);
             }
 
             if (!GenIndexMap.TryGetValue(key, out int idx))
-            {
                 idx = ApproxIndex(current);
-            }
 
-            int target = idx + steps;
-            if (target >= Gen.Length) target = Gen.Length - 1;
-
+            int target = ClampIndex(idx + steps, Gen.Length);
             var pick = Gen[target];
             return new DiceFormula(pick.r, pick.d);
         }
 
         private static (int r, DiceType d) PromoteAlong((int r, DiceType d)[] chain, int steps, (int r, DiceType d) currentKey)
         {
-            if (steps <= 0) return currentKey;
-
-            int i = steps - 1; 
-            if (i >= chain.Length) i = chain.Length - 1;
+            if (steps <= 0 || chain == null || chain.Length == 0) return currentKey;
+            int i = ClampIndex(steps - 1, chain.Length);
             return chain[i];
         }
 
@@ -101,6 +94,13 @@ namespace CombatOverhaul.Rules
                 }
             }
             return DefaultApproxIndex;
+        }
+
+        private static int ClampIndex(int idx, int length)
+        {
+            if (idx < 0) return 0;
+            if (idx >= length) return length - 1;
+            return idx;
         }
     }
 }
