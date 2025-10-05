@@ -8,7 +8,7 @@ namespace CombatOverhaul.Patches.Attack
 {
     /// Sustituye la comprobación de éxito por TN derivado de p = (A/(A+D))*α + β (topes y pasos del 5 %).
     [HarmonyPatch(typeof(RuleAttackRoll), nameof(RuleAttackRoll.IsSuccessRoll))]
-    internal static class Patch_AttackRoll_IsSuccessRoll
+    internal static class AttackRoll
     {
         static bool Prefix(RuleAttackRoll __instance, int d20, ref bool __result)
         {
