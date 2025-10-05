@@ -1,4 +1,4 @@
-﻿using CombatOverhaul.Patches.Attack;
+﻿using CombatOverhaul.Bus;
 using Kingmaker;
 using Kingmaker.Items;
 using Kingmaker.PubSubSystem;

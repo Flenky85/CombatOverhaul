@@ -53,7 +53,7 @@ namespace CombatOverhaul
                     UnsubscribeHandlers();
 
                     // 2) Retirar parches
-                    if (_harmony != null) _harmony.UnpatchAll(HarmonyId);
+                    _harmony?.UnpatchAll(HarmonyId);
                     _harmony = null;
 
                     Log.Info("Disabled. Handlers unsubscribed and patches removed.");
@@ -74,7 +74,7 @@ namespace CombatOverhaul
             {
                 UnsubscribeHandlers();
 
-                if (_harmony != null) _harmony.UnpatchAll(HarmonyId);
+                _harmony?.UnpatchAll(HarmonyId);
                 _harmony = null;
 
                 _enabled = false;
@@ -92,7 +92,7 @@ namespace CombatOverhaul
         {
             _busSubs.Clear();
 
-            TrySub(() => EventBus.Subscribe(new CombatOverhaul.Patches.Attack.ForceDexForAttack()));
+            TrySub(() => EventBus.Subscribe(new CombatOverhaul.Bus.ForceDexForAttack()));
             TrySub(() => EventBus.Subscribe(new CombatOverhaul.Bus.IntelligenceMagicDamageScaling()));
             TrySub(() => EventBus.Subscribe(new CombatOverhaul.Bus.IntelligenceHealingScaling()));
             TrySub(() => EventBus.Subscribe(new CombatOverhaul.Bus.BABDice_WeaponStats()));
