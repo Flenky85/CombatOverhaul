@@ -2,9 +2,9 @@
 using HarmonyLib;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Items;
-using UnityEngine; // Mathf
+using UnityEngine; 
 using Kingmaker.UnitLogic;
-using CombatOverhaul.Calculators;               // HasFact()
+using CombatOverhaul.Calculators;               
 
 namespace CombatOverhaul.Patches.Armor
 {
@@ -21,7 +21,6 @@ namespace CombatOverhaul.Patches.Armor
 
                 int percent = 0;
 
-                // 1) Armadura real (vía slot seguro)
                 var armorSlot = unit.Body?.Armor;
                 ItemEntityArmor armorEntity = null;
                 if (armorSlot != null && armorSlot.HasArmor)
@@ -29,14 +28,13 @@ namespace CombatOverhaul.Patches.Armor
 
                 if (armorEntity != null)
                 {
-                    // Preferimos el limitador efectivo si el juego lo expone; si no, usamos MaxDex del ítem.
                     int? dexLimiter = armorEntity.DexBonusLimeterAC != null
                         ? (int?)armorEntity.DexBonusLimeterAC.Value
                         : null;
 
                     if (!dexLimiter.HasValue)
                     {
-                        var limiters = __instance.m_BaseAttributeBonusLimiters; // publicized
+                        var limiters = __instance.m_BaseAttributeBonusLimiters; 
                         if (limiters != null)
                         {
                             foreach (var it in limiters)
@@ -50,7 +48,6 @@ namespace CombatOverhaul.Patches.Armor
                         }
                     }
 
-                    // Si no hay limitador expuesto, caemos al Max Dex real del ítem (mithral, etc.)
                     int dexMax = Mathf.Clamp(
                         dexLimiter ?? ArmorCalculator.GetArmorMaxDex(armorEntity),
                         0, 8
@@ -60,7 +57,6 @@ namespace CombatOverhaul.Patches.Armor
                 }
                 else
                 {
-                    // 2) Sin armadura: feats marcadores (refs canónicas)
                     var desc = unit.Descriptor;
                     if (desc != null)
                     {
@@ -76,11 +72,10 @@ namespace CombatOverhaul.Patches.Armor
 
                 if (percent <= 0) return;
 
-                // Aplicar reducción
                 static int Reduce(int v, int pct)
                 {
                     if (v <= 0) return v;
-                    int r = (v * pct + 99) / 100; // ceil
+                    int r = (v * pct + 99) / 100; 
                     if (r <= 0) r = 1;
                     int res = v - r;
                     return res < 0 ? 0 : res;
@@ -93,7 +88,7 @@ namespace CombatOverhaul.Patches.Armor
             }
             catch
             {
-                // silencioso
+                
             }
         }
     }
