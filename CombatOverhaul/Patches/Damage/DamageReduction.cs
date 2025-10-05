@@ -1,20 +1,20 @@
-﻿using CombatOverhaul.Calculators;           
-using CombatOverhaul.Rules;                 
-using CombatOverhaul.Utils;                 
+﻿using CombatOverhaul.Calculators;
+using CombatOverhaul.Rules;
+using CombatOverhaul.Utils;
 using HarmonyLib;
-using Kingmaker.Blueprints;                 
+using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Facts;
-using Kingmaker.EntitySystem.Entities;      
-using Kingmaker.Items;                      
-using Kingmaker.RuleSystem.Rules.Damage;    
-using Kingmaker.UnitLogic;                  
-using Kingmaker.UnitLogic.Mechanics;        
-using Kingmaker.UnitLogic.Parts;            
+using Kingmaker.EntitySystem.Entities;
+using Kingmaker.Items;
+using Kingmaker.RuleSystem.Rules.Damage;
+using Kingmaker.UnitLogic;
+using Kingmaker.UnitLogic.Mechanics;
+using Kingmaker.UnitLogic.Parts;
 using System;
 using System.Collections.Generic;
-using UnityEngine;                          
+using UnityEngine;
 
-namespace CombatOverhaul.Patches
+namespace CombatOverhaul.Patches.Damage
 {
     [HarmonyPatch(typeof(RuleCalculateDamage))]
     internal static class DamageReduction
