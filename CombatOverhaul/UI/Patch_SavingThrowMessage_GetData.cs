@@ -45,7 +45,7 @@ namespace CombatOverhaul.UI
 
         /// Reemplaza SOLO la línea "Saving throw result: …" por "Saving throw: <d20>".
         /// Mantiene intacta "Difficulty (DC): …" y todo lo demás.
-        public static string ReplaceSavingThrowLineOnly(SavingThrowMessage self, RuleSavingThrow rule, string originalBody)
+        public static string ReplaceSavingThrowLineOnly(RuleSavingThrow rule, string originalBody)
         {
             if (string.IsNullOrEmpty(originalBody) || rule == null) return originalBody ?? string.Empty;
 

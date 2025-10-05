@@ -46,10 +46,10 @@ namespace CombatOverhaul.UI
         }
 
         /// Construye cabecera custom de maniobras y limpia el bloque vanilla.
-        public static string BuildBodyWithCustomHeader(CombatManeuverLogMessage self, RuleCombatManeuver rule, string originalBody)
+        public static string BuildBodyWithCustomHeader(RuleCombatManeuver rule, string originalBody)
         {
             if (rule == null) return originalBody ?? string.Empty;
-            if (originalBody == null) originalBody = string.Empty;
+            originalBody ??= string.Empty;
 
             // A, D, d20 ya calculados por OnTrigger
             int roll = rule.InitiatorRoll;

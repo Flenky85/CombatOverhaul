@@ -15,7 +15,7 @@ namespace CombatOverhaul.UI
     [HarmonyPatch(typeof(TooltipTemplateItem), nameof(TooltipTemplateItem.GetBody))]
     static class Patch_RemoveMaxDex_AndFollowingDetails
     {
-        static void Postfix(TooltipTemplateItem __instance, TooltipTemplateType type, ref IEnumerable<ITooltipBrick> __result)
+        static void Postfix(TooltipTemplateItem __instance, ref IEnumerable<ITooltipBrick> __result)
         {
             if (__result == null) return;
             if (!(__instance.m_Item is ItemEntityArmor)) return;
