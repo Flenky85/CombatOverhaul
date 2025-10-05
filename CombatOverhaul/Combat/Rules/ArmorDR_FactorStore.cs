@@ -11,45 +11,64 @@ namespace CombatOverhaul.Combat.Rules
         {
             public readonly List<float> Factors = new List<float>();
             public int Index;
-            public DateTime Stamp = DateTime.UtcNow;
+            public DateTime Stamp;
         }
 
         private static readonly ConditionalWeakTable<RuleDealDamage, Entry> Table =
             new ConditionalWeakTable<RuleDealDamage, Entry>();
 
+        private static readonly TimeSpan Expiration = TimeSpan.FromSeconds(5);
+
         public static void Set(RuleDealDamage rule, List<float> factors)
         {
-            if (rule == null || factors == null || factors.Count == 0) return;
+            if (rule == null || factors == null || factors.Count == 0)
+                return;
 
-            Entry e;
-            if (!Table.TryGetValue(rule, out e))
+            var entry = Table.GetOrCreateValue(rule);
+            lock (entry)
             {
-                e = new Entry();
-                Table.Add(rule, e);
+                entry.Factors.Clear();
+                entry.Factors.AddRange(factors);
+                entry.Index = 0;
+                entry.Stamp = DateTime.UtcNow;
             }
-
-            e.Factors.Clear();
-            e.Factors.AddRange(factors);
-            e.Index = 0;
-            e.Stamp = DateTime.UtcNow;
         }
 
         public static bool TryDequeue(RuleDealDamage rule, out float factor)
         {
             factor = 1f;
-            if (rule == null) return false;
-
-            Entry e;
-            if (!Table.TryGetValue(rule, out e)) return false;
-
-            // caduca por si acaso (anti fugas si algo quedara colgado)
-            if ((DateTime.UtcNow - e.Stamp).TotalSeconds > 5.0)
+            if (rule == null)
                 return false;
 
-            if (e.Index >= e.Factors.Count) return false;
+            if (!Table.TryGetValue(rule, out var entry))
+                return false;
 
-            factor = e.Factors[e.Index++];
-            return true;
+            lock (entry)
+            {
+                var now = DateTime.UtcNow;
+
+                if (now - entry.Stamp > Expiration)
+                {
+                    Table.Remove(rule);
+                    return false;
+                }
+
+                if (entry.Index >= entry.Factors.Count)
+                {
+                    Table.Remove(rule);
+                    return false;
+                }
+
+                factor = entry.Factors[entry.Index++];
+
+                if (entry.Index >= entry.Factors.Count)
+                {
+                    Table.Remove(rule);
+                }
+
+                return true;
+            }
         }
+
     }
 }
