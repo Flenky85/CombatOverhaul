@@ -1,5 +1,4 @@
-﻿using System;
-using Kingmaker.Blueprints.Items.Armors;
+﻿using Kingmaker.Blueprints.Items.Armors;
 using Kingmaker.Items;
 using Kingmaker.RuleSystem.Rules.Damage;
 

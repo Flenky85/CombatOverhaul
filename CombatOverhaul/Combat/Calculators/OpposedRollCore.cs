@@ -1,5 +1,5 @@
 ﻿using System;
-using CombatOverhaul.Utils; // Log opcional
+using CombatOverhaul.Utils; 
 
 namespace CombatOverhaul.Combat.Calculators
 {
