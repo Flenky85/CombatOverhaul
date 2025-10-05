@@ -1,6 +1,7 @@
-﻿using System;
+﻿using CombatOverhaul.Utils;
 using Kingmaker.PubSubSystem;
 using Kingmaker.RuleSystem.Rules;
+using System;
 using UnityEngine;
 
 namespace CombatOverhaul.Combat.Rules.Bus
@@ -36,7 +37,7 @@ namespace CombatOverhaul.Combat.Rules.Bus
             catch (Exception ex)
             {
 
-                Debug.LogError($"[CO][BAB→Dice] {ex}");
+                Debug.LogError($"[BAB→Dice] {ex}");
 
             }
         }

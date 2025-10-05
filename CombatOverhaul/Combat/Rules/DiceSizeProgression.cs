@@ -21,11 +21,9 @@ namespace CombatOverhaul.Combat.Rules
             (12, DiceType.D6),
         };
 
-        // Índice O(1) para saber en qué posición está un (rolls, dice) dentro de Gen
         private static readonly Dictionary<(int r, DiceType d), int> GenIndexMap =
             new Dictionary<(int r, DiceType d), int>();
 
-        // Ramas específicas para orígenes que no encajan en Gen exactamente
         private static readonly Dictionary<(int r, DiceType d), (int r, DiceType d)[]> Branches =
             new Dictionary<(int, DiceType), (int, DiceType)[]>
             {
@@ -44,7 +42,7 @@ namespace CombatOverhaul.Combat.Rules
                 [(8, DiceType.D8)] = new[] { (12, DiceType.D8) },
             };
 
-        private const int DefaultApproxIndex = 5; // 1d8
+        private const int DefaultApproxIndex = 5; 
 
         static DiceSizeProgression()
         {
@@ -82,7 +80,7 @@ namespace CombatOverhaul.Combat.Rules
         {
             if (steps <= 0) return currentKey;
 
-            int i = steps - 1; // steps=1 -> índice 0
+            int i = steps - 1; 
             if (i >= chain.Length) i = chain.Length - 1;
             return chain[i];
         }

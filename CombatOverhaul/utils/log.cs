@@ -6,6 +6,7 @@ namespace CombatOverhaul.Utils
     internal static class Log
     {
         private const string Prefix = "[CombatOverhaul] ";
+        internal static object prefix;
 
         public static void Info(string message)
         {
