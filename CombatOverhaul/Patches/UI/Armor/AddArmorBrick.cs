@@ -8,7 +8,7 @@ using Kingmaker.UI.MVVM._VM.Tooltip.Templates;
 using Owlcat.Runtime.UI.Tooltips;
 using CombatOverhaul.Calculators;
 
-namespace CombatOverhaul.Patches.UI
+namespace CombatOverhaul.Patches.UI.Armor
 {
     [HarmonyPatch(typeof(TooltipTemplateItem), nameof(TooltipTemplateItem.GetBody))]
     internal static class AddArmorBrick
