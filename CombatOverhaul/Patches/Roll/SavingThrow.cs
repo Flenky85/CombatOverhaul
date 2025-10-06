@@ -1,6 +1,7 @@
-﻿using HarmonyLib;
+﻿using CombatOverhaul.Calculators;
+using CombatOverhaul.Patches.UI.FloatMessage;
+using HarmonyLib;
 using Kingmaker.RuleSystem.Rules;
-using CombatOverhaul.Calculators;
 
 namespace CombatOverhaul.Patches.Roll
 {
@@ -9,15 +10,19 @@ namespace CombatOverhaul.Patches.Roll
     {
         static bool Prefix(RuleSavingThrow __instance, int d20, int successBonus, ref bool __result)
         {
-            if (d20 == 20) { __result = true; return false; }
-            if (d20 == 1) { __result = false; return false; }
+            if (__instance == null) { __result = false; return false; }
 
             int A = __instance.StatValue + successBonus;
             int D = __instance.DifficultyClass;
 
             var res = OpposedRollCore.ResolveD20(A, D, d20);
+
+            if (d20 == 20) { TbmCombatTextContext.Set(res.TN); __result = true; return false; }
+            if (d20 == 1) { TbmCombatTextContext.Set(res.TN); __result = false; return false; }
+
+            TbmCombatTextContext.Set(res.TN);
             __result = res.Success;
-            return false; 
+            return false;
         }
     }
 }
