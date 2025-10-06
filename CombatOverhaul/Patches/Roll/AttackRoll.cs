@@ -19,46 +19,41 @@ namespace CombatOverhaul.Patches.Roll
             }
 
             if (TacticalCombatHelper.IsActive)
-            {
-                __result = true;
-                return false;
-            }
-
-            int A = __instance.AttackBonus;
-            int D = __instance.TargetAC;
+                return true;
 
             if (__instance.AutoHit)
             {
-                var r = OpposedRollCore.ResolveD20(A, D, d20);
-                TbmCombatTextContext.Set(r.TN, (int)Math.Round(r.P5 * 100f));
                 __result = true;
                 return false;
             }
 
             if (__instance.AutoMiss)
             {
-                var r = OpposedRollCore.ResolveD20(A, D, d20);
-                TbmCombatTextContext.Set(r.TN, (int)Math.Round(r.P5 * 100f));
                 __result = false;
                 return false;
             }
 
+            int A = __instance.AttackBonus;
+            int D = __instance.TargetAC;
+
+            var res = OpposedRollCore.ResolveD20(A, D, d20);
+
             if (d20 == 20)
             {
+                TbmCombatTextContext.Set(res.TN);
                 __result = true;
                 return false;
             }
 
             if (d20 == 1 && !__instance.Initiator.State.Features.AlwaysChance)
             {
+                TbmCombatTextContext.Set(res.TN);
                 __result = false;
                 return false;
             }
 
-            var res = OpposedRollCore.ResolveD20(A, D, d20);
-            TbmCombatTextContext.Set(res.TN, (int)Math.Round(res.P5 * 100f));
+            TbmCombatTextContext.Set(res.TN);
             __result = res.Success;
-
             return false;
         }
     }

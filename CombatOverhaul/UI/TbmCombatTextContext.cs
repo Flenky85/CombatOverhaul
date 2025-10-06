@@ -1,14 +1,12 @@
-﻿// CombatOverhaul/UI/TbmCombatTextContext.cs
-using System;
-
-namespace CombatOverhaul.UI
+﻿namespace CombatOverhaul.UI
 {
     internal static class TbmCombatTextContext
     {
-        [ThreadStatic] public static int? OverrideTN;
-        [ThreadStatic] public static int? OverridePct;
+        public static int? OverrideTN { get; private set; }
+        public static bool Suppress { get; private set; }
 
-        public static void Set(int tn, int pct) { OverrideTN = tn; OverridePct = pct; }
-        public static void Clear() { OverrideTN = null; OverridePct = null; }
+        public static void Set(int tn) { OverrideTN = tn; Suppress = false; }
+        public static void SuppressNext() { OverrideTN = null; Suppress = true; }
+        public static void Clear() { OverrideTN = null; Suppress = false; }
     }
 }
