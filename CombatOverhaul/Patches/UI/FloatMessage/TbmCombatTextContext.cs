@@ -1,4 +1,4 @@
-﻿namespace CombatOverhaul.UI
+﻿namespace CombatOverhaul.Patches.UI.FloatMessage
 {
     internal static class TbmCombatTextContext
     {
@@ -6,7 +6,6 @@
         public static bool Suppress { get; private set; }
 
         public static void Set(int tn) { OverrideTN = tn; Suppress = false; }
-        public static void SuppressNext() { OverrideTN = null; Suppress = true; }
         public static void Clear() { OverrideTN = null; Suppress = false; }
     }
 }

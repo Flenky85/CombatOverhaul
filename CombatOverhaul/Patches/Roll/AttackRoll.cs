@@ -1,6 +1,6 @@
 ﻿using System;
 using CombatOverhaul.Calculators;
-using CombatOverhaul.UI;
+using CombatOverhaul.Patches.UI.FloatMessage;
 using HarmonyLib;
 using Kingmaker.Armies.TacticalCombat;
 using Kingmaker.RuleSystem.Rules;
