@@ -2,7 +2,7 @@
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.RuleSystem.Rules.Abilities;
 
-namespace CombatOverhaul.Spells
+namespace CombatOverhaul.Patches.Magic
 {
     [HarmonyPatch(typeof(RuleCalculateAbilityParams), nameof(RuleCalculateAbilityParams.OnTrigger))]
     internal static class DC_ForceCHA_Conc_ForceWis
