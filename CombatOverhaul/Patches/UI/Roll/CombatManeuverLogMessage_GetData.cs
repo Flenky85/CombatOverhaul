@@ -93,7 +93,7 @@ namespace CombatOverhaul.Patches.UI.Roll
             };
 
             sb.Append("Maneuver roll: ").Append(roll).Append('\n')
-              .Append("Chance of success: ").Append(pct).Append("% (").Append(needed).Append(")\n")
+              .Append("Chance of success: ").Append(pct).Append("% (DC: ").Append(needed).Append(")\n")
               .Append("Result: ").Append(resultText);
         }
     }

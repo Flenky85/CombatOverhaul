@@ -111,7 +111,7 @@ namespace CombatOverhaul.Patches.UI.Roll
             string hitText = rule.IsHit ? "hit" : roll == 1 ? "critical miss" : "miss";
 
             sb.Append("Attack roll: ").Append(roll).Append('\n')
-              .Append("Chance of hit: ").Append(pct).Append("% (").Append(needed).Append(")\n")
+              .Append("Chance of hit: ").Append(pct).Append("% (DC: ").Append(needed).Append(")\n")
               .Append("Result: ").Append(hitText);
 
             if (rule.IsCriticalRoll)

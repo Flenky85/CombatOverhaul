@@ -63,7 +63,7 @@ namespace CombatOverhaul.Patches.UI.Roll
                     bool passed = rule.RollResult >= D;
 
                     sb.Append("Saving throw: ").Append(roll).AppendLine();
-                    sb.Append("Chance of success: ").Append(pct).Append("% (").Append(tn).Append(')').AppendLine();
+                    sb.Append("Chance of success: ").Append(pct).Append("% (DC: ").Append(tn).Append(')').AppendLine();
                     sb.Append("Result: ").Append(passed ? "success" : "fail").AppendLine();
 
                     var stat = rule.Initiator.Stats.GetStat<ModifiableValue>(rule.StatType);
