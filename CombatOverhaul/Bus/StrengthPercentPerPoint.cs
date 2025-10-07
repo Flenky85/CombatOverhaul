@@ -1,8 +1,11 @@
-﻿using Kingmaker.EntitySystem.Entities;
+﻿using Kingmaker.Blueprints;
+using Kingmaker.Blueprints.Classes;
+using Kingmaker.EntitySystem.Entities;
 using Kingmaker.Items;
 using Kingmaker.Items.Slots;
 using Kingmaker.PubSubSystem;
 using Kingmaker.RuleSystem.Rules.Damage;
+using Kingmaker.UnitLogic;
 using System;
 
 namespace CombatOverhaul.Bus
@@ -13,7 +16,7 @@ namespace CombatOverhaul.Bus
     {
         private const float SingleMain_PerPoint = 0.10f;
         private const float DualPrimary_PerPoint = 0.10f;
-        private const float DualOffhand_PerPoint = 0.00f;
+        private const float DualOffhand_PerPoint = 0.05f;
 
         private const int Naturals_WithManufactured_Offset = 2;
         private const bool ExcludePrecision = false;
@@ -66,6 +69,9 @@ namespace CombatOverhaul.Bus
                 if (isManufacturedHit)
                 {
                     perPoint = ResolveManufacturedPerPoint(primaryIsManufactured, offIsManufactured, isOffhandHit);
+
+                    if (primaryIsManufactured && offIsManufactured && isOffhandHit)
+                        perPoint = AddDoubleSliceBonus(attacker, perPoint);
                 }
                 else if (isNaturalHit)
                 {
@@ -103,7 +109,6 @@ namespace CombatOverhaul.Bus
         }
 
         public void OnEventDidTrigger(RuleCalculateDamage evt) { /* no-op */ }
-
 
         private static float ResolveManufacturedPerPoint(bool primaryManu, bool offManu, bool isOffhandHit)
         {
@@ -158,6 +163,23 @@ namespace CombatOverhaul.Bus
                 if (bp.IsUnarmed) { hasUnarmed = true; return; }  
                 if (bp.IsNatural) c++;
             }
+
+
+        }
+
+        private const string DoubleSliceGuid = "8a6a1920019c45d40b4561f05dcb3240";
+        private static BlueprintFeature _doubleSliceFeat;
+        private static BlueprintFeature DoubleSliceFeat =>
+            _doubleSliceFeat ??= ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(DoubleSliceGuid);
+
+        private static float AddDoubleSliceBonus(UnitEntityData attacker, float basePerPoint)
+        {
+            if (attacker != null
+                && DoubleSliceFeat != null
+                && (attacker.Descriptor?.HasFact(DoubleSliceFeat) ?? false))
+                return basePerPoint + 0.05f;
+
+            return basePerPoint;
         }
     }
 }
