@@ -11,25 +11,25 @@ namespace CombatOverhaul.Bus
         IGlobalRulebookHandler<RuleCalculateDamage>,
         ISubscriber, IGlobalSubscriber
     {
-        private const float SingleMain_PerPoint = 0.15f;
-        private const float DualPrimary_PerPoint = 0.15f;
-        private const float DualOffhand_PerPoint = 0.15f;
+        private const float SingleMain_PerPoint = 0.10f;
+        private const float DualPrimary_PerPoint = 0.10f;
+        private const float DualOffhand_PerPoint = 0.00f;
 
         private const int Naturals_WithManufactured_Offset = 2;
         private const bool ExcludePrecision = false;
 
         private static readonly float[] NaturalPct = {
             0.00f,  
-            0.30f,  
-            0.15f,  
+            0.20f,  
             0.10f,  
-            0.075f, 
-            0.06f,  
-            0.05f,  
-            0.0428f,
-            0.0375f,
-            0.0333f,
-            0.03f   
+            0.033f,  
+            0.025f, 
+            0.02f,  
+            0.016f,  
+            0.014f,
+            0.0125f,
+            0.011f,
+            0.01f   
         };
 
         public void OnEventAboutToTrigger(RuleCalculateDamage evt)
