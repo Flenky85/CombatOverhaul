@@ -4,13 +4,13 @@ using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.JsonSystem;
 using Kingmaker.Localization;
-using Kingmaker.UnitLogic.FactLogic; 
+using Kingmaker.UnitLogic.FactLogic;
 using System.Collections.Generic;
 
 namespace CombatOverhaul.Patches.Features.Commons
 {
     [HarmonyPatch(typeof(BlueprintsCache), nameof(BlueprintsCache.Init))]
-    internal static class ImprovedTwoWeaponFighting
+    internal static class GreaterTwoWeaponFighting
     {
         private static bool _done;
 
@@ -18,17 +18,15 @@ namespace CombatOverhaul.Patches.Features.Commons
         {
             if (_done) return; _done = true;
 
-            var feat = ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.ImprovedTwoWeaponFighting);
+            var feat = ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.GreaterTwoWeaponFighting);
             if (feat == null) return;
 
             var comps = new List<BlueprintComponent>(feat.ComponentsArray);
-
             for (int i = comps.Count - 1; i >= 0; i--)
             {
                 if (comps[i] is AddFacts)
                     comps.RemoveAt(i);
             }
-
             feat.ComponentsArray = comps.ToArray();
 
             var pack = LocalizationManager.CurrentPack;
@@ -36,11 +34,11 @@ namespace CombatOverhaul.Patches.Features.Commons
             {
                 var descKey = feat.m_Description?.m_Key;
                 if (!string.IsNullOrEmpty(descKey))
-                    pack.PutString(descKey, "Increases damage dealt by 2.5% per point of Dexterity bonus on off-hand attacks when using finesse weapons only.");
+                    pack.PutString(descKey, "Upgrades Improved Two-Weapon Fighting: your off-hand attacks with finesse weapons gain +5% damage per point of Dexterity bonus.");
 
                 var shortKey = feat.m_DescriptionShort?.m_Key;
                 if (!string.IsNullOrEmpty(shortKey))
-                    pack.PutString(shortKey, "+2.5% damage per point of DEX bonus on off-hand attacks (finesse weapons only).");
+                    pack.PutString(shortKey, "Upgrades Improved TWF: +5% damage per DEX bonus point on off-hand (finesse only).");
             }
         }
     }

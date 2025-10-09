@@ -1,4 +1,6 @@
-﻿using Kingmaker.Blueprints;
+﻿using CombatOverhaul.Guids;
+using CombatOverhaul.Patches.Features.Commons;
+using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.Enums;
@@ -176,10 +178,9 @@ namespace CombatOverhaul.Bus
 
         }
 
-        private const string DoubleSliceGuid = "8a6a1920019c45d40b4561f05dcb3240";
         private static BlueprintFeature _doubleSliceFeat;
         private static BlueprintFeature DoubleSliceFeat =>
-            _doubleSliceFeat ??= ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(DoubleSliceGuid);
+            _doubleSliceFeat ??= ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.DoubleSlice);
 
         private static bool IsFinesseWeapon(ItemEntityWeapon w)
         {
@@ -206,22 +207,31 @@ namespace CombatOverhaul.Bus
             return basePerPoint;
         }
 
-        private const string ImprovedTWFGuid = "9af88f3ed8a017b45a6837eab7437629";
         private static BlueprintFeature _improvedTWF;
         private static BlueprintFeature ImprovedTWF =>
-            _improvedTWF ??= ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(ImprovedTWFGuid);
+            _improvedTWF ??= ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.ImprovedTwoWeaponFighting);
+
+        private static BlueprintFeature _greaterTWF;
+        private static BlueprintFeature GreaterTWF =>
+            _greaterTWF ??= ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.GreaterTwoWeaponFighting);
 
         private static int GetImprovedTWFDexBonusPercent(UnitEntityData attacker, ItemEntityWeapon weapon)
         {
             if (attacker == null || weapon == null) return 0;
             if (!IsFinesseWeapon(weapon)) return 0;
 
-            if (ImprovedTWF == null || !(attacker.Descriptor?.HasFact(ImprovedTWF) ?? false)) return 0;
+            float perPoint;
+            if (GreaterTWF != null && (attacker.Descriptor?.HasFact(GreaterTWF) ?? false))
+                perPoint = 0.05f;
+            else if (ImprovedTWF != null && (attacker.Descriptor?.HasFact(ImprovedTWF) ?? false))
+                perPoint = 0.025f;
+            else
+                return 0;
 
             int dexMod = attacker.Stats?.Dexterity?.Bonus ?? 0;
             if (dexMod <= 0) return 0;
 
-            return (int)Math.Round(dexMod * 0.025f * 100f, MidpointRounding.AwayFromZero);
+            return (int)Math.Round(dexMod * perPoint * 100f, MidpointRounding.AwayFromZero);
         }
     }
 }

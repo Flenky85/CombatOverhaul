@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using CombatOverhaul.Guids;
+using HarmonyLib;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.JsonSystem;
@@ -14,13 +15,12 @@ namespace CombatOverhaul.Patches.Features.Commons
     internal static class WeaponFinesse
     {
         private static bool _done;
-        private const string WeaponFinesseGuid = "90e54424d682d104ab36436bd527af09";
-
+        
         static void Postfix()
         {
             if (_done) return; _done = true;
 
-            var feat = ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(WeaponFinesseGuid);
+            var feat = ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.WeaponFinesse);
             if (feat == null) return;
 
             var comps = new List<BlueprintComponent>(feat.ComponentsArray);

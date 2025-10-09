@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using CombatOverhaul.Guids;
+using HarmonyLib;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.JsonSystem;
@@ -12,13 +13,12 @@ namespace CombatOverhaul.Patches.Features.Commons
     internal static class DoubleSlice
     {
         private static bool _done;
-        private const string DoubleSliceGuid = "8a6a1920019c45d40b4561f05dcb3240";
 
         static void Postfix()
         {
             if (_done) return; _done = true;
 
-            var feat = ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(DoubleSliceGuid);
+            var feat = ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.DoubleSlice);
             if (feat == null) return;
 
             var comps = new List<BlueprintComponent>(feat.ComponentsArray);
