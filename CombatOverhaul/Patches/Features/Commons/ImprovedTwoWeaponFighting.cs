@@ -3,33 +3,30 @@ using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.JsonSystem;
 using Kingmaker.Localization;
-using Kingmaker.UnitLogic.FactLogic;
+using Kingmaker.UnitLogic.FactLogic; 
 using System.Collections.Generic;
 
 namespace CombatOverhaul.Patches.Features.Commons
 {
     [HarmonyPatch(typeof(BlueprintsCache), nameof(BlueprintsCache.Init))]
-    internal static class DoubleSlice
+    internal static class ImprovedTwoWeaponFighting
     {
         private static bool _done;
-        private const string DoubleSliceGuid = "8a6a1920019c45d40b4561f05dcb3240";
+        private const string ImprovedTWF_Guid = "9af88f3ed8a017b45a6837eab7437629";
 
         static void Postfix()
         {
             if (_done) return; _done = true;
 
-            var feat = ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(DoubleSliceGuid);
+            var feat = ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(ImprovedTWF_Guid);
             if (feat == null) return;
 
             var comps = new List<BlueprintComponent>(feat.ComponentsArray);
 
             for (int i = comps.Count - 1; i >= 0; i--)
             {
-                if (comps[i] is AddMechanicsFeature amf &&
-                    amf.m_Feature == AddMechanicsFeature.MechanicsFeatureType.DoubleSlice)
-                {
+                if (comps[i] is AddFacts)
                     comps.RemoveAt(i);
-                }
             }
 
             feat.ComponentsArray = comps.ToArray();
@@ -37,16 +34,13 @@ namespace CombatOverhaul.Patches.Features.Commons
             var pack = LocalizationManager.CurrentPack;
             if (pack != null)
             {
-                var enText =
-                    "<b>Off-hand only.</b> Your off-hand attacks gain <b>+5%</b> damage per point of <b>Strength bonus</b>.";
-
                 var descKey = feat.m_Description?.m_Key;
                 if (!string.IsNullOrEmpty(descKey))
-                    pack.PutString(descKey, enText);
+                    pack.PutString(descKey, "Increases damage dealt by 2.5% per point of Dexterity bonus.");
 
                 var shortKey = feat.m_DescriptionShort?.m_Key;
                 if (!string.IsNullOrEmpty(shortKey))
-                    pack.PutString(shortKey, "+5% damage per point of STR bonus on off-hand attacks.");
+                    pack.PutString(shortKey, "+2.5% damage per point of DEX bonus.");
             }
         }
     }

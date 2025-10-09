@@ -25,14 +25,12 @@ namespace CombatOverhaul.Patches.Features.Commons
 
             var comps = new List<BlueprintComponent>(feat.ComponentsArray);
 
-            // 1) Quitar reemplazos de stat
             for (int i = comps.Count - 1; i >= 0; i--)
                 if (comps[i] is AttackStatReplacement) comps.RemoveAt(i);
 
-            // 2) +1 al ataque con armas Finesse (solo melee) — AÑADE name para evitar problemas de serialización
             var atk = new WeaponParametersAttackBonus
             {
-                name = "$WeaponParametersAttackBonus$CO_WeaponFinesse", // <— IMPORTANTE
+                name = "$WeaponParametersAttackBonus$CO_WeaponFinesse", 
                 OnlyFinessable = true,
                 CanBeUsedWithFightersFinesse = false,
                 Ranged = false,
@@ -48,8 +46,6 @@ namespace CombatOverhaul.Patches.Features.Commons
             comps.Add(atk);
             feat.ComponentsArray = comps.ToArray();
 
-            // 3) Descripción — REUTILIZA LAS KEYS EXISTENTES (no crees keys nuevas)
-            //    Si no hay pack aún, no hagas nada (evita NRE).
             var pack = LocalizationManager.CurrentPack;
             if (pack != null)
             {
@@ -58,7 +54,6 @@ namespace CombatOverhaul.Patches.Features.Commons
                     "elven curve blade, estoc, or rapier made for a creature of your <b><color=#703565><link=\"Encyclopedia:Size\">size</link></color></b> category, " +
                     "you gain a <b>+1</b> bonus on melee <b><color=#703565><link=\"Encyclopedia:Attack\">attack rolls</link></color></b> made with that weapon.";
 
-                // Usa la key original si existe
                 var descKey = feat.m_Description?.m_Key;
                 if (!string.IsNullOrEmpty(descKey))
                     pack.PutString(descKey, enText);

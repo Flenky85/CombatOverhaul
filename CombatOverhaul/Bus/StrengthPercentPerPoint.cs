@@ -1,6 +1,7 @@
 ﻿using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.EntitySystem.Entities;
+using Kingmaker.Enums;
 using Kingmaker.Items;
 using Kingmaker.Items.Slots;
 using Kingmaker.PubSubSystem;
@@ -46,14 +47,11 @@ namespace CombatOverhaul.Bus
                 var attackRoll = parentRule?.AttackRoll;
                 if (attacker == null || attackRoll == null) return;
 
-                int strMod = attacker.Stats?.Strength?.Bonus ?? 0;
-                if (strMod == 0) return;
-
                 var weapon = attackRoll.Weapon;
                 if (weapon == null) return;
 
-                bool isNaturalHit = IsNaturalWeapon(weapon);           
-                bool isManufacturedHit = IsManufacturedWeapon(weapon); 
+                bool isNaturalHit = IsNaturalWeapon(weapon);
+                bool isManufacturedHit = IsManufacturedWeapon(weapon);
 
                 var body = attacker.Body;
                 var primary = body?.PrimaryHand?.MaybeWeapon;
@@ -65,13 +63,24 @@ namespace CombatOverhaul.Bus
 
                 bool isOffhandHit = off == weapon;
 
+                int strMod = attacker.Stats?.Strength?.Bonus ?? 0;
+
+                // DEX sólo si es dual-wield manufactured y el golpe es offhand
+                int dexBonusPercent = (isOffhandHit && primaryIsManufactured && offIsManufactured)
+                    ? GetImprovedTWFDexBonusPercent(attacker, weapon)
+                    : 0;
+
+                // Si no hay STR ni DEX aplicables, salimos
+                if (strMod == 0 && dexBonusPercent == 0) return;
+
                 float perPoint;
                 if (isManufacturedHit)
                 {
                     perPoint = ResolveManufacturedPerPoint(primaryIsManufactured, offIsManufactured, isOffhandHit);
 
+                    // Tu bonus de Double Slice a la offhand (dejas tu 0.05f actual)
                     if (primaryIsManufactured && offIsManufactured && isOffhandHit)
-                        perPoint = AddDoubleSliceBonus(attacker, perPoint);
+                        perPoint = AddDoubleSliceBonus(attacker, weapon, perPoint);
                 }
                 else if (isNaturalHit)
                 {
@@ -86,13 +95,17 @@ namespace CombatOverhaul.Bus
                 }
                 else
                 {
-                    return;
+                    // Si no es ni manufactured ni natural (raro), aún podríamos aplicar DEX solo si ya lo teníamos
+                    if (dexBonusPercent == 0) return;
+                    perPoint = 0f;
                 }
 
-                if (perPoint == 0f) return;
+                int extraPercentStr = 0;
+                if (strMod != 0 && perPoint != 0f)
+                    extraPercentStr = (int)Math.Round(strMod * perPoint * 100f, MidpointRounding.AwayFromZero);
 
-                int extraPercent = (int)Math.Round(strMod * perPoint * 100f, MidpointRounding.AwayFromZero);
-                if (extraPercent == 0) return;
+                int totalPercent = extraPercentStr + dexBonusPercent;
+                if (totalPercent == 0) return;
 
                 var bundle = parentRule.DamageBundle;
                 if (bundle == null) return;
@@ -100,12 +113,12 @@ namespace CombatOverhaul.Bus
                 foreach (var d in bundle)
                 {
                     if (d == null) continue;
-                    if (d.Type != DamageType.Physical) continue; 
+                    if (d.Type != DamageType.Physical) continue;
                     if (ExcludePrecision && d.Precision) continue;
-                    d.BonusPercent += extraPercent;
+                    d.BonusPercent += totalPercent;
                 }
             }
-            catch (Exception) {  }
+            catch (Exception) { }
         }
 
         public void OnEventDidTrigger(RuleCalculateDamage evt) { /* no-op */ }
@@ -172,14 +185,51 @@ namespace CombatOverhaul.Bus
         private static BlueprintFeature DoubleSliceFeat =>
             _doubleSliceFeat ??= ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(DoubleSliceGuid);
 
-        private static float AddDoubleSliceBonus(UnitEntityData attacker, float basePerPoint)
+        // Helper: ¿arma finesse?
+        private static bool IsFinesseWeapon(ItemEntityWeapon w)
+        {
+            var bp = w?.Blueprint;
+            if (bp == null) return false;
+
+            if (bp.IsLight) return true;
+
+            // Alineado con la descripción de Weapon Finesse en WotR
+            var cat = bp.Category;
+            return cat == WeaponCategory.ElvenCurvedBlade
+                || cat == WeaponCategory.Estoc
+                || cat == WeaponCategory.Rapier;
+        }
+
+        // Solo añade +0.05f si TIENE Double Slice y el arma NO es finesse
+        private static float AddDoubleSliceBonus(UnitEntityData attacker, ItemEntityWeapon weapon, float basePerPoint)
         {
             if (attacker != null
                 && DoubleSliceFeat != null
-                && (attacker.Descriptor?.HasFact(DoubleSliceFeat) ?? false))
+                && (attacker.Descriptor?.HasFact(DoubleSliceFeat) ?? false)
+                && !IsFinesseWeapon(weapon))
+            {
                 return basePerPoint + 0.05f;
-
+            }
             return basePerPoint;
+        }
+
+        private const string ImprovedTWFGuid = "9af88f3ed8a017b45a6837eab7437629";
+        private static BlueprintFeature _improvedTWF;
+        private static BlueprintFeature ImprovedTWF =>
+            _improvedTWF ??= ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(ImprovedTWFGuid);
+
+        private static int GetImprovedTWFDexBonusPercent(UnitEntityData attacker, ItemEntityWeapon weapon)
+        {
+            if (attacker == null || weapon == null) return 0;
+            if (!IsFinesseWeapon(weapon)) return 0;
+
+            if (ImprovedTWF == null || !(attacker.Descriptor?.HasFact(ImprovedTWF) ?? false)) return 0;
+
+            int dexMod = attacker.Stats?.Dexterity?.Bonus ?? 0;
+            if (dexMod <= 0) return 0;
+
+            // 0.025f por punto de DEX -> porcentaje entero
+            return (int)Math.Round(dexMod * 0.025f * 100f, MidpointRounding.AwayFromZero);
         }
     }
 }
