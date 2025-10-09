@@ -65,12 +65,10 @@ namespace CombatOverhaul.Bus
 
                 int strMod = attacker.Stats?.Strength?.Bonus ?? 0;
 
-                // DEX sólo si es dual-wield manufactured y el golpe es offhand
                 int dexBonusPercent = (isOffhandHit && primaryIsManufactured && offIsManufactured)
                     ? GetImprovedTWFDexBonusPercent(attacker, weapon)
                     : 0;
 
-                // Si no hay STR ni DEX aplicables, salimos
                 if (strMod == 0 && dexBonusPercent == 0) return;
 
                 float perPoint;
@@ -78,7 +76,6 @@ namespace CombatOverhaul.Bus
                 {
                     perPoint = ResolveManufacturedPerPoint(primaryIsManufactured, offIsManufactured, isOffhandHit);
 
-                    // Tu bonus de Double Slice a la offhand (dejas tu 0.05f actual)
                     if (primaryIsManufactured && offIsManufactured && isOffhandHit)
                         perPoint = AddDoubleSliceBonus(attacker, weapon, perPoint);
                 }
@@ -95,7 +92,6 @@ namespace CombatOverhaul.Bus
                 }
                 else
                 {
-                    // Si no es ni manufactured ni natural (raro), aún podríamos aplicar DEX solo si ya lo teníamos
                     if (dexBonusPercent == 0) return;
                     perPoint = 0f;
                 }
@@ -185,7 +181,6 @@ namespace CombatOverhaul.Bus
         private static BlueprintFeature DoubleSliceFeat =>
             _doubleSliceFeat ??= ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(DoubleSliceGuid);
 
-        // Helper: ¿arma finesse?
         private static bool IsFinesseWeapon(ItemEntityWeapon w)
         {
             var bp = w?.Blueprint;
@@ -193,14 +188,12 @@ namespace CombatOverhaul.Bus
 
             if (bp.IsLight) return true;
 
-            // Alineado con la descripción de Weapon Finesse en WotR
             var cat = bp.Category;
             return cat == WeaponCategory.ElvenCurvedBlade
                 || cat == WeaponCategory.Estoc
                 || cat == WeaponCategory.Rapier;
         }
 
-        // Solo añade +0.05f si TIENE Double Slice y el arma NO es finesse
         private static float AddDoubleSliceBonus(UnitEntityData attacker, ItemEntityWeapon weapon, float basePerPoint)
         {
             if (attacker != null
@@ -228,7 +221,6 @@ namespace CombatOverhaul.Bus
             int dexMod = attacker.Stats?.Dexterity?.Bonus ?? 0;
             if (dexMod <= 0) return 0;
 
-            // 0.025f por punto de DEX -> porcentaje entero
             return (int)Math.Round(dexMod * 0.025f * 100f, MidpointRounding.AwayFromZero);
         }
     }

@@ -36,11 +36,11 @@ namespace CombatOverhaul.Patches.Features.Commons
             {
                 var descKey = feat.m_Description?.m_Key;
                 if (!string.IsNullOrEmpty(descKey))
-                    pack.PutString(descKey, "Increases damage dealt by 2.5% per point of Dexterity bonus.");
+                    pack.PutString(descKey, "Increases damage dealt by 2.5% per point of Dexterity bonus when using finesse weapons only.");
 
                 var shortKey = feat.m_DescriptionShort?.m_Key;
                 if (!string.IsNullOrEmpty(shortKey))
-                    pack.PutString(shortKey, "+2.5% damage per point of DEX bonus.");
+                    pack.PutString(shortKey, "+2.5% damage per point of DEX bonus with finesse weapons only.");
             }
         }
     }

@@ -38,7 +38,7 @@ namespace CombatOverhaul.Patches.Features.Commons
             if (pack != null)
             {
                 var enText =
-                    "<b>Off-hand only.</b> Your off-hand attacks gain <b>+5%</b> damage per point of <b>Strength bonus</b>.";
+                    "Off-hand only. Your off-hand attacks with non-finesse weapons gain +5% damage per point of Strength bonus.";
 
                 var descKey = feat.m_Description?.m_Key;
                 if (!string.IsNullOrEmpty(descKey))
@@ -46,7 +46,7 @@ namespace CombatOverhaul.Patches.Features.Commons
 
                 var shortKey = feat.m_DescriptionShort?.m_Key;
                 if (!string.IsNullOrEmpty(shortKey))
-                    pack.PutString(shortKey, "+5% damage per point of STR bonus on off-hand attacks.");
+                    pack.PutString(shortKey, "+5% damage per point of STR bonus on off-hand attacks with non-finesse weapons.");
             }
         }
     }
