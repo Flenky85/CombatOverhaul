@@ -12,14 +12,10 @@ using System;
 
 namespace CombatOverhaul.Bus
 {
-    /// <summary>
-    /// STR scaling (+ Double Slice en off-hand no finesse) + DEX (ITWF) en off-hand finesse.
-    /// </summary>
     internal sealed class AttackDamageScaling :
         IGlobalRulebookHandler<RuleCalculateDamage>,
         ISubscriber, IGlobalSubscriber
     {
-        // ======================= Config STR =======================
         private const float SingleMain_PerPoint = 0.10f;
         private const float DualPrimary_PerPoint = 0.10f;
         private const float DualOffhand_PerPoint = 0.05f;
@@ -41,7 +37,6 @@ namespace CombatOverhaul.Bus
             0.01f   // 10+
         };
 
-        // ======================= Blueprints =======================
         private static BlueprintFeature _doubleSliceFeat;
         private static BlueprintFeature DoubleSliceFeat =>
             _doubleSliceFeat ??= ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.DoubleSlice);
@@ -58,7 +53,6 @@ namespace CombatOverhaul.Bus
         private static BlueprintFeature WeaponFinesseFeat =>
             _weaponFinesse ??= ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.WeaponFinesse);
 
-        // ======================= Contexto =======================
         private struct AttackCtx
         {
             public UnitEntityData Attacker;
@@ -90,22 +84,20 @@ namespace CombatOverhaul.Bus
                 var ctx = BuildContext(evt);
                 if (ctx.Attacker == null || ctx.AttackWeapon == null) return;
 
-                // ===== STR: per-point =====
                 int strPercent = 0;
                 if (ctx.StrMod > 0)
                 {
-                    float perPoint = PerPointFromSTR(ctx); // incluye Double Slice en off-hand no finesse
+                    float perPoint = PerPointFromSTR(ctx); 
                     if (perPoint > 0f)
                         strPercent = RoundPct(ctx.StrMod * perPoint * 100f);
                 }
 
-                // ===== DEX: ITWF off-hand finesse (2.5% * DEX_mod) =====
                 int dexPercent = 0;
                 if (ctx.IsOffHand && IsFinesseWeapon(ctx.AttackWeapon) && ctx.DexMod > 0)
                 {
                     float perPoint = 0f;
-                    if (HasGreaterTWF(ctx.Attacker)) perPoint = 0.05f;   // GTWF
-                    else if (HasImprovedTWF(ctx.Attacker)) perPoint = 0.025f;  // ITWF
+                    if (HasGreaterTWF(ctx.Attacker)) perPoint = 0.05f;   
+                    else if (HasImprovedTWF(ctx.Attacker)) perPoint = 0.025f;  
 
                     if (perPoint > 0f)
                         dexPercent = RoundPct(ctx.DexMod * perPoint * 100f);
@@ -132,13 +124,11 @@ namespace CombatOverhaul.Bus
             }
             catch
             {
-                // silencio por simplicidad
             }
         }
 
         public void OnEventDidTrigger(RuleCalculateDamage evt) { /* no-op */ }
 
-        // ======================= Build Context =======================
         private static AttackCtx BuildContext(RuleCalculateDamage evt)
         {
             var ctx = new AttackCtx();
@@ -158,11 +148,9 @@ namespace CombatOverhaul.Bus
             ctx.PrimaryWeapon = primary;
             ctx.OffWeapon = off;
 
-            // Mano por instancia
             ctx.IsMainHand = object.ReferenceEquals(primary, weapon);
             ctx.IsOffHand = object.ReferenceEquals(off, weapon);
 
-            // Tipo de golpe
             ctx.IsNaturalHit = IsNaturalWeapon(weapon);
             ctx.IsManufacturedHit = IsManufacturedWeapon(weapon);
 
@@ -176,7 +164,6 @@ namespace CombatOverhaul.Bus
             return ctx;
         }
 
-        // ======================= STR (incluye Double Slice) =======================
         private static float PerPointFromSTR(AttackCtx ctx)
         {
             if (ctx.IsNaturalHit)
@@ -193,43 +180,40 @@ namespace CombatOverhaul.Bus
 
             if (ctx.IsManufacturedHit)
             {
-                // Single-wield
                 if (ctx.PrimaryIsManufactured && !ctx.OffIsManufactured)
                 {
                     float perPoint = SingleMain_PerPoint;
 
-                    // Weapon Finesse: SOLO main-hand + arma finesse ⇒ -0.05 al STR por punto
                     if (ctx.IsMainHand && IsFinesseWeapon(ctx.AttackWeapon) && HasWeaponFinesse(ctx.Attacker))
                         perPoint = Math.Max(0f, perPoint - 0.05f);
 
                     return perPoint;
                 }
 
-                // Dual-wield
                 if (ctx.PrimaryIsManufactured && ctx.OffIsManufactured)
                 {
                     float perPoint = ctx.IsOffHand ? DualOffhand_PerPoint : DualPrimary_PerPoint;
 
-                    // Double Slice: +0.05 en off-hand si NO es finesse
-                    if (ctx.IsOffHand && HasDoubleSlice(ctx.Attacker) && !IsFinesseWeapon(ctx.AttackWeapon))
+                    if (ctx.IsOffHand && HasDoubleSlice(ctx.Attacker))
                         perPoint += 0.05f;
 
-                    // Weapon Finesse: SOLO main-hand + arma finesse ⇒ -0.05 al STR por punto
                     if (ctx.IsMainHand && IsFinesseWeapon(ctx.AttackWeapon) && HasWeaponFinesse(ctx.Attacker))
                         perPoint = Math.Max(0f, perPoint - 0.05f);
+
+                    if (ctx.IsOffHand && IsFinesseWeapon(ctx.AttackWeapon) && HasGreaterTWF(ctx.Attacker))
+                        perPoint = Math.Max(0f, perPoint - 0.05f);
+                    else if (ctx.IsOffHand && IsFinesseWeapon(ctx.AttackWeapon) && HasImprovedTWF(ctx.Attacker))
+                        perPoint = Math.Max(0f, perPoint - 0.025f);
 
                     return perPoint;
                 }
 
-                // Caso borde
                 return SingleMain_PerPoint;
             }
-
 
             return 0f;
         }
 
-        // ======================= Helpers feats / armas =======================
         private static bool HasDoubleSlice(UnitEntityData unit)
         {
             if (unit == null || DoubleSliceFeat == null) return false;
