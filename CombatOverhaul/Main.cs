@@ -96,7 +96,7 @@ namespace CombatOverhaul
             TrySub(() => EventBus.Subscribe(new CombatOverhaul.Bus.IntelligenceMagicDamageScaling()));
             TrySub(() => EventBus.Subscribe(new CombatOverhaul.Bus.IntelligenceHealingScaling()));
             TrySub(() => EventBus.Subscribe(new CombatOverhaul.Bus.BABDice_WeaponStats()));
-            TrySub(() => EventBus.Subscribe(new CombatOverhaul.Bus.StrengthPercentPerPoint()));
+            TrySub(() => EventBus.Subscribe(new CombatOverhaul.Bus.AttackDamageScaling()));
 
             Log.Info($"Subscribed {_busSubs.Count} handlers.");
         }

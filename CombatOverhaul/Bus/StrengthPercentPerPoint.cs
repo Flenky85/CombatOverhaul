@@ -1,4 +1,4 @@
-﻿using CombatOverhaul.Guids;
+﻿/*using CombatOverhaul.Guids;
 using CombatOverhaul.Patches.Features.Commons;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
@@ -119,7 +119,7 @@ namespace CombatOverhaul.Bus
             catch (Exception) { }
         }
 
-        public void OnEventDidTrigger(RuleCalculateDamage evt) { /* no-op */ }
+        public void OnEventDidTrigger(RuleCalculateDamage evt) { }
 
         private static float ResolveManufacturedPerPoint(bool primaryManu, bool offManu, bool isOffhandHit)
         {
@@ -235,3 +235,4 @@ namespace CombatOverhaul.Bus
         }
     }
 }
+*/
