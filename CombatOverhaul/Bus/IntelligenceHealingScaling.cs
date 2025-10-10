@@ -9,7 +9,7 @@ namespace CombatOverhaul.Bus
         IGlobalRulebookHandler<RuleHealDamage>,
         ISubscriber, IGlobalSubscriber
     {
-        private const float PerMod = 0.10f;
+        private const float PerMod = 0.05f;
 
         public void OnEventAboutToTrigger(RuleHealDamage evt)
         {

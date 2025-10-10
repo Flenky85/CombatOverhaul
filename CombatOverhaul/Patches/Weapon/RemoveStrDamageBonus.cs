@@ -25,8 +25,11 @@ namespace CombatOverhaul.Patches.Weapon
                 int applied = (int)(str * ((str < 0) ? 1f : mult));
 
                 if (applied != 0)
-                return;
+                    dd.AddModifier(new Modifier(-applied, StatType.Strength)); 
+
+                return; 
             }
+
 
             if (!__instance.DamageBonusStat.HasValue)
             {
