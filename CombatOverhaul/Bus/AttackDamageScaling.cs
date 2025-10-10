@@ -54,6 +54,10 @@ namespace CombatOverhaul.Bus
         private static BlueprintFeature GreaterTWF =>
             _greaterTWF ??= ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.GreaterTwoWeaponFighting);
 
+        private static BlueprintFeature _weaponFinesse;
+        private static BlueprintFeature WeaponFinesseFeat =>
+            _weaponFinesse ??= ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.WeaponFinesse);
+
         // ======================= Contexto =======================
         private struct AttackCtx
         {
@@ -105,6 +109,11 @@ namespace CombatOverhaul.Bus
 
                     if (perPoint > 0f)
                         dexPercent = RoundPct(ctx.DexMod * perPoint * 100f);
+                }
+
+                if (ctx.IsMainHand && IsFinesseWeapon(ctx.AttackWeapon) && HasWeaponFinesse(ctx.Attacker) && ctx.DexMod > 0)
+                {
+                    dexPercent += RoundPct(ctx.DexMod * 0.05f * 100f);
                 }
 
                 int total = strPercent + dexPercent;
@@ -186,16 +195,28 @@ namespace CombatOverhaul.Bus
             {
                 // Single-wield
                 if (ctx.PrimaryIsManufactured && !ctx.OffIsManufactured)
-                    return SingleMain_PerPoint;
+                {
+                    float perPoint = SingleMain_PerPoint;
+
+                    // Weapon Finesse: SOLO main-hand + arma finesse ⇒ -0.05 al STR por punto
+                    if (ctx.IsMainHand && IsFinesseWeapon(ctx.AttackWeapon) && HasWeaponFinesse(ctx.Attacker))
+                        perPoint = Math.Max(0f, perPoint - 0.05f);
+
+                    return perPoint;
+                }
 
                 // Dual-wield
                 if (ctx.PrimaryIsManufactured && ctx.OffIsManufactured)
                 {
                     float perPoint = ctx.IsOffHand ? DualOffhand_PerPoint : DualPrimary_PerPoint;
 
-                    // Double Slice: +5%/punto en off-hand si NO es finesse y el portador tiene el feat
+                    // Double Slice: +0.05 en off-hand si NO es finesse
                     if (ctx.IsOffHand && HasDoubleSlice(ctx.Attacker) && !IsFinesseWeapon(ctx.AttackWeapon))
                         perPoint += 0.05f;
+
+                    // Weapon Finesse: SOLO main-hand + arma finesse ⇒ -0.05 al STR por punto
+                    if (ctx.IsMainHand && IsFinesseWeapon(ctx.AttackWeapon) && HasWeaponFinesse(ctx.Attacker))
+                        perPoint = Math.Max(0f, perPoint - 0.05f);
 
                     return perPoint;
                 }
@@ -203,6 +224,7 @@ namespace CombatOverhaul.Bus
                 // Caso borde
                 return SingleMain_PerPoint;
             }
+
 
             return 0f;
         }
@@ -224,6 +246,12 @@ namespace CombatOverhaul.Bus
         {
             if (unit == null || GreaterTWF == null) return false;
             return unit.Descriptor != null && unit.Descriptor.HasFact(GreaterTWF);
+        }
+
+        private static bool HasWeaponFinesse(UnitEntityData unit)
+        {
+            if (unit == null || WeaponFinesseFeat == null) return false;
+            return unit.Descriptor != null && unit.Descriptor.HasFact(WeaponFinesseFeat);
         }
 
         private static bool IsFinesseWeapon(ItemEntityWeapon w)
