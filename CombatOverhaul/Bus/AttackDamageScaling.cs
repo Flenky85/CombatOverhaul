@@ -88,20 +88,17 @@ namespace CombatOverhaul.Bus
                 var ctx = BuildContext(evt);
                 if (ctx.Attacker == null || ctx.AttackWeapon == null) return;
 
-                int dexBonusPos = Math.Max(0, ctx.DexMod);
-                int strBonusPos = Math.Max(0, ctx.StrMod);
-
                 int strPercent = 0;
                 
                 {
-                    float perPoint = PerPointFromSTR(ctx, dexBonusPos, strBonusPos);
+                    float perPoint = PerPointFromSTR(ctx);
                     if (ctx.StrMod != 0 && perPoint != 0f)
                         strPercent = RoundPct(ctx.StrMod * perPoint * 100f); 
                 }
 
                 int dexPercent = 0;
 
-                if (ctx.IsOffHand && IsFinesseWeapon(ctx.AttackWeapon) && dexBonusPos > strBonusPos)
+                if (ctx.IsOffHand && IsFinesseWeapon(ctx.AttackWeapon) && ctx.DexMod > ctx.StrMod)
                 {
                     float perPoint = 0f;
                     if (HasGreaterTWF(ctx.Attacker)) perPoint = 0.05f;
@@ -111,14 +108,14 @@ namespace CombatOverhaul.Bus
                         dexPercent = RoundPct(ctx.DexMod * perPoint * 100f);
                 }
 
-                if (ctx.IsMainHand && IsFinesseWeapon(ctx.AttackWeapon) && HasWeaponFinesse(ctx.Attacker) && dexBonusPos > strBonusPos && ctx.DexMod != 0)
+                if (ctx.IsMainHand && IsFinesseWeapon(ctx.AttackWeapon) && HasWeaponFinesse(ctx.Attacker) && ctx.DexMod > ctx.StrMod && ctx.DexMod != 0)
                 {
                     dexPercent += RoundPct(ctx.DexMod * 0.05f * 100f);
                 }
 
-                if (ctx.IsNaturalHit && HasWeaponFinesse(ctx.Attacker) && dexBonusPos > strBonusPos && ctx.DexMod != 0)
+                if (ctx.IsNaturalHit && HasWeaponFinesse(ctx.Attacker) && ctx.DexMod > ctx.StrMod && ctx.DexMod != 0)
                 {
-                    float perPoint = PerPointFromSTR(ctx, dexBonusPos, strBonusPos);
+                    float perPoint = PerPointFromSTR(ctx);
                     if (ctx.DexMod != 0 && perPoint != 0f)
                         dexPercent = RoundPct(ctx.DexMod * perPoint * 100f);
                 }
@@ -195,7 +192,7 @@ namespace CombatOverhaul.Bus
             return ctx;
         }
 
-        private static float PerPointFromSTR(AttackCtx ctx, int dexBonusPos, int strBonusPos)
+        private static float PerPointFromSTR(AttackCtx ctx)
         {
             if (ctx.IsNaturalHit)
             {
@@ -210,7 +207,7 @@ namespace CombatOverhaul.Bus
 
                 float perPoint = NaturalPct[idx];
 
-                if (HasWeaponFinesse(ctx.Attacker) && dexBonusPos > strBonusPos)
+                if (HasWeaponFinesse(ctx.Attacker) && ctx.DexMod > ctx.StrMod)
                     perPoint *= 0.5f;
 
                 return perPoint;
@@ -222,7 +219,7 @@ namespace CombatOverhaul.Bus
                 {
                     float perPoint = SingleMain_PerPoint;
 
-                    if (ctx.IsMainHand && IsFinesseWeapon(ctx.AttackWeapon) && HasWeaponFinesse(ctx.Attacker) && dexBonusPos > strBonusPos)
+                    if (ctx.IsMainHand && IsFinesseWeapon(ctx.AttackWeapon) && HasWeaponFinesse(ctx.Attacker) && ctx.DexMod > ctx.StrMod)
                         perPoint = Math.Max(0f, perPoint - 0.05f);
 
                     return perPoint;
@@ -235,12 +232,12 @@ namespace CombatOverhaul.Bus
                     if (ctx.IsOffHand && HasDoubleSlice(ctx.Attacker))
                         perPoint += 0.05f;
 
-                    if (ctx.IsMainHand && IsFinesseWeapon(ctx.AttackWeapon) && HasWeaponFinesse(ctx.Attacker) && dexBonusPos > strBonusPos)
+                    if (ctx.IsMainHand && IsFinesseWeapon(ctx.AttackWeapon) && HasWeaponFinesse(ctx.Attacker) && ctx.DexMod > ctx.StrMod)
                         perPoint = Math.Max(0f, perPoint - 0.05f);
 
-                    if (ctx.IsOffHand && IsFinesseWeapon(ctx.AttackWeapon) && HasGreaterTWF(ctx.Attacker) && dexBonusPos > strBonusPos)
+                    if (ctx.IsOffHand && IsFinesseWeapon(ctx.AttackWeapon) && HasGreaterTWF(ctx.Attacker) && ctx.DexMod > ctx.StrMod)
                         perPoint = Math.Max(0f, perPoint - 0.05f);
-                    else if (ctx.IsOffHand && IsFinesseWeapon(ctx.AttackWeapon) && HasImprovedTWF(ctx.Attacker) && dexBonusPos > strBonusPos)
+                    else if (ctx.IsOffHand && IsFinesseWeapon(ctx.AttackWeapon) && HasImprovedTWF(ctx.Attacker) && ctx.DexMod > ctx.StrMod)
                         perPoint = Math.Max(0f, perPoint - 0.025f);
 
                     return perPoint;
