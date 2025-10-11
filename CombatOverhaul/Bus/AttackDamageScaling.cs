@@ -25,16 +25,10 @@ namespace CombatOverhaul.Bus
 
         private static readonly float[] NaturalPct = {
             0.00f,  // 0
-            0.20f,  // 1 natural
+            0.30f,  // 1 natural
             0.10f,  // 2
-            0.033f, // 3
-            0.025f, // 4
-            0.02f,  // 5
-            0.016f, // 6
-            0.014f, // 7
-            0.0125f,// 8
-            0.011f, // 9
-            0.01f   // 10+
+            0.066f, // 3
+            0.05f,  // 4
         };
 
         private static BlueprintFeature _doubleSliceFeat;
@@ -88,6 +82,7 @@ namespace CombatOverhaul.Bus
                 int strBonusPos = Math.Max(0, ctx.StrMod);
 
                 int strPercent = 0;
+                
                 {
                     float perPoint = PerPointFromSTR(ctx, dexBonusPos, strBonusPos);
                     if (ctx.StrMod != 0 && perPoint != 0f)
@@ -109,6 +104,11 @@ namespace CombatOverhaul.Bus
                 if (ctx.IsMainHand && IsFinesseWeapon(ctx.AttackWeapon) && HasWeaponFinesse(ctx.Attacker) && dexBonusPos > strBonusPos && ctx.DexMod != 0)
                 {
                     dexPercent += RoundPct(ctx.DexMod * 0.05f * 100f);
+                }
+
+                if (ctx.IsNaturalHit && HasWeaponFinesse(ctx.Attacker) && dexBonusPos > strBonusPos && ctx.DexMod != 0)
+                {
+                    dexPercent = strPercent;
                 }
 
                 int total = strPercent + dexPercent;
@@ -171,14 +171,21 @@ namespace CombatOverhaul.Bus
         {
             if (ctx.IsNaturalHit)
             {
-                int naturals = CountNaturalWeapons(ctx.Attacker, ctx.AttackWeapon, ctx.AnyManufacturedEquipped);
-                if (naturals <= 0) naturals = 1;
+                int naturals = CountNaturalWeapons(ctx.Attacker);
+                if (naturals < 1) naturals = 1;
 
-                naturals = ctx.AnyManufacturedEquipped
-                    ? Math.Min(naturals + Naturals_WithManufactured_Offset, 10)
-                    : Math.Min(naturals, 10);
+                int idx = ctx.AnyManufacturedEquipped
+                    ? naturals + Naturals_WithManufactured_Offset
+                    : naturals;
 
-                return NaturalPct[naturals];
+                if (idx > 4) idx = 4;
+
+                float perPoint = NaturalPct[idx];
+
+                if (HasWeaponFinesse(ctx.Attacker) && dexBonusPos > strBonusPos)
+                    perPoint *= 0.5f;
+
+                return perPoint;
             }
 
             if (ctx.IsManufacturedHit)
@@ -256,54 +263,36 @@ namespace CombatOverhaul.Bus
 
         private static bool IsNaturalWeapon(ItemEntityWeapon w)
         {
-            var bp = w?.Blueprint;
-            return bp != null && (bp.IsNatural || bp.IsUnarmed);
+            return w?.Blueprint?.IsNatural ?? false;
         }
 
         private static bool IsManufacturedWeapon(ItemEntityWeapon w)
         {
-            var bp = w?.Blueprint;
-            return w != null && !(bp?.IsNatural ?? false) && !(bp?.IsUnarmed ?? false);
+            return w != null && !IsNaturalWeapon(w);
         }
 
-        private static int CountNaturalWeapons(UnitEntityData unit, ItemEntityWeapon current, bool anyManufacturedEquipped)
+        private static int CountNaturalWeapons(UnitEntityData unit)
         {
             if (unit?.Body == null) return 0;
 
             int count = 0;
-            bool hasUnarmedSomewhere = false;
 
-            ScanSlot(unit.Body.PrimaryHand, ref count, ref hasUnarmedSomewhere);
-            ScanSlot(unit.Body.SecondaryHand, ref count, ref hasUnarmedSomewhere);
-
-            var extra = unit.Body.AdditionalLimbs;
-            if (extra != null)
-            {
-                foreach (var slot in extra)
-                    ScanSlot(slot, ref count, ref hasUnarmedSomewhere);
-            }
-
-            bool currentIsUnarmed = current?.Blueprint?.IsUnarmed ?? false;
-            if (hasUnarmedSomewhere)
-            {
-                if (!anyManufacturedEquipped || currentIsUnarmed)
-                    count++;
-            }
-
-            return count;
-
-            void ScanSlot(WeaponSlot slot, ref int c, ref bool hasUnarmed)
+            static void Scan(WeaponSlot slot, ref int c)
             {
                 var w = slot?.MaybeWeapon;
-                var bp = w?.Blueprint;
-                if (bp == null) return;
-
-                if (bp.IsUnarmed) { hasUnarmed = true; return; }
-                if (bp.IsNatural) c++;
+                if (w?.Blueprint?.IsNatural == true) c++;
             }
+
+            Scan(unit.Body.PrimaryHand, ref count);
+            Scan(unit.Body.SecondaryHand, ref count);
+
+            var limbs = unit.Body.AdditionalLimbs;
+            if (limbs != null)
+                foreach (var s in limbs) Scan(s, ref count);
+
+            return count;
         }
 
-        // ======================= Util =======================
         private static int RoundPct(float x)
         {
             return (int)Math.Round(x, MidpointRounding.AwayFromZero);
