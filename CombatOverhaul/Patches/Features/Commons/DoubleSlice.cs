@@ -39,6 +39,8 @@ namespace CombatOverhaul.Patches.Features.Commons
             {
                 var enText =
                     "Off-hand only. Your off-hand attacks weapons gain +5% damage per point of Strength bonus.";
+                
+                enText = BlueprintCore.Utils.EncyclopediaTool.TagEncyclopediaEntries(enText);
 
                 var descKey = feat.m_Description?.m_Key;
                 if (!string.IsNullOrEmpty(descKey))
@@ -46,7 +48,7 @@ namespace CombatOverhaul.Patches.Features.Commons
 
                 var shortKey = feat.m_DescriptionShort?.m_Key;
                 if (!string.IsNullOrEmpty(shortKey))
-                    pack.PutString(shortKey, "+5% damage per point of STR bonus on off-hand attacks with weapons.");
+                    pack.PutString(shortKey, enText);
             }
         }
     }

@@ -8,6 +8,7 @@ using Kingmaker.Items.Slots;
 using Kingmaker.PubSubSystem;
 using Kingmaker.RuleSystem.Rules.Damage;
 using Kingmaker.UnitLogic;
+using Kingmaker.UnitLogic.Buffs.Blueprints;
 using System;
 
 namespace CombatOverhaul.Bus
@@ -31,6 +32,7 @@ namespace CombatOverhaul.Bus
             0.05f,  // 4
         };
 
+        //Feats
         private static BlueprintFeature _doubleSliceFeat;
         private static BlueprintFeature DoubleSliceFeat =>
             _doubleSliceFeat ??= ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.DoubleSlice);
@@ -47,6 +49,11 @@ namespace CombatOverhaul.Bus
         private static BlueprintFeature WeaponFinesseFeat =>
             _weaponFinesse ??= ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.WeaponFinesse);
 
+        //Buffs
+        private static BlueprintBuff _dragonStyleBuff;
+        private static BlueprintBuff DragonStyleBuff =>
+            _dragonStyleBuff ??= ResourcesLibrary.TryGetBlueprint<BlueprintBuff>(BuffsGuids.DragonStyleBuff);
+
         private struct AttackCtx
         {
             public UnitEntityData Attacker;
@@ -60,6 +67,7 @@ namespace CombatOverhaul.Bus
 
             public bool IsManufacturedHit;
             public bool IsNaturalHit;
+            public bool IsUnarmed;
 
             public bool PrimaryIsManufactured;
             public bool OffIsManufactured;
@@ -67,6 +75,8 @@ namespace CombatOverhaul.Bus
 
             public int StrMod;
             public int DexMod;
+
+            public bool IsFirstAttack;
         }
 
         public void OnEventAboutToTrigger(RuleCalculateDamage evt)
@@ -113,6 +123,11 @@ namespace CombatOverhaul.Bus
                         dexPercent = RoundPct(ctx.DexMod * perPoint * 100f);
                 }
 
+                if (ctx.IsFirstAttack && ctx.IsUnarmed && HasDragonStyle(ctx.Attacker) && ctx.StrMod != 0) 
+                {
+                    strPercent += RoundPct(ctx.StrMod * 0.05f * 100f);
+                }
+
                 int total = strPercent + dexPercent;
                 if (total == 0) return;
 
@@ -155,6 +170,7 @@ namespace CombatOverhaul.Bus
 
             ctx.IsNaturalHit = IsNaturalWeapon(weapon);
             ctx.IsManufacturedHit = IsManufacturedWeapon(weapon);
+            ctx.IsUnarmed = IsUnarmedWeapon(weapon);
 
             ctx.PrimaryIsManufactured = IsManufacturedWeapon(primary);
             ctx.OffIsManufactured = IsManufacturedWeapon(off);
@@ -173,6 +189,8 @@ namespace CombatOverhaul.Bus
 
             ctx.StrMod = attacker?.Stats?.Strength?.Bonus ?? 0;
             ctx.DexMod = attacker?.Stats?.Dexterity?.Bonus ?? 0;
+
+            ctx.IsFirstAttack = GetIsFirstAttack(evt);
 
             return ctx;
         }
@@ -258,6 +276,12 @@ namespace CombatOverhaul.Bus
             return unit.Descriptor != null && unit.Descriptor.HasFact(WeaponFinesseFeat);
         }
 
+        private static bool HasDragonStyle(UnitEntityData unit)
+        {
+            if (unit == null || DragonStyleBuff == null) return false;
+            return unit.Descriptor != null && unit.Descriptor.HasFact(DragonStyleBuff);
+        }
+
         private static bool IsFinesseWeapon(ItemEntityWeapon w)
         {
             var bp = w?.Blueprint;
@@ -281,6 +305,11 @@ namespace CombatOverhaul.Bus
             return w != null && !IsNaturalWeapon(w);
         }
 
+        private static bool IsUnarmedWeapon(ItemEntityWeapon w)
+        {
+            return w?.Blueprint.IsUnarmed ?? false;
+        }
+
         private static int CountNaturalWeapons(UnitEntityData unit)
         {
             if (unit?.Body == null) return 0;
@@ -301,6 +330,17 @@ namespace CombatOverhaul.Bus
                 foreach (var s in limbs) Scan(s, ref count);
 
             return count;
+        }
+
+        private static bool GetIsFirstAttack(RuleCalculateDamage evt)
+        {
+            if (!(evt?.ParentRule is RuleDealDamage rd)) return false;
+
+            var raw = rd.AttackRoll?.RuleAttackWithWeapon;
+            if (raw != null)
+                return raw.IsFirstAttack;
+
+            return false;
         }
 
         private static int RoundPct(float x)

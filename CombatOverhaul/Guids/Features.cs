@@ -8,5 +8,6 @@
         public const string GreaterTwoWeaponFighting = "c126adbdf6ddd8245bda33694cd774e8";
         public const string WeaponFinesse = "90e54424d682d104ab36436bd527af09";
         public const string FencingGrace = "47b352ea0f73c354aba777945760b441";
+        public const string DragonStyle = "87ec6541cddfa394ab540dd13399d319";
     }
 }

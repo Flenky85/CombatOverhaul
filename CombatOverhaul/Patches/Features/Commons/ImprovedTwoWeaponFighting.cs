@@ -34,13 +34,17 @@ namespace CombatOverhaul.Patches.Features.Commons
             var pack = LocalizationManager.CurrentPack;
             if (pack != null)
             {
+                var enText = "Increases damage dealt by 2.5% per point of Dexterity bonus on off-hand attacks when using finesse weapons only.";
+
+                enText = BlueprintCore.Utils.EncyclopediaTool.TagEncyclopediaEntries(enText);
+
                 var descKey = feat.m_Description?.m_Key;
                 if (!string.IsNullOrEmpty(descKey))
-                    pack.PutString(descKey, "Increases damage dealt by 2.5% per point of Dexterity bonus on off-hand attacks when using finesse weapons only.");
+                    pack.PutString(descKey, enText);
 
                 var shortKey = feat.m_DescriptionShort?.m_Key;
                 if (!string.IsNullOrEmpty(shortKey))
-                    pack.PutString(shortKey, "+2.5% damage per point of DEX bonus on off-hand attacks (finesse weapons only).");
+                    pack.PutString(shortKey, enText);
             }
         }
     }

@@ -32,13 +32,17 @@ namespace CombatOverhaul.Patches.Features.Commons
             var pack = LocalizationManager.CurrentPack;
             if (pack != null)
             {
+                var enText = "Upgrades Improved Two-Weapon Fighting: your off-hand attacks with finesse weapons gain +5% damage per point of Dexterity bonus.";
+
+                enText = BlueprintCore.Utils.EncyclopediaTool.TagEncyclopediaEntries(enText);
+
                 var descKey = feat.m_Description?.m_Key;
                 if (!string.IsNullOrEmpty(descKey))
-                    pack.PutString(descKey, "Upgrades Improved Two-Weapon Fighting: your off-hand attacks with finesse weapons gain +5% damage per point of Dexterity bonus.");
+                    pack.PutString(descKey, enText);
 
                 var shortKey = feat.m_DescriptionShort?.m_Key;
                 if (!string.IsNullOrEmpty(shortKey))
-                    pack.PutString(shortKey, "Upgrades Improved TWF: +5% damage per DEX bonus point on off-hand (finesse only).");
+                    pack.PutString(shortKey, enText);
             }
         }
     }
