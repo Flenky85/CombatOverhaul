@@ -52,7 +52,7 @@ namespace CombatOverhaul.Bus
         //Buffs
         private static BlueprintBuff _dragonStyleBuff;
         private static BlueprintBuff DragonStyleBuff =>
-            _dragonStyleBuff ??= ResourcesLibrary.TryGetBlueprint<BlueprintBuff>(BuffsGuids.DragonStyleBuff);
+            _dragonStyleBuff ??= ResourcesLibrary.TryGetBlueprint<BlueprintBuff>(BuffsGuids.DragonStyle);
 
         private struct AttackCtx
         {

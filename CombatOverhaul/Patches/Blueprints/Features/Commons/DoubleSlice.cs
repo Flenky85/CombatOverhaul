@@ -7,7 +7,7 @@ using Kingmaker.Localization;
 using Kingmaker.UnitLogic.FactLogic;
 using System.Collections.Generic;
 
-namespace CombatOverhaul.Patches.Features.Commons
+namespace CombatOverhaul.Patches.Blueprints.Features.Commons
 {
     [HarmonyPatch(typeof(BlueprintsCache), nameof(BlueprintsCache.Init))]
     internal static class DoubleSlice
