@@ -108,7 +108,9 @@ namespace CombatOverhaul.Bus
 
                 if (ctx.IsNaturalHit && HasWeaponFinesse(ctx.Attacker) && dexBonusPos > strBonusPos && ctx.DexMod != 0)
                 {
-                    dexPercent = strPercent;
+                    float perPoint = PerPointFromSTR(ctx, dexBonusPos, strBonusPos);
+                    if (ctx.DexMod != 0 && perPoint != 0f)
+                        dexPercent = RoundPct(ctx.DexMod * perPoint * 100f);
                 }
 
                 int total = strPercent + dexPercent;
@@ -151,15 +153,23 @@ namespace CombatOverhaul.Bus
             ctx.PrimaryWeapon = primary;
             ctx.OffWeapon = off;
 
-            ctx.IsMainHand = object.ReferenceEquals(primary, weapon);
-            ctx.IsOffHand = object.ReferenceEquals(off, weapon);
-
             ctx.IsNaturalHit = IsNaturalWeapon(weapon);
             ctx.IsManufacturedHit = IsManufacturedWeapon(weapon);
 
             ctx.PrimaryIsManufactured = IsManufacturedWeapon(primary);
             ctx.OffIsManufactured = IsManufacturedWeapon(off);
             ctx.AnyManufacturedEquipped = ctx.PrimaryIsManufactured || ctx.OffIsManufactured;
+
+            if (ctx.IsManufacturedHit)
+            {
+                ctx.IsMainHand = ReferenceEquals(primary, weapon);
+                ctx.IsOffHand = ReferenceEquals(off, weapon);
+            }
+            else
+            {
+                ctx.IsMainHand = false;
+                ctx.IsOffHand = false;
+            }
 
             ctx.StrMod = attacker?.Stats?.Strength?.Bonus ?? 0;
             ctx.DexMod = attacker?.Stats?.Dexterity?.Bonus ?? 0;
