@@ -20,16 +20,17 @@ namespace CombatOverhaul.Patches.Blueprints.Features.Races
         static void Postfix()
         {
             if (_done) return; _done = true;
+            
+            var feat = ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.SlowAndSteadyDwarf);
 
-            FeatureConfigurator.For(FeaturesGuids.SlowAndSteadyDwarf)
+            FeatureConfigurator.For(feat)
                 .EditComponent<AddStatBonus>(c =>
                 {
                     if (c.Stat == StatType.Speed && c.Descriptor == ModifierDescriptor.Armor)
                         c.Value = -5;
                 })
                 .Configure();
-
-            var feat = ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.SlowAndSteadyDwarf);
+            
             var enText =
                 "Dwarves have a base speed of 15 feet, but their speed is never modified by armor or encumbrance.";
 

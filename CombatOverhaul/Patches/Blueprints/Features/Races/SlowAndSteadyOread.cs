@@ -1,4 +1,5 @@
-﻿using CombatOverhaul.Guids;
+﻿using BlueprintCore.Blueprints.CustomConfigurators.Classes;
+using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
 using HarmonyLib;
 using Kingmaker.Blueprints;
@@ -21,17 +22,14 @@ namespace CombatOverhaul.Patches.Blueprints.Features.Races
 
             var feat = ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.SlowAndSteadyOread);
 
-            if (feat == null) return;
-
-            foreach (var comp in feat.ComponentsArray)
-            {
-                if (comp is AddStatBonus asb
-                    && asb.Stat == StatType.Speed
-                    && asb.Descriptor == ModifierDescriptor.Armor)
+            FeatureConfigurator.For(feat)
+                .EditComponent<AddStatBonus>(c =>
                 {
-                    asb.Value = -5;
-                }
-            }
+                    if (c.Stat == StatType.Speed && c.Descriptor == ModifierDescriptor.Armor)
+                        c.Value = -5;
+                })
+                .Configure();
+
             var enText =
                 "Oread have a base speed of 15 feet, but their speed is never modified by armor or encumbrance.";
 
