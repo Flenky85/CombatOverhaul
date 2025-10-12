@@ -57,6 +57,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Patches\Blueprints\Buffs\Commons\" />
+    <Folder Include="Patches\Blueprints\Buffs\" />
   </ItemGroup>
 </Project>

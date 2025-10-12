@@ -6,15 +6,11 @@ using Kingmaker.Enums;
 using Kingmaker.Items;
 using Kingmaker.Items.Slots;
 using Kingmaker.PubSubSystem;
-using Kingmaker.RuleSystem;
-using Kingmaker.RuleSystem.Rules;
 using Kingmaker.RuleSystem.Rules.Damage;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Buffs.Blueprints;
 using Kingmaker.UnitLogic.Commands;
-using Kingmaker.UnitLogic.Commands.Base;
 using System;
-using System.Collections.Generic;
 
 namespace CombatOverhaul.Bus.AttackDamageScaling
 {
@@ -53,6 +49,10 @@ namespace CombatOverhaul.Bus.AttackDamageScaling
         private static BlueprintFeature _weaponFinesse;
         private static BlueprintFeature WeaponFinesseFeat =>
             _weaponFinesse ??= ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.WeaponFinesse);
+
+        private static BlueprintFeature _ShiftersEdge;
+        private static BlueprintFeature ShiftersEdgeFeat =>
+            _ShiftersEdge ??= ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.ShiftersEdge);
 
         //Buffs
         private static BlueprintBuff _dragonStyleBuff;
@@ -128,6 +128,12 @@ namespace CombatOverhaul.Bus.AttackDamageScaling
                 if (ctx.IsFirstAttack && ctx.IsUnarmed && HasDragonStyle(ctx.Attacker) && ctx.StrMod != 0) 
                 {
                     strPercent += RoundPct(ctx.StrMod * 0.05f * 100f);
+                }
+
+                if (ctx.IsNaturalHit && HasShifterEdge(ctx.Attacker) && ctx.DexMod > ctx.StrMod)
+                {
+                    strPercent += RoundPct(ctx.StrMod * 0.01f * 100f);
+                    dexPercent += RoundPct(ctx.DexMod * 0.01f * 100f);
                 }
 
                 int total = strPercent + dexPercent;
@@ -282,6 +288,12 @@ namespace CombatOverhaul.Bus.AttackDamageScaling
         {
             if (unit == null || DragonStyleBuff == null) return false;
             return unit.Descriptor != null && unit.Descriptor.HasFact(DragonStyleBuff);
+        }
+
+        private static bool HasShifterEdge(UnitEntityData unit)
+        {
+            if (unit == null || ShiftersEdgeFeat == null) return false;
+            return unit.Descriptor != null && unit.Descriptor.HasFact(ShiftersEdgeFeat);
         }
 
         private static bool IsFinesseWeapon(ItemEntityWeapon w)

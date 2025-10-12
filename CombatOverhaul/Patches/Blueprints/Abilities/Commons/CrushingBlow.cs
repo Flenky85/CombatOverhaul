@@ -2,7 +2,8 @@
 using HarmonyLib;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.JsonSystem;
-using Kingmaker.UnitLogic.Abilities.Blueprints; 
+using Kingmaker.UnitLogic.Abilities.Blueprints;
+using BlueprintCore.Blueprints.CustomConfigurators.UnitLogic.Abilities;
 
 namespace CombatOverhaul.Patches.Blueprints.Abilities.Commons
 {
@@ -18,8 +19,9 @@ namespace CombatOverhaul.Patches.Blueprints.Abilities.Commons
             var ability = ResourcesLibrary.TryGetBlueprint<BlueprintAbility>(AbilitiesGuids.CrushingBlow);
             if (ability == null) return;
 
-            ability.m_IsFullRoundAction = false;
-
+            AbilityConfigurator.For(AbilitiesGuids.CrushingBlow)
+                .OnConfigure(bp => bp.m_IsFullRoundAction = false)
+                .Configure();
         }
     }
 }

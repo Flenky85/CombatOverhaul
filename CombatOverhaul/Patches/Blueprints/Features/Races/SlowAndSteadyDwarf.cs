@@ -1,5 +1,4 @@
 ﻿using BlueprintCore.Blueprints.CustomConfigurators.Classes;
-using BlueprintCore.Utils;
 using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
 using HarmonyLib;
@@ -22,6 +21,7 @@ namespace CombatOverhaul.Patches.Blueprints.Features.Races
             if (_done) return; _done = true;
             
             var feat = ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.SlowAndSteadyDwarf);
+            if (feat == null) return;
 
             FeatureConfigurator.For(feat)
                 .EditComponent<AddStatBonus>(c =>
@@ -29,12 +29,9 @@ namespace CombatOverhaul.Patches.Blueprints.Features.Races
                     if (c.Stat == StatType.Speed && c.Descriptor == ModifierDescriptor.Armor)
                         c.Value = -5;
                 })
+                .SetDescriptionValue(
+                    "Dwarves have a base speed of 15 feet, but their speed is never modified by armor or encumbrance.")
                 .Configure();
-            
-            var enText =
-                "Dwarves have a base speed of 15 feet, but their speed is never modified by armor or encumbrance.";
-
-            feat.SetDescription(enText);
         }
     }
 }

@@ -1,51 +1,58 @@
-﻿using BlueprintCore.Utils; 
-using Kingmaker.Blueprints.Classes;
+﻿using BlueprintCore.Blueprints.CustomConfigurators.Classes; 
+using BlueprintCore.Blueprints.CustomConfigurators.UnitLogic.Abilities; 
+using BlueprintCore.Utils; 
 using Kingmaker.Localization;
 
 namespace CombatOverhaul.Utils
 {
-    internal static class DescriptionUtils
+    internal static class BlueprintCoreDescriptionExtensions
     {
-        /// <summary>
-        /// Actualiza description y shortDescription de un Feature sin cambiar las keys.
-        /// </summary>
-        public static void SetFeatDescription(
-            BlueprintFeature feat,
-            string text,
-            string shortText = null,
-            bool tagEncyclopedia = true)
+        private static string ResolveLocalizedKey(LocalizedString ls)
         {
-            if (feat == null) return;
-
-            // Prepara textos
-            string Process(string s) =>
-                tagEncyclopedia ? EncyclopediaTool.TagEncyclopediaEntries(s) : s;
-
-            var pack = LocalizationManager.CurrentPack;
-            if (pack == null) return;
-
-            // Descripción larga
-            var descKey = feat.m_Description?.m_Key;
-            if (!string.IsNullOrEmpty(descKey))
+            if (ls == null) return string.Empty;
+            var cur = ls; int guard = 0;
+            while (cur.Shared != null && guard < 50)
             {
-                var value = Process(text);
-                pack.PutString(descKey, value);
+                guard++;
+                cur = cur.Shared.String;
+                if (cur == null) break;
             }
-
-            // Descripción corta
-            var shortKey = feat.m_DescriptionShort?.m_Key;
-            if (!string.IsNullOrEmpty(shortKey))
-            {
-                var value = Process(shortText ?? text);
-                pack.PutString(shortKey, value);
-            }
+            return cur?.Key ?? string.Empty;
         }
 
-        public static void SetDescription(
-            this BlueprintFeature feat,
-            string text,
-            string shortText = null,
-            bool tagEncyclopedia = true)
-            => SetFeatDescription(feat, text, shortText, tagEncyclopedia);
+        private static void PutResolved(LocalizedString ls, string value)
+        {
+            var pack = LocalizationManager.CurrentPack;
+            if (ls == null || pack == null) return;
+
+            var key = ResolveLocalizedKey(ls);
+            if (!string.IsNullOrEmpty(key))
+                pack.PutString(key, value);
+        }
+
+        private static string Process(string s, bool tagEncyclopedia) =>
+            tagEncyclopedia ? EncyclopediaTool.TagEncyclopediaEntries(s) : s;
+
+        public static FeatureConfigurator SetDescriptionValue(
+            this FeatureConfigurator cfg, string text, bool tagEncyclopedia = true)
+        {
+            return cfg.OnConfigure(bp =>
+            {
+                var v = Process(text, tagEncyclopedia);
+                PutResolved(bp.m_Description, v);
+                PutResolved(bp.m_DescriptionShort, v); 
+            });
+        }
+
+        public static AbilityConfigurator SetDescriptionValue(
+            this AbilityConfigurator cfg, string text, bool tagEncyclopedia = true)
+        {
+            return cfg.OnConfigure(bp =>
+            {
+                var v = Process(text, tagEncyclopedia);
+                PutResolved(bp.m_Description, v);
+                PutResolved(bp.m_DescriptionShort, v);
+            });
+        }
     }
 }

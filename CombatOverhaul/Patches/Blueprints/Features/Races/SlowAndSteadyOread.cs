@@ -21,6 +21,7 @@ namespace CombatOverhaul.Patches.Blueprints.Features.Races
             if (_done) return; _done = true;
 
             var feat = ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.SlowAndSteadyOread);
+            if (feat == null) return;
 
             FeatureConfigurator.For(feat)
                 .EditComponent<AddStatBonus>(c =>
@@ -28,12 +29,9 @@ namespace CombatOverhaul.Patches.Blueprints.Features.Races
                     if (c.Stat == StatType.Speed && c.Descriptor == ModifierDescriptor.Armor)
                         c.Value = -5;
                 })
+                .SetDescriptionValue(
+                    "Oread have a base speed of 15 feet, but their speed is never modified by armor or encumbrance.")
                 .Configure();
-
-            var enText =
-                "Oread have a base speed of 15 feet, but their speed is never modified by armor or encumbrance.";
-
-            feat.SetDescription(enText);
         }
     }
 }

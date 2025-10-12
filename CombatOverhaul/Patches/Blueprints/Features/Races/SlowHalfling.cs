@@ -21,6 +21,7 @@ namespace CombatOverhaul.Patches.Blueprints.Features.Races
             if (_done) return; _done = true;
 
             var feat = ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.SlowGnome);
+            if (feat == null) return;
 
             FeatureConfigurator.For(feat)
                 .EditComponent<AddStatBonus>(c =>
@@ -28,12 +29,9 @@ namespace CombatOverhaul.Patches.Blueprints.Features.Races
                     if (c.Stat == StatType.Speed && c.Descriptor == ModifierDescriptor.Racial)
                         c.Value = -5;
                 })
+                .SetDescriptionValue(
+                    "Halfling have a base speed of 15 feet.")
                 .Configure();
-
-            var enText =
-                "Halfling have a base speed of 15 feet.";
-
-            feat.SetDescription(enText);
         }
     }
 }
