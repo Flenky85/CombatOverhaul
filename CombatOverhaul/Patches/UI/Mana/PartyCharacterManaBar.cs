@@ -221,9 +221,9 @@ namespace CombatOverhaul.Patches.UI.Mana
                     hpRT = healthContainer as RectTransform;
 
                 // Tweaks de colocación/tamaño
-                const float WIDTH_DELTA = 40f;  // píxeles extra de anchura total
-                const float BAR_HEIGHT = 20f;   // más delgada
-                const float X_OFFSET_R = 1f;   // un poco a la derecha
+                const float WIDTH_DELTA = 2.3f;  // píxeles extra de anchura total
+                const float BAR_HEIGHT = 20f;   // Altura
+                const float X_OFFSET_R = 3f;   // un poco a la derecha
                 const float Y_OFFSET_UP = 0f;  // menos negativo = más arriba (respecto a la HP)
 
                 // 1) CONTENEDOR para evitar que el Layout del padre nos aplaste
@@ -259,6 +259,34 @@ namespace CombatOverhaul.Patches.UI.Mana
                     holderRT.pivot = new Vector2(0.5f, 0f);
                     holderRT.sizeDelta = new Vector2(0f, BAR_HEIGHT);
                     holderRT.anchoredPosition = new Vector2(X_OFFSET_R, Y_OFFSET_UP);
+                }
+
+                if (parentHasLayout)
+                {
+                    // Si el padre usa LayoutGroup, el ancho lo manda el LayoutElement
+                    // Tomamos como base el ancho actual (si lo conoces puedes usar hpRT.rect.width)
+                    holderLE.flexibleWidth = 0f; // que no estire libremente
+                                                 // Si hpRT existe, usamos su ancho real; si no, sumamos al preferred
+                    float baseWidth = (hpRT != null) ? hpRT.rect.width : holderLE.preferredWidth;
+                    holderLE.minWidth = baseWidth + WIDTH_DELTA;
+                    holderLE.preferredWidth = baseWidth + WIDTH_DELTA;
+                }
+                else
+                {
+                    // Si NO hay LayoutGroup y los anchors están en stretch (0..1),
+                    // sizeDelta.x no manda; hay que abrir offsets.
+                    // Abrimos por ambos lados para ganar WIDTH_DELTA en total.
+                    var offMin = holderRT.offsetMin;
+                    var offMax = holderRT.offsetMax;
+                    offMin.x -= WIDTH_DELTA * 0.5f;
+                    offMax.x += WIDTH_DELTA * 0.5f;
+                    holderRT.offsetMin = offMin;
+                    holderRT.offsetMax = offMax;
+
+                    // Alternativa (si prefieres ancho absoluto en vez de stretch):
+                    // holderRT.anchorMin = new Vector2(0.5f, holderRT.anchorMin.y);
+                    // holderRT.anchorMax = new Vector2(0.5f, holderRT.anchorMax.y);
+                    // holderRT.sizeDelta = new Vector2((hpRT != null ? hpRT.rect.width : holderRT.sizeDelta.x) + WIDTH_DELTA, BAR_HEIGHT);
                 }
 
                 // 2) Barra real dentro del holder
