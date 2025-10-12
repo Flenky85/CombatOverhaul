@@ -1,4 +1,5 @@
 ﻿using CombatOverhaul.Calculators;
+using CombatOverhaul.Guids;
 using CombatOverhaul.Rules;
 using CombatOverhaul.Utils;
 using HarmonyLib;
@@ -19,7 +20,11 @@ namespace CombatOverhaul.Patches.Damage
     [HarmonyPatch(typeof(RuleCalculateDamage))]
     internal static class DamageReduction
     {
-        private const float MaxFinalReduction = 1.0f; 
+        private const float MaxFinalReduction = 1.0f;
+
+        private static BlueprintUnitFact _sunderArmorFact;
+        private static BlueprintUnitFact SunderArmorFact =>
+            _sunderArmorFact ??= ResourcesLibrary.TryGetBlueprint<BlueprintUnitFact>(BuffsGuids.SunderArmor);
 
         [HarmonyPatch("ApplyDifficultyForDamageReduction")]
         [HarmonyPrefix]
@@ -32,6 +37,9 @@ namespace CombatOverhaul.Patches.Damage
                 var target = __instance?.Target;
                 if (list == null || list.Count == 0 || target == null)
                     return;
+
+                var desc = target.Descriptor;
+                bool hasSunder = desc != null && SunderArmorFact != null && Has(desc, SunderArmorFact);
 
                 int count = list.Count;
 
@@ -57,13 +65,15 @@ namespace CombatOverhaul.Patches.Damage
                     }
                     else
                     {
-                        var desc = target.Descriptor;
                         var heavyRef = MarkerRefs.HeavyRef;
                         var mediumRef = MarkerRefs.MediumRef;
 
                         if (Has(desc, heavyRef)) rdBase = 0.40f; 
                         else if (Has(desc, mediumRef)) rdBase = 0.20f;
                     }
+
+                    if (hasSunder && rdBase > 0f)
+                        rdBase *= 0.5f;
 
                     if (rdBase > 0f)
                     {
