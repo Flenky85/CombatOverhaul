@@ -1,37 +1,51 @@
-﻿using Kingmaker.Blueprints.Classes;
+﻿using BlueprintCore.Utils; 
+using Kingmaker.Blueprints.Classes;
 using Kingmaker.Localization;
 
 namespace CombatOverhaul.Utils
 {
     internal static class DescriptionUtils
     {
-        public static void SetFeatDescription(BlueprintFeature feat, string text, string shortText = null, bool tagEncyclopedia = true)
+        /// <summary>
+        /// Actualiza description y shortDescription de un Feature sin cambiar las keys.
+        /// </summary>
+        public static void SetFeatDescription(
+            BlueprintFeature feat,
+            string text,
+            string shortText = null,
+            bool tagEncyclopedia = true)
         {
             if (feat == null) return;
+
+            // Prepara textos
+            string Process(string s) =>
+                tagEncyclopedia ? EncyclopediaTool.TagEncyclopediaEntries(s) : s;
 
             var pack = LocalizationManager.CurrentPack;
             if (pack == null) return;
 
-            string desc = tagEncyclopedia
-                ? BlueprintCore.Utils.EncyclopediaTool.TagEncyclopediaEntries(text)
-                : text;
-
+            // Descripción larga
             var descKey = feat.m_Description?.m_Key;
             if (!string.IsNullOrEmpty(descKey))
-                pack.PutString(descKey, desc);
+            {
+                var value = Process(text);
+                pack.PutString(descKey, value);
+            }
 
+            // Descripción corta
             var shortKey = feat.m_DescriptionShort?.m_Key;
             if (!string.IsNullOrEmpty(shortKey))
             {
-                string s = shortText ?? desc;
-                s = tagEncyclopedia ? BlueprintCore.Utils.EncyclopediaTool.TagEncyclopediaEntries(s) : s;
-                pack.PutString(shortKey, s);
+                var value = Process(shortText ?? text);
+                pack.PutString(shortKey, value);
             }
         }
-        /// <summary>
-        /// Versión de extensión por ergonomía.
-        /// </summary>
-        public static void SetDescription(this BlueprintFeature feat, string text, string shortText = null, bool tagEncyclopedia = true)
+
+        public static void SetDescription(
+            this BlueprintFeature feat,
+            string text,
+            string shortText = null,
+            bool tagEncyclopedia = true)
             => SetFeatDescription(feat, text, shortText, tagEncyclopedia);
     }
 }

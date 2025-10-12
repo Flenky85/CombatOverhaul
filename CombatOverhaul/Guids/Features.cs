@@ -12,5 +12,11 @@
         public const string CrushingBlow = "4153755355a0b9b4e956c9ca232c22cf";
         public const string ShiftersEdge = "0e7ec9a341ca46fcaf4d49759e047c83";
         public const string SunderArmor = "9719015edcbf142409592e2cbaab7fe1";
+
+        //Race Feats
+        public const string SlowAndSteadyDwarf = "786588ad1694e61498e77321d4b07157";
+        public const string SlowGnome = "09bc9ccb8ee0ffe4b8827066b1ed7e11";
+        public const string SlowHalfling = "b8926aeaac17dc7408a5059788255819";
+        public const string SlowAndSteadyOread = "a9a3a4766b88af74a9d226dddf2927eb";
     }
 }
