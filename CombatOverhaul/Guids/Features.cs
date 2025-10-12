@@ -10,5 +10,6 @@
         public const string FencingGrace = "47b352ea0f73c354aba777945760b441";
         public const string DragonStyle = "87ec6541cddfa394ab540dd13399d319";
         public const string CrushingBlow = "4153755355a0b9b4e956c9ca232c22cf";
+        public const string ShiftersEdge = "0e7ec9a341ca46fcaf4d49759e047c83";
     }
 }
