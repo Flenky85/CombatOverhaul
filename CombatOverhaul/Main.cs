@@ -92,11 +92,11 @@ namespace CombatOverhaul
         {
             _busSubs.Clear();
 
-            TrySub(() => EventBus.Subscribe(new CombatOverhaul.Bus.ForceDexForAttack()));
-            TrySub(() => EventBus.Subscribe(new CombatOverhaul.Bus.IntelligenceMagicDamageScaling()));
-            TrySub(() => EventBus.Subscribe(new CombatOverhaul.Bus.IntelligenceHealingScaling()));
-            TrySub(() => EventBus.Subscribe(new CombatOverhaul.Bus.BABDice_WeaponStats()));
-            TrySub(() => EventBus.Subscribe(new CombatOverhaul.Bus.AttackDamageScaling()));
+            TrySub(() => EventBus.Subscribe(new Bus.ForceDexForAttack()));
+            TrySub(() => EventBus.Subscribe(new Bus.IntelligenceMagicDamageScaling()));
+            TrySub(() => EventBus.Subscribe(new Bus.IntelligenceHealingScaling()));
+            TrySub(() => EventBus.Subscribe(new Bus.BABDice_WeaponStats()));
+            TrySub(() => EventBus.Subscribe(new Bus.AttackDamageScaling.AttackDamageScaling()));
 
             Log.Info($"Subscribed {_busSubs.Count} handlers.");
         }

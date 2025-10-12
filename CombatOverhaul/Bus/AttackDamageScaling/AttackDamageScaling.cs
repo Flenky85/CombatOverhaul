@@ -6,12 +6,17 @@ using Kingmaker.Enums;
 using Kingmaker.Items;
 using Kingmaker.Items.Slots;
 using Kingmaker.PubSubSystem;
+using Kingmaker.RuleSystem;
+using Kingmaker.RuleSystem.Rules;
 using Kingmaker.RuleSystem.Rules.Damage;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Buffs.Blueprints;
+using Kingmaker.UnitLogic.Commands;
+using Kingmaker.UnitLogic.Commands.Base;
 using System;
+using System.Collections.Generic;
 
-namespace CombatOverhaul.Bus
+namespace CombatOverhaul.Bus.AttackDamageScaling
 {
     internal sealed class AttackDamageScaling :
         IGlobalRulebookHandler<RuleCalculateDamage>,
@@ -309,24 +314,20 @@ namespace CombatOverhaul.Bus
 
         private static int CountNaturalWeapons(UnitEntityData unit)
         {
-            if (unit?.Body == null) return 0;
+            if (unit == null) return 0;
 
-            int count = 0;
+            int total = 0;
 
-            static void Scan(WeaponSlot slot, ref int c)
+            foreach (var info in UnitAttack.EnumerateFullAttack(unit))
             {
-                var w = slot?.MaybeWeapon;
-                if (w?.Blueprint?.IsNatural == true) c++;
+                WeaponSlot slot = info.Hand;
+                if (slot == null) continue;
+
+                ItemEntityWeapon w = slot.MaybeWeapon;
+                total += (w != null && w.HoldInTwoHands) ? 2 : 1;
             }
 
-            Scan(unit.Body.PrimaryHand, ref count);
-            Scan(unit.Body.SecondaryHand, ref count);
-
-            var limbs = unit.Body.AdditionalLimbs;
-            if (limbs != null)
-                foreach (var s in limbs) Scan(s, ref count);
-
-            return count;
+            return total;
         }
 
         private static bool GetIsFirstAttack(RuleCalculateDamage evt)
