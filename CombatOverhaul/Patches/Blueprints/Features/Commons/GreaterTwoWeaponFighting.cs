@@ -1,4 +1,5 @@
 ﻿using CombatOverhaul.Guids;
+using CombatOverhaul.Utils;
 using HarmonyLib;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
@@ -34,15 +35,7 @@ namespace CombatOverhaul.Patches.Blueprints.Features.Commons
             {
                 var enText = "Upgrades Improved Two-Weapon Fighting: your off-hand attacks with finesse weapons gain +5% damage per point of Dexterity bonus.";
 
-                enText = BlueprintCore.Utils.EncyclopediaTool.TagEncyclopediaEntries(enText);
-
-                var descKey = feat.m_Description?.m_Key;
-                if (!string.IsNullOrEmpty(descKey))
-                    pack.PutString(descKey, enText);
-
-                var shortKey = feat.m_DescriptionShort?.m_Key;
-                if (!string.IsNullOrEmpty(shortKey))
-                    pack.PutString(shortKey, enText);
+                feat.SetDescription(enText);
             }
         }
     }

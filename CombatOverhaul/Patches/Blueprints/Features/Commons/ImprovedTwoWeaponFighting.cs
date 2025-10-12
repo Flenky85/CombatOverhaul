@@ -1,4 +1,5 @@
 ﻿using CombatOverhaul.Guids;
+using CombatOverhaul.Utils;
 using HarmonyLib;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
@@ -34,17 +35,10 @@ namespace CombatOverhaul.Patches.Blueprints.Features.Commons
             var pack = LocalizationManager.CurrentPack;
             if (pack != null)
             {
-                var enText = "Increases damage dealt by 2.5% per point of Dexterity bonus on off-hand attacks when using finesse weapons only.";
+                var enText = "Increases damage convert 2.5% extra damage per point of Strength bonus into " +
+                    "2.5% extra damage per point of Dexterity bonus. on off-hand attacks when using finesse weapons only.";
 
-                enText = BlueprintCore.Utils.EncyclopediaTool.TagEncyclopediaEntries(enText);
-
-                var descKey = feat.m_Description?.m_Key;
-                if (!string.IsNullOrEmpty(descKey))
-                    pack.PutString(descKey, enText);
-
-                var shortKey = feat.m_DescriptionShort?.m_Key;
-                if (!string.IsNullOrEmpty(shortKey))
-                    pack.PutString(shortKey, enText);
+                feat.SetDescription(enText);
             }
         }
     }

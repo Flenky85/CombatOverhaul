@@ -1,4 +1,5 @@
 ﻿using CombatOverhaul.Guids;
+using CombatOverhaul.Utils;
 using HarmonyLib;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
@@ -42,15 +43,7 @@ namespace CombatOverhaul.Patches.Blueprints.Features.Commons
                     "your primary-hand attacks convert 5% extra damage per point of Strength bonus " +
                     "into 5% extra damage per point of Dexterity bonus.";
 
-                enText = BlueprintCore.Utils.EncyclopediaTool.TagEncyclopediaEntries(enText);
-
-                var descKey = feat.m_Description?.m_Key;
-                if (!string.IsNullOrEmpty(descKey))
-                    pack.PutString(descKey, enText);
-
-                var shortKey = feat.m_DescriptionShort?.m_Key;
-                if (!string.IsNullOrEmpty(shortKey))
-                    pack.PutString(shortKey, enText);
+                feat.SetDescription(enText);
             }
         }
     }

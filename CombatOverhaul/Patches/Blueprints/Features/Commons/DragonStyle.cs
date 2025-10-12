@@ -1,9 +1,10 @@
-﻿using HarmonyLib;
+﻿using CombatOverhaul.Guids;
+using CombatOverhaul.Utils;
+using HarmonyLib;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.JsonSystem;
 using Kingmaker.Localization;
-using CombatOverhaul.Guids;
 
 namespace CombatOverhaul.Patches.Blueprints.Features.Commons
 {
@@ -27,15 +28,7 @@ namespace CombatOverhaul.Patches.Blueprints.Features.Commons
                 "While using this style, you gain a +2 bonus on saving throws against sleep effects, paralysis effects, and stunning effects. " +
                 "Further, you add +5% damage per point of your Strength bonus to the damage roll of your first unarmed strike each round.";
 
-            enText = BlueprintCore.Utils.EncyclopediaTool.TagEncyclopediaEntries(enText);
-
-            var descKey = feat.m_Description?.m_Key;
-            if (!string.IsNullOrEmpty(descKey))
-                pack.PutString(descKey, enText);
-
-            var shortKey = feat.m_DescriptionShort?.m_Key;
-            if (!string.IsNullOrEmpty(shortKey))
-                pack.PutString(shortKey, enText);
+            feat.SetDescription(enText);
         }
     }
 }
