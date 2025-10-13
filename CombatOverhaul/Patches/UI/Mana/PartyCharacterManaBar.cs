@@ -31,7 +31,7 @@ namespace CombatOverhaul.Patches.UI.Mana
         public const float PAD_B = 1f;
 
         // Colors
-        public static readonly Color BG_COLOR = new Color(0f, 0f, 0f, 0.65f);
+        public static readonly Color BG_COLOR = new Color(0f, 0f, 0f, 0.0f);
         public static readonly Color FILL_COLOR = new Color(0.12f, 0.45f, 1f, 1f);
     }
 
