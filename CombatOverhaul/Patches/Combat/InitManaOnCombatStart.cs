@@ -33,26 +33,21 @@ namespace CombatOverhaul.Patches.Combat
             {
                 var game = Game.Instance;
                 if (game == null || game.Player == null)
-                {
-                    Debug.Log("[CO][Mana] HandleCombatStart: Game/Player null. Abort.");
+                {                
                     return;
                 }
 
                 var party = game.Player.PartyAndPets;
                 if (party == null)
                 {
-                    Debug.Log("[CO][Mana] HandleCombatStart: PartyAndPets null. Abort.");
                     return;
                 }
 
                 var res = ManaResourceBP.Mana;
                 if (res == null)
                 {
-                    Debug.Log("[CO][Mana] HandleCombatStart: Mana resource is null. Did you register it?");
                     return;
                 }
-
-                Debug.Log($"[CO][Mana] HandleCombatStart: PartyCount={party.Count}. UseFunctionValues={ManaCombatTestConfig.UseFunctionValues}");
 
                 int processed = 0;
 
@@ -98,8 +93,10 @@ namespace CombatOverhaul.Patches.Combat
                             SetResourceAmountUnsafe(coll, res, startCur); // ⟵ fijamos actual = maxDyn
 
                         int curAfter = coll.GetResourceAmount(res);
+                        
 
                         ManaEvents.Raise(unit, curAfter, maxDyn); // ⟵ UI con maxDyn
+
 
                         Debug.Log($"[CO][Mana] Init '{unit.CharacterName}': curBefore={curBefore} -> curAfter={curAfter}, maxDyn={maxDyn} (FULL)");
                         processed++;

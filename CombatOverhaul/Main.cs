@@ -1,7 +1,7 @@
 ﻿using CombatOverhaul.Bus;
 using CombatOverhaul.Utils;
 using HarmonyLib;
-using Kingmaker.PubSubSystem; // EventBus
+using Kingmaker.PubSubSystem;
 using System;
 using System.Collections.Generic;
 using UnityModManagerNet;
@@ -16,10 +16,8 @@ namespace CombatOverhaul
         private static UnityModManager.ModEntry _mod;
         private static bool _enabled;
 
-        // Guardamos los IDisposable devueltos por EventBus.Subscribe
         private static readonly List<IDisposable> _busSubs = new List<IDisposable>();
 
-        // ---------- UMM entry ----------
         static bool Load(UnityModManager.ModEntry entry)
         {
             _mod = entry;
@@ -29,7 +27,6 @@ namespace CombatOverhaul
             return true;
         }
 
-        // ---------- Toggle ----------
         private static bool OnToggle(UnityModManager.ModEntry entry, bool value)
         {
             if (_enabled == value) return true;
@@ -39,21 +36,17 @@ namespace CombatOverhaul
                 _enabled = value;
                 if (value)
                 {
-                    // 1) Aplicar parches
                     _harmony = new Harmony(HarmonyId);
                     _harmony.PatchAll(typeof(Main).Assembly);
 
-                    // 2) Suscribirse a EventBus
                     SubscribeHandlers();
 
                     Log.Info("Enabled. Harmony patches applied and handlers subscribed.");
                 }
                 else
                 {
-                    // 1) Desuscribir handlers
                     UnsubscribeHandlers();
 
-                    // 2) Retirar parches
                     _harmony?.UnpatchAll(HarmonyId);
                     _harmony = null;
 
@@ -68,7 +61,6 @@ namespace CombatOverhaul
             }
         }
 
-        // ---------- Unload ----------
         private static bool OnUnload(UnityModManager.ModEntry entry)
         {
             try
@@ -88,7 +80,6 @@ namespace CombatOverhaul
             return true;
         }
 
-        // ---------- Suscripciones ----------
         private static void SubscribeHandlers()
         {
             _busSubs.Clear();

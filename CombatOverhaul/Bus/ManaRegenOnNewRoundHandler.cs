@@ -5,7 +5,7 @@ using Kingmaker;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.PubSubSystem;
 using Kingmaker.UnitLogic;
-using Kingmaker.RuleSystem.Rules; // <-- necesario para RuleSkillCheck
+using Kingmaker.RuleSystem.Rules;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -15,17 +15,13 @@ namespace CombatOverhaul.Bus
     internal sealed class ManaRegenOnRoundStart :
         ITurnBasedModeHandler, IGlobalSubscriber, ISubscriber
     {
-        // Ronda sorpresa: trátala igual que una ronda normal
         public void HandleSurpriseRoundStarted() => DoRegenForParty();
 
-        // Ronda normal (1, 2, 3, ...)
         public void HandleRoundStarted(int round) => DoRegenForParty();
 
-        // ====== Métodos requeridos por la interfaz (no los usamos) ======
         public void HandleTurnStarted(UnitEntityData unit) { /* noop */ }
         public void HandleUnitControlChanged(UnitEntityData unit) { /* noop */ }
         public void HandleUnitNotSurprised(UnitEntityData unit, RuleSkillCheck check) { /* noop */ }
-        // ================================================================
 
         private static void DoRegenForParty()
         {
@@ -79,7 +75,7 @@ namespace CombatOverhaul.Bus
                 if (coll == null || res == null) return;
                 if (!coll.ContainsResource(res)) coll.Add(res, restoreAmount: false);
 
-                var map = coll.m_Resources; // AssemblyPublicizer
+                var map = coll.m_Resources; 
                 if (!map.TryGetValue(res, out UnitAbilityResource uar) || uar == null) return;
                 uar.Amount = Math.Max(0, value);
             }

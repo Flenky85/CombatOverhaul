@@ -22,7 +22,7 @@ namespace CombatOverhaul.Testing
             // Recorremos la party y notificamos a la UI
             foreach (UnitEntityData unit in party)
             {
-                ManaEvents.Raise(unit, 5, 20);
+                ManaEvents.Raise(unit, 5, 19);
             }
 
             Utils.Log.Info("[ManaUITest] Maná de prueba aplicado: 25/100 a toda la party.");
