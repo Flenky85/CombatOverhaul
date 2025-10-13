@@ -4,50 +4,45 @@ using Kingmaker.EntitySystem.Entities;
 using Kingmaker.UI.MVVM._PCView.Party;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace CombatOverhaul.Patches.UI.Mana
 {
     // =========================================================
-    // ===============  CONFIGURACIÓN DE LA BARRA  =============
+    // =====================  BAR CONFIG  ======================
     // =========================================================
     internal static class ManaUIConfig
     {
-        // Grosor (ANCHO) de la barra vertical en px
+        // Vertical bar thickness (WIDTH) in px
         public const float BAR_THICKNESS = 6f;
 
-        // Altura deseada. Si lo pones a 0, usa la altura de la barra de HP.
+        // Desired height. If 0 => use HP bar height
         public const float BAR_HEIGHT = 0f;
 
-        // Offsets relativos a la HP (px). +X = derecha; +Y = arriba
+        // Offsets relative to HP (px). +X = right; +Y = up
         public const float X_OFFSET = 0f;
         public const float Y_OFFSET = 0f;
 
-        // Padding interno dentro del rect del holder
+        // Inner padding of the rect (L, R, T, B)
         public const float PAD_L = 1f;
         public const float PAD_R = 1f;
         public const float PAD_T = 1f;
         public const float PAD_B = 1f;
 
-        // Colores
+        // Colors
         public static readonly Color BG_COLOR = new Color(0f, 0f, 0f, 0.65f);
         public static readonly Color FILL_COLOR = new Color(0.12f, 0.45f, 1f, 1f);
     }
 
     // =========================================================
-    // ================  API PÚBLICA DE MANA UI  ===============
+    // =================  PUBLIC MANA UI API  ==================
     // =========================================================
     public static class ManaUI
     {
-        // Llama a esto cuando tengas creado el BlueprintAbilityResource de maná.
         public static void SetManaResource(Kingmaker.Blueprints.BlueprintAbilityResource res)
-        {
-            ManaProvider.ManaResource = res;
-        }
+            => ManaProvider.ManaResource = res;
 
-        // Útil si cambias valores de maná desde otro sitio y quieres forzar repaint
         public static void RefreshUnit(UnitEntityData unit)
         {
             if (unit == null) return;
@@ -86,7 +81,7 @@ namespace CombatOverhaul.Patches.UI.Mana
         public static void Subscribe(UnitEntityData unit, Action<int, int> cb)
         {
             if (unit == null || cb == null) return;
-            if (!_subs.TryGetValue(unit, out List<Action<int, int>> list))
+            if (!_subs.TryGetValue(unit, out var list))
             {
                 list = new List<Action<int, int>>();
                 _subs[unit] = list;
@@ -97,7 +92,7 @@ namespace CombatOverhaul.Patches.UI.Mana
         public static void Unsubscribe(UnitEntityData unit, object owner)
         {
             if (unit == null) return;
-            if (_subs.TryGetValue(unit, out List<Action<int, int>> list))
+            if (_subs.TryGetValue(unit, out var list))
             {
                 for (int i = list.Count - 1; i >= 0; i--)
                 {
@@ -111,11 +106,11 @@ namespace CombatOverhaul.Patches.UI.Mana
         public static void Raise(UnitEntityData unit, int current, int max)
         {
             if (unit == null) return;
-            if (_subs.TryGetValue(unit, out List<Action<int, int>> list))
+            if (_subs.TryGetValue(unit, out var list))
             {
-                var array = list.ToArray();
-                for (int i = 0; i < array.Length; i++)
-                    array[i]?.Invoke(current, max);
+                var copy = list.ToArray();
+                for (int i = 0; i < copy.Length; i++)
+                    copy[i]?.Invoke(current, max);
             }
         }
     }
@@ -124,10 +119,7 @@ namespace CombatOverhaul.Patches.UI.Mana
     {
         [SerializeField] private Image _fill;
 
-        public void Attach(Image fillImage)
-        {
-            _fill = fillImage;
-        }
+        public void Attach(Image fillImage) => _fill = fillImage;
 
         public void SetColor(Color c)
         {
@@ -136,84 +128,55 @@ namespace CombatOverhaul.Patches.UI.Mana
 
         public void UpdateValue(int current, int max)
         {
-            if (_fill != null) _fill.fillAmount = (max > 0) ? Mathf.Clamp01((float)current / (float)max) : 0f;
+            if (_fill != null)
+                _fill.fillAmount = (max > 0) ? Mathf.Clamp01((float)current / (float)max) : 0f;
         }
     }
 
     internal sealed class OnDestroyHook : MonoBehaviour
     {
         public Action OnDestroyed;
-        private void OnDestroy() { OnDestroyed?.Invoke(); }
+        private void OnDestroy() => OnDestroyed?.Invoke();
     }
 
     // =========================================================
-    // =====================  EL PARCHE  =======================
+    // ======================  PATCH  ==========================
     // =========================================================
-    [HarmonyPatch]
-    internal static class PartyCharacterManaBarPatch
+    [HarmonyPatch(typeof(PartyCharacterPCView), "BindViewImplementation")]
+    internal static class PartyCharacterManaBarPCPatch
     {
         private static readonly Dictionary<Transform, Sprite> _hpSpriteCache = new Dictionary<Transform, Sprite>();
         private static readonly Dictionary<Transform, Material> _hpMaterialCache = new Dictionary<Transform, Material>();
 
-        static IEnumerable<MethodBase> TargetMethods()
-        {
-            var open = typeof(PartyCharacterView<>);
-            var asm = open.Assembly;
-            foreach (var t in asm.GetTypes())
-            {
-                if (!t.IsClass || t.IsAbstract) continue;
-                if (!IsSubclassOfRawGeneric(open, t)) continue;
-                var m = t.GetMethod("BindViewImplementation",
-                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                if (m != null && m.GetParameters().Length == 0)
-                    yield return m;
-            }
-        }
-
-        private static bool IsSubclassOfRawGeneric(Type generic, Type toCheck)
-        {
-            while (toCheck != null && toCheck != typeof(object))
-            {
-                var cur = toCheck.IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;
-                if (generic == cur) return true;
-                toCheck = toCheck.BaseType;
-            }
-            return false;
-        }
-
-        static void Postfix(object __instance)
+        // Postfix tipado: acceso directo a API pública de la vista PC
+        static void Postfix(PartyCharacterPCView __instance)
         {
             try
             {
-                var comp = __instance as Component;
-                if (comp == null) return;
+                // 1) Unit in the slot (public prop)
+                var unit = __instance?.UnitEntityData; // public in PCView
+                if (unit == null) return; // empty slot or no active VM
 
-                var vmProp = __instance.GetType().GetProperty("ViewModel",
-                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                var vm = vmProp?.GetValue(__instance, null);
-                if (vm == null) return;
-
-                var unit = TryGetUnitFromVM(vm, __instance);
-                if (unit == null) return;
-
+                // 2) Anchor container: try HP progress bar → HP text → portrait
                 Transform healthContainer = null;
-                UnitHealthPartProgressView hpProg = null;
+                UnitHealthPartProgressView hpProg =
+                    __instance.GetComponentInChildren<UnitHealthPartProgressView>(true);
 
-                hpProg = comp.gameObject.GetComponentInChildren<UnitHealthPartProgressView>(true);
-                if (hpProg != null) healthContainer = hpProg.transform.parent;
-
+                if (hpProg != null)
+                    healthContainer = hpProg.transform.parent;
                 if (healthContainer == null)
                 {
-                    var hpTxt = comp.gameObject.GetComponentInChildren<UnitHealthPartTextView>(true);
+                    var hpTxt = __instance.GetComponentInChildren<UnitHealthPartTextView>(true);
                     if (hpTxt != null) healthContainer = hpTxt.transform.parent;
                 }
                 if (healthContainer == null)
                 {
-                    var portrait = comp.gameObject.GetComponentInChildren<UnitPortraitPartView>(true);
+                    var portrait = __instance.GetComponentInChildren<UnitPortraitPartView>(true);
                     if (portrait != null) healthContainer = portrait.transform.parent;
                 }
-                if (healthContainer == null) healthContainer = comp.transform;
+                if (healthContainer == null) healthContainer = __instance.transform;
 
+                // 3) Prevent duplicates
                 var already = healthContainer.Find("ManaBar_V");
                 if (already != null)
                 {
@@ -221,21 +184,20 @@ namespace CombatOverhaul.Patches.UI.Mana
                     return;
                 }
 
+                // 4) Create vertical bar
                 CreateManaBarVertical(healthContainer, hpProg, unit);
             }
             catch (Exception ex)
             {
-                Log.Error("[ManaBarPatch] EX", ex);
+                Log.Error("[ManaBarPatch-PC] EX", ex);
             }
         }
 
         private static void CreateManaBarVertical(Transform healthContainer, UnitHealthPartProgressView hpProg, UnitEntityData unit)
         {
-            RectTransform hpRT = null;
-            if (hpProg != null) hpRT = hpProg.GetComponent<RectTransform>();
-            if (hpRT == null) hpRT = healthContainer as RectTransform;
+            RectTransform hpRT = hpProg != null ? hpProg.GetComponent<RectTransform>() : healthContainer as RectTransform;
 
-            // Holder: barra vertical a la DERECHA de la HP
+            // Holder: vertical bar to the RIGHT of the HP bar
             var holder = new GameObject("ManaBar_V", typeof(RectTransform));
             var holderRT = holder.GetComponent<RectTransform>();
             holder.transform.SetParent(healthContainer, false);
@@ -250,7 +212,7 @@ namespace CombatOverhaul.Patches.UI.Mana
 
             float targetHeight = (ManaUIConfig.BAR_HEIGHT > 0f)
                 ? ManaUIConfig.BAR_HEIGHT
-                : ((hpRT != null) ? Mathf.Max(1f, hpRT.rect.height) : 12f);
+                : (hpRT != null ? Mathf.Max(1f, hpRT.rect.height) : 12f);
 
             if (parentHasLayout)
             {
@@ -262,16 +224,13 @@ namespace CombatOverhaul.Patches.UI.Mana
             if (hpRT != null)
             {
                 holderRT.SetSiblingIndex(hpRT.GetSiblingIndex() + 1);
-
-                // Copiamos anchors verticales de HP; para horizontal fijamos al centro y usamos sizeDelta.x
-                holderRT.anchorMin = new Vector2(hpRT.anchorMin.x, hpRT.anchorMin.y);
-                holderRT.anchorMax = new Vector2(hpRT.anchorMax.x, hpRT.anchorMax.y);
+                holderRT.anchorMin = hpRT.anchorMin;
+                holderRT.anchorMax = hpRT.anchorMax;
                 holderRT.pivot = hpRT.pivot;
-
-                // Grosor fijo y altura objetivo
                 holderRT.sizeDelta = new Vector2(ManaUIConfig.BAR_THICKNESS, targetHeight);
 
-                // Posicionada a la derecha de la HP + offset
+
+                // Position to the right of HP + offset
                 float x = hpRT.anchoredPosition.x + (hpRT.rect.width * 0.5f) + (ManaUIConfig.BAR_THICKNESS * 0.5f) + ManaUIConfig.X_OFFSET;
                 float y = hpRT.anchoredPosition.y + ManaUIConfig.Y_OFFSET;
                 holderRT.anchoredPosition = new Vector2(x, y);
@@ -285,7 +244,7 @@ namespace CombatOverhaul.Patches.UI.Mana
                 holderRT.anchoredPosition = new Vector2(ManaUIConfig.X_OFFSET, ManaUIConfig.Y_OFFSET);
             }
 
-            // Rect interno de la barra
+            // Inner rect of the bar
             var manaBar = new GameObject("Bar", typeof(RectTransform));
             var manaRT = manaBar.GetComponent<RectTransform>();
             manaBar.transform.SetParent(holderRT, false);
@@ -294,7 +253,6 @@ namespace CombatOverhaul.Patches.UI.Mana
             manaRT.pivot = new Vector2(0.5f, 0.5f);
             manaRT.sizeDelta = Vector2.zero;
             manaRT.anchoredPosition = Vector2.zero;
-
             manaRT.offsetMin = new Vector2(ManaUIConfig.PAD_L, ManaUIConfig.PAD_B);
             manaRT.offsetMax = new Vector2(-ManaUIConfig.PAD_R, -ManaUIConfig.PAD_T);
 
@@ -318,11 +276,11 @@ namespace CombatOverhaul.Patches.UI.Mana
             var fillImg = fillGO.GetComponent<Image>();
             fillImg.type = Image.Type.Filled;
             fillImg.fillMethod = Image.FillMethod.Vertical;
-            fillImg.fillOrigin = (int)Image.OriginVertical.Bottom; // de abajo hacia arriba
+            fillImg.fillOrigin = (int)Image.OriginVertical.Bottom; 
             fillImg.color = ManaUIConfig.FILL_COLOR;
 
-            // Reusar sprite/material HP si existen
-            GetHpSpriteAndMatCached(healthContainer, hpProg, out Sprite hpSprite, out Material hpMat);
+            // Reuse HP sprite/material (cached)
+            GetHpSpriteAndMatCached(healthContainer, hpProg, out var hpSprite, out var hpMat);
             if (hpSprite != null)
             {
                 fillImg.sprite = hpSprite;
@@ -341,18 +299,18 @@ namespace CombatOverhaul.Patches.UI.Mana
             bgImg.raycastTarget = false;
             fillImg.raycastTarget = false;
 
-            // View + primer pintado + subscripción
+            // View + first paint + subscription
             var view = manaBar.AddComponent<ManaBarView>();
             view.Attach(fillImg);
             view.SetColor(ManaUIConfig.FILL_COLOR);
 
             var (current, max) = ManaProvider.Get(unit);
             view.UpdateValue(current, max);
-            ManaEvents.Subscribe(unit, delegate (int c, int m) { view.UpdateValue(c, m); });
+            ManaEvents.Subscribe(unit, (c, m) => view.UpdateValue(c, m));
 
             // Cleanup
             var destroyHook = healthContainer.gameObject.AddComponent<OnDestroyHook>();
-            destroyHook.OnDestroyed += delegate { ManaEvents.Unsubscribe(unit, view); };
+            destroyHook.OnDestroyed += () => ManaEvents.Unsubscribe(unit, view);
         }
 
         private static void GetHpSpriteAndMatCached(Transform key, UnitHealthPartProgressView hpProg, out Sprite sprite, out Material mat)
@@ -377,7 +335,7 @@ namespace CombatOverhaul.Patches.UI.Mana
                         }
                     }
                 }
-                catch { }
+                catch { /* ignore */ }
 
                 _hpSpriteCache[key] = sprite;
                 _hpMaterialCache[key] = mat;
@@ -390,105 +348,7 @@ namespace CombatOverhaul.Patches.UI.Mana
             if (view == null) return;
             var (current, max) = ManaProvider.Get(unit);
             view.UpdateValue(current, max);
-            ManaEvents.Subscribe(unit, delegate (int c, int m) { view.UpdateValue(c, m); });
-        }
-
-        // ------- helpers VM -------
-        private static UnitEntityData TryGetUnitFromVM(object partyCharacterVM, object viewInstance)
-        {
-            var u = GetUnitFromAny(partyCharacterVM);
-            if (u != null) return u;
-
-            if (viewInstance != null)
-            {
-                var portraitField = GetFieldRecursive(viewInstance.GetType(), "m_PortraitView");
-                var portraitView = (portraitField != null) ? portraitField.GetValue(viewInstance) as Component : null;
-                var portraitVM = (portraitView != null)
-                    ? GetPropertyValue(portraitView, "ViewModel")
-                    : null;
-                var u2 = GetUnitFromAny(portraitVM);
-                if (u2 != null) return u2;
-
-                var hpField = GetFieldRecursive(viewInstance.GetType(), "m_HealthProgressView");
-                var hpView = (hpField != null) ? hpField.GetValue(viewInstance) as Component : null;
-                var hpVM = (hpView != null)
-                    ? GetPropertyValue(hpView, "ViewModel")
-                    : null;
-                var u3 = GetUnitFromAny(hpVM);
-                if (u3 != null) return u3;
-            }
-
-            return null;
-        }
-
-        private static object GetPropertyValue(object obj, string name)
-        {
-            try
-            {
-                var p = obj.GetType().GetProperty(name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                return p?.GetValue(obj, null);
-            }
-            catch { return null; }
-        }
-
-        private static UnitEntityData GetUnitFromAny(object obj, int depth = 0)
-        {
-            if (obj == null || depth > 2) return null;
-
-            var t = obj.GetType();
-
-            var props = t.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            for (int i = 0; i < props.Length; i++)
-            {
-                var p = props[i];
-                try
-                {
-                    if (p.PropertyType == typeof(UnitEntityData))
-                        return p.GetValue(obj, null) as UnitEntityData;
-
-                    if (p.CanRead && (p.Name.IndexOf("Unit", StringComparison.OrdinalIgnoreCase) >= 0 ||
-                                      p.Name.IndexOf("EntityData", StringComparison.OrdinalIgnoreCase) >= 0))
-                    {
-                        var v = p.GetValue(obj, null);
-                        var u = GetUnitFromAny(v, depth + 1);
-                        if (u != null) return u;
-                    }
-                }
-                catch { }
-            }
-
-            var fields = t.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            for (int i = 0; i < fields.Length; i++)
-            {
-                var f = fields[i];
-                try
-                {
-                    if (f.FieldType == typeof(UnitEntityData))
-                        return f.GetValue(obj) as UnitEntityData;
-
-                    if (f.Name.IndexOf("Unit", StringComparison.OrdinalIgnoreCase) >= 0 ||
-                        f.Name.IndexOf("EntityData", StringComparison.OrdinalIgnoreCase) >= 0)
-                    {
-                        var v = f.GetValue(obj);
-                        var u = GetUnitFromAny(v, depth + 1);
-                        if (u != null) return u;
-                    }
-                }
-                catch { }
-            }
-
-            return null;
-        }
-
-        private static FieldInfo GetFieldRecursive(Type t, string name)
-        {
-            while (t != null)
-            {
-                var f = t.GetField(name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                if (f != null) return f;
-                t = t.BaseType;
-            }
-            return null;
+            ManaEvents.Subscribe(unit, (c, m) => view.UpdateValue(c, m));
         }
     }
 }
