@@ -1,11 +1,11 @@
-﻿using BlueprintCore.Blueprints.CustomConfigurators;      
+﻿using BlueprintCore.Blueprints.CustomConfigurators;
 using Kingmaker.Blueprints;
 
 namespace CombatOverhaul.Resources
 {
     internal static class ManaResourceBP
     {
-        public static BlueprintAbilityResource Mana; 
+        public static BlueprintAbilityResource Mana;
 
         public const string ManaGuid = "2f6b2b9a-1b6b-4a9c-8c0c-7f4b1a2e9c10";
 
@@ -17,10 +17,15 @@ namespace CombatOverhaul.Resources
             if (_registered) return;
             _registered = true;
 
-            var amount = ResourceAmountBuilder.New(baseValue: 0);
+            var amount = ResourceAmountBuilder
+                .New(baseValue: 0)               
+                .Build();
+
             Mana = AbilityResourceConfigurator
                 .New(ManaName, ManaGuid)
-                .SetMaxAmount(amount)
+                .SetUseMax(true)       
+                .SetMaxAmount(amount)  
+                .SetMin(0)             
                 .Configure();
         }
     }

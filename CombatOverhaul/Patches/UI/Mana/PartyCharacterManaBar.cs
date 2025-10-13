@@ -64,14 +64,16 @@ namespace CombatOverhaul.Patches.UI.Mana
             var desc = unit.Descriptor;
             if (desc == null) return (0, 0);
 
-            int max = ManaResource.GetMaxAmount(desc);
-            int cur = desc.Resources.GetResourceAmount(ManaResource);
+            int max = Calculators.ManaCalc.CalcMaxMana(unit); 
+            var coll = desc.Resources;
+            int cur = coll.ContainsResource(ManaResource) ? coll.GetResourceAmount(ManaResource) : 0;
 
             if (cur > max) cur = max;
             if (cur < 0) cur = 0;
             return (cur, max);
         }
     }
+
 
     internal static class ManaEvents
     {

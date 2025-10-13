@@ -32,7 +32,7 @@ namespace CombatOverhaul.Patches.Combat
                     var coll = u.Descriptor?.Resources;
                     if (coll == null || !coll.ContainsResource(res)) continue;
 
-                    SetResourceAmountUnsafe(coll, res, 0);
+                    SetResourceAmount(coll, ManaResourceBP.Mana, 0);
 
                     ManaEvents.Raise(u, 0, 0);
 
@@ -46,23 +46,22 @@ namespace CombatOverhaul.Patches.Combat
             }
         }
 
-        private static void SetResourceAmountUnsafe(UnitAbilityResourceCollection coll, BlueprintScriptableObject res, int value)
+        private static void SetResourceAmount(UnitAbilityResourceCollection coll, BlueprintAbilityResource res, int value)
         {
             try
             {
                 if (coll == null || res == null) return;
+                if (!coll.ContainsResource(res)) coll.Add(res, restoreAmount: false);
 
-                if (!coll.ContainsResource(res))
-                    coll.Add(res, restoreAmount: false);
-
-                Dictionary<BlueprintScriptableObject, UnitAbilityResource> map = coll.m_Resources; 
-                if (!map.TryGetValue(res, out UnitAbilityResource uar) || uar == null) return;
+                var map = coll.m_Resources;
+                if (map == null) return;
+                if (!map.TryGetValue(res, out var uar) || uar == null) return;
 
                 uar.Amount = Math.Max(0, value);
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[CO][Mana] SetResourceAmountUnsafe EX: {ex}");
+                Debug.LogError($"[CO][Mana] SetResourceAmount EX: {ex}");
             }
         }
     }

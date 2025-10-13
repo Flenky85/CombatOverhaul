@@ -2,10 +2,11 @@
 using CombatOverhaul.Patches.UI.Mana;
 using CombatOverhaul.Resources;
 using Kingmaker;
+using Kingmaker.Blueprints;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.PubSubSystem;
-using Kingmaker.UnitLogic;
 using Kingmaker.RuleSystem.Rules;
+using Kingmaker.UnitLogic;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -61,14 +62,14 @@ namespace CombatOverhaul.Bus
             if (max > 0 && regen > 0)
             {
                 curAfter = Mathf.Clamp(curBefore + regen, 0, max);
-                SetResourceAmountUnsafe(coll, res, curAfter);
+                SetResourceAmount(coll, ManaResourceBP.Mana, curAfter);
             }
 
             ManaEvents.Raise(unit, curAfter, max);
             Debug.Log($"[CO][Mana][Regen/RoundStart] {unit.CharacterName}: {curBefore} + {regen} => {curAfter} / max={max}");
         }
 
-        private static void SetResourceAmountUnsafe(UnitAbilityResourceCollection coll, Kingmaker.Blueprints.BlueprintScriptableObject res, int value)
+        private static void SetResourceAmount(UnitAbilityResourceCollection coll, BlueprintAbilityResource res, int value)
         {
             try
             {
@@ -76,12 +77,14 @@ namespace CombatOverhaul.Bus
                 if (!coll.ContainsResource(res)) coll.Add(res, restoreAmount: false);
 
                 var map = coll.m_Resources; 
-                if (!map.TryGetValue(res, out UnitAbilityResource uar) || uar == null) return;
+                if (map == null) return;
+                if (!map.TryGetValue(res, out var uar) || uar == null) return;
+
                 uar.Amount = Math.Max(0, value);
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[CO][Mana] SetResourceAmountUnsafe EX: {ex}");
+                Debug.LogError($"[CO][Mana] SetResourceAmount EX: {ex}");
             }
         }
     }

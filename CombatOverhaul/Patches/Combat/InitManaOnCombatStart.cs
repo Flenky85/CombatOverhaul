@@ -7,7 +7,6 @@ using Kingmaker.Blueprints;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.UnitLogic;
 using System;
-using System.Collections.Generic;
 using TurnBased.Controllers;
 using UnityEngine;
 
@@ -59,7 +58,7 @@ namespace CombatOverhaul.Patches.Combat
                         if (curBefore > 0) coll.Spend(res, curBefore); 
 
                         if (startCur > 0)
-                            SetResourceAmountUnsafe(coll, res, startCur); 
+                            SetResourceAmount(coll, ManaResourceBP.Mana, startCur); 
 
                         int curAfter = coll.GetResourceAmount(res);
                         
@@ -91,26 +90,20 @@ namespace CombatOverhaul.Patches.Combat
             return true;
         }
 
-        private static void SetResourceAmountUnsafe(UnitAbilityResourceCollection coll, BlueprintScriptableObject res, int value)
+        private static void SetResourceAmount(UnitAbilityResourceCollection coll, BlueprintAbilityResource res, int value)
         {
-            try
-            {
-                if (coll == null || res == null) return;
+            if (coll == null || res == null) return;
 
-                if (!coll.ContainsResource(res))
-                    coll.Add(res, restoreAmount: false);
+            if (!coll.ContainsResource(res))
+                coll.Add(res, restoreAmount: false);
 
-                Dictionary<BlueprintScriptableObject, UnitAbilityResource> map = coll.m_Resources;
-                if (!map.TryGetValue(res, out UnitAbilityResource uar) || uar == null)
-                    return;
+            var map = coll.m_Resources;
+            if (map == null) return;
 
-                int old = uar.Amount;
-                uar.Amount = Math.Max(0, value);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"[CO][Mana] SetResourceAmountUnsafe EX: {ex}");
-            }
+            if (!map.TryGetValue(res, out var uar) || uar == null) return;
+
+            uar.Amount = Math.Max(0, value);
         }
+
     }
 }
