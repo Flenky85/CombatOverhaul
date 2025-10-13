@@ -1,4 +1,5 @@
 ﻿using CombatOverhaul.Features;
+using CombatOverhaul.Resources;
 using HarmonyLib;
 using Kingmaker.Blueprints.JsonSystem;
 
@@ -10,6 +11,9 @@ namespace CombatOverhaul.Patches
         static void Postfix()
         {
             MonsterArmorMarkers.Register();
+            ManaResourceBP.Register();
+
+            UI.Mana.ManaUI.SetManaResource(ManaResourceBP.Mana);
         }
     }
 }

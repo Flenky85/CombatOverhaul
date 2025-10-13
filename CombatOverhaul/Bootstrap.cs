@@ -24,10 +24,8 @@ namespace CombatOverhaul
             EventBus.Subscribe(_handler);
             _subscribed = true;
 
-            // Recalibra una vez piezas ya equipadas (armadura/escudo) para quitar limitadores previos.
             RecalcMaxDexAllUnitsOnce();
             RecalcAllArmorOnce();
-            //RangedFeatFamily.Configure();
         }
 
         internal static void Dispose()
@@ -52,12 +50,10 @@ namespace CombatOverhaul
                 foreach (var u in game.State.Units)
                 {
                     var armor = u?.Body?.Armor?.MaybeArmor;
-                    if (armor != null)
-                        armor.RecalculateMaxDexBonus();
+                    armor?.RecalculateMaxDexBonus();
 
                     var shieldArmor = u?.Body?.SecondaryHand?.MaybeShield?.ArmorComponent;
-                    if (shieldArmor != null)
-                        shieldArmor.RecalculateMaxDexBonus();
+                    shieldArmor?.RecalculateMaxDexBonus();
                 }
             }
             catch { /* no romper nada si aún no hay estado */ }

@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using HarmonyLib;
-using UnityModManagerNet;
-using Kingmaker.PubSubSystem; // EventBus
+﻿using CombatOverhaul.Bus;
 using CombatOverhaul.Utils;
+using HarmonyLib;
+using Kingmaker.PubSubSystem; // EventBus
+using System;
+using System.Collections.Generic;
+using UnityModManagerNet;
 
 namespace CombatOverhaul
 {
@@ -92,11 +93,13 @@ namespace CombatOverhaul
         {
             _busSubs.Clear();
 
-            TrySub(() => EventBus.Subscribe(new Bus.ForceDexForAttack()));
-            TrySub(() => EventBus.Subscribe(new Bus.IntelligenceMagicDamageScaling()));
-            TrySub(() => EventBus.Subscribe(new Bus.IntelligenceHealingScaling()));
-            TrySub(() => EventBus.Subscribe(new Bus.BABDice_WeaponStats()));
+            TrySub(() => EventBus.Subscribe(new ForceDexForAttack()));
+            TrySub(() => EventBus.Subscribe(new IntelligenceMagicDamageScaling()));
+            TrySub(() => EventBus.Subscribe(new IntelligenceHealingScaling()));
+            TrySub(() => EventBus.Subscribe(new BABDice_WeaponStats()));
             TrySub(() => EventBus.Subscribe(new Bus.AttackDamageScaling.AttackDamageScaling()));
+            TrySub(() => EventBus.Subscribe(new ManaRegenOnRoundStart()));
+
 
             Log.Info($"Subscribed {_busSubs.Count} handlers.");
         }

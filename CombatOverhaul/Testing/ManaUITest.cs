@@ -1,13 +1,13 @@
-﻿using Kingmaker;
+﻿using CombatOverhaul.Patches.UI.Mana;
+using Kingmaker;
 using Kingmaker.EntitySystem.Entities;
-using System.Collections.Generic;
 
-namespace CombatOverhaul.Patches.UI.Mana
+namespace CombatOverhaul.Testing
 {
     /// <summary>
     /// Utilidad de prueba para forzar valores de maná en UI sin tener aún el AbilityResource.
     /// </summary>
-    /// Testeo: CombatOverhaul.Patches.UI.Mana.ManaUITest.Apply25of100ToParty();
+    /// Testeo: CombatOverhaul.Testing.ManaUITest.Apply25of100ToParty();
     public static class ManaUITest
     {
         /// <summary>
@@ -22,7 +22,7 @@ namespace CombatOverhaul.Patches.UI.Mana
             // Recorremos la party y notificamos a la UI
             foreach (UnitEntityData unit in party)
             {
-                ManaEvents.Raise(unit, 50, 100);
+                ManaEvents.Raise(unit, 5, 20);
             }
 
             Utils.Log.Info("[ManaUITest] Maná de prueba aplicado: 25/100 a toda la party.");
