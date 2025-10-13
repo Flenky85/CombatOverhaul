@@ -1,4 +1,4 @@
-﻿using CombatOverhaul.Utils;
+﻿/*using CombatOverhaul.Utils;
 using HarmonyLib;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.UI.MVVM._PCView.Party;
@@ -15,19 +15,19 @@ namespace CombatOverhaul.Patches.UI.Mana
     // =========================================================
     internal static class ManaUIConfig
     {
-        // Grosor (ANCHO) de la barra vertical en px
-        public const float BAR_THICKNESS = 6f;
+        // ALTURA visual de la barra (px)
+        public const float BAR_HEIGHT = 122f;
 
-        // Altura deseada. Si lo pones a 0, usa la altura de la barra de HP.
-        public const float BAR_HEIGHT = 0f;
+        // Ancho extra respecto al ancho de la barra de HP (px). 0 = igual que HP.
+        public const float WIDTH_DELTA = 3f;
 
-        // Offsets relativos a la HP (px). +X = derecha; +Y = arriba
-        public const float X_OFFSET = 0f;
+        // Offsets relativos al anclaje de la HP (positivo = derecha / arriba)
+        public const float X_OFFSET = 5f;
         public const float Y_OFFSET = 0f;
 
-        // Padding interno dentro del rect del holder
-        public const float PAD_L = 1f;
-        public const float PAD_R = 1f;
+        // Padding interno dentro del rect del holder (left, right, top, bottom)
+        public const float PAD_L = 3f;
+        public const float PAD_R = 2f;
         public const float PAD_T = 1f;
         public const float PAD_B = 1f;
 
@@ -115,7 +115,9 @@ namespace CombatOverhaul.Patches.UI.Mana
             {
                 var array = list.ToArray();
                 for (int i = 0; i < array.Length; i++)
+                {
                     array[i]?.Invoke(current, max);
+                }
             }
         }
     }
@@ -152,6 +154,7 @@ namespace CombatOverhaul.Patches.UI.Mana
     [HarmonyPatch]
     internal static class PartyCharacterManaBarPatch
     {
+        // cache ligero para evitar LINQ repetido
         private static readonly Dictionary<Transform, Sprite> _hpSpriteCache = new Dictionary<Transform, Sprite>();
         private static readonly Dictionary<Transform, Material> _hpMaterialCache = new Dictionary<Transform, Material>();
 
@@ -196,6 +199,7 @@ namespace CombatOverhaul.Patches.UI.Mana
                 var unit = TryGetUnitFromVM(vm, __instance);
                 if (unit == null) return;
 
+                // anclaje: usamos el padre del HealthProgress si existe, si no salud texto, si no retrato, etc.
                 Transform healthContainer = null;
                 UnitHealthPartProgressView hpProg = null;
 
@@ -207,21 +211,25 @@ namespace CombatOverhaul.Patches.UI.Mana
                     var hpTxt = comp.gameObject.GetComponentInChildren<UnitHealthPartTextView>(true);
                     if (hpTxt != null) healthContainer = hpTxt.transform.parent;
                 }
+
                 if (healthContainer == null)
                 {
                     var portrait = comp.gameObject.GetComponentInChildren<UnitPortraitPartView>(true);
                     if (portrait != null) healthContainer = portrait.transform.parent;
                 }
+
                 if (healthContainer == null) healthContainer = comp.transform;
 
-                var already = healthContainer.Find("ManaBar_V");
+                // evitar duplicados
+                var already = healthContainer.Find("ManaBar");
                 if (already != null)
                 {
                     Refresh(already.gameObject, unit);
                     return;
                 }
 
-                CreateManaBarVertical(healthContainer, hpProg, unit);
+                // crear
+                CreateManaBar(healthContainer, hpProg, unit);
             }
             catch (Exception ex)
             {
@@ -229,14 +237,15 @@ namespace CombatOverhaul.Patches.UI.Mana
             }
         }
 
-        private static void CreateManaBarVertical(Transform healthContainer, UnitHealthPartProgressView hpProg, UnitEntityData unit)
+        private static void CreateManaBar(Transform healthContainer, UnitHealthPartProgressView hpProg, UnitEntityData unit)
         {
+            // localizamos el RectTransform de la barra de HP para clonar geometría base
             RectTransform hpRT = null;
             if (hpProg != null) hpRT = hpProg.GetComponent<RectTransform>();
             if (hpRT == null) hpRT = healthContainer as RectTransform;
 
-            // Holder: barra vertical a la DERECHA de la HP
-            var holder = new GameObject("ManaBar_V", typeof(RectTransform));
+            // Holder para aislar de LayoutGroups y controlar ancho/alto
+            var holder = new GameObject("ManaBar_Holder", typeof(RectTransform));
             var holderRT = holder.GetComponent<RectTransform>();
             holder.transform.SetParent(healthContainer, false);
 
@@ -247,46 +256,49 @@ namespace CombatOverhaul.Patches.UI.Mana
 
             var holderLE = holder.AddComponent<LayoutElement>();
             holderLE.ignoreLayout = !parentHasLayout;
-
-            float targetHeight = (ManaUIConfig.BAR_HEIGHT > 0f)
-                ? ManaUIConfig.BAR_HEIGHT
-                : ((hpRT != null) ? Mathf.Max(1f, hpRT.rect.height) : 12f);
-
-            if (parentHasLayout)
-            {
-                holderLE.minWidth = ManaUIConfig.BAR_THICKNESS;
-                holderLE.preferredWidth = ManaUIConfig.BAR_THICKNESS;
-                holderLE.flexibleWidth = 0f;
-            }
+            holderLE.minHeight = ManaUIConfig.BAR_HEIGHT;
+            holderLE.preferredHeight = ManaUIConfig.BAR_HEIGHT;
+            holderLE.flexibleWidth = 1f;
 
             if (hpRT != null)
             {
                 holderRT.SetSiblingIndex(hpRT.GetSiblingIndex() + 1);
-
-                // Copiamos anchors verticales de HP; para horizontal fijamos al centro y usamos sizeDelta.x
-                holderRT.anchorMin = new Vector2(hpRT.anchorMin.x, hpRT.anchorMin.y);
-                holderRT.anchorMax = new Vector2(hpRT.anchorMax.x, hpRT.anchorMax.y);
+                holderRT.anchorMin = hpRT.anchorMin;
+                holderRT.anchorMax = hpRT.anchorMax;
                 holderRT.pivot = hpRT.pivot;
-
-                // Grosor fijo y altura objetivo
-                holderRT.sizeDelta = new Vector2(ManaUIConfig.BAR_THICKNESS, targetHeight);
-
-                // Posicionada a la derecha de la HP + offset
-                float x = hpRT.anchoredPosition.x + (hpRT.rect.width * 0.5f) + (ManaUIConfig.BAR_THICKNESS * 0.5f) + ManaUIConfig.X_OFFSET;
-                float y = hpRT.anchoredPosition.y + ManaUIConfig.Y_OFFSET;
-                holderRT.anchoredPosition = new Vector2(x, y);
+                // aplicamos nuestra altura, conservando ancho base
+                holderRT.sizeDelta = new Vector2(hpRT.sizeDelta.x, ManaUIConfig.BAR_HEIGHT);
+                holderRT.anchoredPosition = hpRT.anchoredPosition + new Vector2(ManaUIConfig.X_OFFSET, ManaUIConfig.Y_OFFSET);
             }
             else
             {
-                holderRT.anchorMin = new Vector2(1f, 0.5f);
-                holderRT.anchorMax = new Vector2(1f, 0.5f);
-                holderRT.pivot = new Vector2(0.5f, 0.5f);
-                holderRT.sizeDelta = new Vector2(ManaUIConfig.BAR_THICKNESS, targetHeight);
+                holderRT.anchorMin = new Vector2(0f, 0f);
+                holderRT.anchorMax = new Vector2(1f, 0f);
+                holderRT.pivot = new Vector2(0.5f, 0f);
+                holderRT.sizeDelta = new Vector2(0f, ManaUIConfig.BAR_HEIGHT);
                 holderRT.anchoredPosition = new Vector2(ManaUIConfig.X_OFFSET, ManaUIConfig.Y_OFFSET);
             }
 
-            // Rect interno de la barra
-            var manaBar = new GameObject("Bar", typeof(RectTransform));
+            // Control del ancho extra
+            if (parentHasLayout)
+            {
+                holderLE.flexibleWidth = 0f;
+                float baseWidth = (hpRT != null) ? hpRT.rect.width : holderLE.preferredWidth;
+                holderLE.minWidth = baseWidth + ManaUIConfig.WIDTH_DELTA;
+                holderLE.preferredWidth = baseWidth + ManaUIConfig.WIDTH_DELTA;
+            }
+            else
+            {
+                var offMin = holderRT.offsetMin;
+                var offMax = holderRT.offsetMax;
+                offMin.x -= ManaUIConfig.WIDTH_DELTA * 0.5f;
+                offMax.x += ManaUIConfig.WIDTH_DELTA * 0.5f;
+                holderRT.offsetMin = offMin;
+                holderRT.offsetMax = offMax;
+            }
+
+            // Rect real de la barra dentro del holder
+            var manaBar = new GameObject("ManaBar", typeof(RectTransform));
             var manaRT = manaBar.GetComponent<RectTransform>();
             manaBar.transform.SetParent(holderRT, false);
             manaRT.anchorMin = Vector2.zero;
@@ -295,6 +307,7 @@ namespace CombatOverhaul.Patches.UI.Mana
             manaRT.sizeDelta = Vector2.zero;
             manaRT.anchoredPosition = Vector2.zero;
 
+            // padding interno
             manaRT.offsetMin = new Vector2(ManaUIConfig.PAD_L, ManaUIConfig.PAD_B);
             manaRT.offsetMax = new Vector2(-ManaUIConfig.PAD_R, -ManaUIConfig.PAD_T);
 
@@ -307,7 +320,7 @@ namespace CombatOverhaul.Patches.UI.Mana
             var bgImg = bgGO.GetComponent<Image>();
             bgImg.color = ManaUIConfig.BG_COLOR;
 
-            // FILL vertical bottom->top
+            // FILL
             var fillGO = new GameObject("Fill", typeof(RectTransform), typeof(Image));
             var fillRT = fillGO.GetComponent<RectTransform>();
             fillGO.transform.SetParent(manaBar.transform, false);
@@ -317,20 +330,23 @@ namespace CombatOverhaul.Patches.UI.Mana
 
             var fillImg = fillGO.GetComponent<Image>();
             fillImg.type = Image.Type.Filled;
-            fillImg.fillMethod = Image.FillMethod.Vertical;
-            fillImg.fillOrigin = (int)Image.OriginVertical.Bottom; // de abajo hacia arriba
+            fillImg.fillMethod = Image.FillMethod.Horizontal;
+            fillImg.fillOrigin = (int)Image.OriginHorizontal.Left;
             fillImg.color = ManaUIConfig.FILL_COLOR;
 
-            // Reusar sprite/material HP si existen
+            // sprite/material de HP (cacheados)
             GetHpSpriteAndMatCached(healthContainer, hpProg, out Sprite hpSprite, out Material hpMat);
+
             if (hpSprite != null)
             {
                 fillImg.sprite = hpSprite;
                 fillImg.material = hpMat;
-                bgImg.sprite = hpSprite; bgImg.type = Image.Type.Sliced;
+                bgImg.sprite = hpSprite;
+                bgImg.type = Image.Type.Sliced;
             }
             else
             {
+                // fallback: 1x1
                 var tex = new Texture2D(1, 1, TextureFormat.RGBA32, false);
                 tex.SetPixel(0, 0, Color.white); tex.Apply();
                 var spr = Sprite.Create(tex, new Rect(0, 0, 1, 1), new Vector2(0.5f, 0.5f), 100f);
@@ -437,6 +453,7 @@ namespace CombatOverhaul.Patches.UI.Mana
 
             var t = obj.GetType();
 
+            // propiedades
             var props = t.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             for (int i = 0; i < props.Length; i++)
             {
@@ -457,6 +474,7 @@ namespace CombatOverhaul.Patches.UI.Mana
                 catch { }
             }
 
+            // campos
             var fields = t.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             for (int i = 0; i < fields.Length; i++)
             {
@@ -491,4 +509,4 @@ namespace CombatOverhaul.Patches.UI.Mana
             return null;
         }
     }
-}
+}*/

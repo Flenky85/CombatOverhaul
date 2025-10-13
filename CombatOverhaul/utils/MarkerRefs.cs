@@ -1,5 +1,4 @@
-﻿// Utils/MarkerRefs.cs
-using Kingmaker.Blueprints;
+﻿using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 
 namespace CombatOverhaul.Utils
