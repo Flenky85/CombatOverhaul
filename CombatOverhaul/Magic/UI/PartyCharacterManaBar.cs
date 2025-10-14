@@ -4,6 +4,7 @@ using Kingmaker.EntitySystem.Entities;
 using Kingmaker.UI.MVVM._PCView.Party;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,6 +35,20 @@ namespace CombatOverhaul.Magic.UI
         public static readonly Color BG_COLOR = new Color(0f, 0f, 0f, 0.0f);
         public static readonly Color FILL_COLOR = new Color(0.12f, 0.45f, 1f, 1f);
     }
+
+    internal static class ManaUITextConfig
+    {
+        // Posición respecto a la esquina sup. derecha del contenedor de vida
+        public const float OFFSET_X = 0f;   // izquierda (negativo) / derecha (positivo)
+        public const float OFFSET_Y = 16f;  // abajo (negativo)   / arriba (positivo)
+
+        // Tamaños independientes
+        public const float FONT_SCALE_CURRENT = 1f; // tamaño para el "actual" y la barra "/"
+        public const float FONT_SCALE_MAX = 0.8f; // tamaño para el "máximo" (ej. 20% más pequeño que current)
+
+        public static readonly Color TEXT_COLOR = ManaUIConfig.FILL_COLOR; // mismo azul que la barra
+    }
+
 
     // =========================================================
     // =================  PUBLIC MANA UI API  ==================
@@ -141,6 +156,58 @@ namespace CombatOverhaul.Magic.UI
         private void OnDestroy() => OnDestroyed?.Invoke();
     }
 
+    internal sealed class ManaTextView : MonoBehaviour
+    {
+        private TextMeshProUGUI _tmp;
+        private Text _uiText;
+
+        public void Attach(TextMeshProUGUI tmp, Text uiText)
+        {
+            _tmp = tmp; _uiText = uiText;
+
+            if (_tmp != null)
+            {
+                _tmp.raycastTarget = false;
+                _tmp.richText = true; // necesario para <size=...>
+            }
+            if (_uiText != null)
+            {
+                _uiText.raycastTarget = false;
+                _uiText.supportRichText = true; // necesario para <size=...>
+            }
+        }
+
+        public void SetColor(Color c)
+        {
+            if (_tmp != null) _tmp.color = c;
+            if (_uiText != null) _uiText.color = c;
+        }
+
+        public void UpdateValue(int current, int max)
+        {
+            // Base = el mayor de los dos escalados (para que el "grande" sea el tamaño del componente)
+            float baseScale = Mathf.Max(ManaUITextConfig.FONT_SCALE_CURRENT, ManaUITextConfig.FONT_SCALE_MAX);
+
+            if (_tmp != null)
+            {
+                // En TMP podemos usar porcentaje relativo
+                int percentSmall = Mathf.RoundToInt(100f * (ManaUITextConfig.FONT_SCALE_MAX / baseScale));
+                string s = $"{current}/<size={percentSmall}%>{max}</size>";
+                _tmp.text = s;
+                return;
+            }
+
+            if (_uiText != null)
+            {
+                // En UI.Text el <size=> es absoluto en puntos
+                int smallPts = Mathf.Max(1, Mathf.RoundToInt(_uiText.fontSize * (ManaUITextConfig.FONT_SCALE_MAX / baseScale)));
+                string s = $"{current}/<size={smallPts}>{max}</size>";
+                _uiText.text = s;
+            }
+        }
+    }
+
+
     // =========================================================
     // ======================  PATCH  ==========================
     // =========================================================
@@ -155,22 +222,19 @@ namespace CombatOverhaul.Magic.UI
         {
             try
             {
-                // 1) Unit in the slot (public prop)
-                var unit = __instance?.UnitEntityData; // public in PCView
-                if (unit == null) return; // empty slot or no active VM
+                var unit = __instance?.UnitEntityData;
+                if (unit == null) return;
 
-                // 2) Anchor container: try HP progress bar → HP text → portrait
                 Transform healthContainer = null;
-                UnitHealthPartProgressView hpProg =
-                    __instance.GetComponentInChildren<UnitHealthPartProgressView>(true);
+                UnitHealthPartProgressView hpProg = __instance.GetComponentInChildren<UnitHealthPartProgressView>(true);
 
                 if (hpProg != null)
                     healthContainer = hpProg.transform.parent;
-                if (healthContainer == null)
-                {
-                    var hpTxt = __instance.GetComponentInChildren<UnitHealthPartTextView>(true);
-                    if (hpTxt != null) healthContainer = hpTxt.transform.parent;
-                }
+
+                var hpTxt = __instance.GetComponentInChildren<UnitHealthPartTextView>(true); // <-- necesitaremos esta ref
+                if (healthContainer == null && hpTxt != null)
+                    healthContainer = hpTxt.transform.parent;
+
                 if (healthContainer == null)
                 {
                     var portrait = __instance.GetComponentInChildren<UnitPortraitPartView>(true);
@@ -178,22 +242,139 @@ namespace CombatOverhaul.Magic.UI
                 }
                 if (healthContainer == null) healthContainer = __instance.transform;
 
-                // 3) Prevent duplicates
-                var already = healthContainer.Find("ManaBar_V");
-                if (already != null)
+                // Evitar duplicados (barra)
+                var alreadyBar = healthContainer.Find("ManaBar_V");
+                if (alreadyBar != null)
                 {
-                    Refresh(already.gameObject, unit);
+                    Refresh(alreadyBar.gameObject, unit);
+                    CreateOrRefreshManaText(hpTxt, unit); // <-- asegurar el texto también
                     return;
                 }
 
-                // 4) Create vertical bar
+                // Crear barra y texto
                 CreateManaBarVertical(healthContainer, hpProg, unit);
+                CreateOrRefreshManaText(hpTxt, unit); // <-- crear el número si hay contenedor de HP text
             }
             catch (Exception ex)
             {
                 Log.Error("[ManaBarPatch-PC] EX", ex);
             }
         }
+
+        // ----- NUEVO: creación/refresh del texto -----
+        // ----- NUEVO: creación/refresh del texto (con ignoreLayout) -----
+        private static void CreateOrRefreshManaText(UnitHealthPartTextView hpTextView, UnitEntityData unit)
+        {
+            if (hpTextView == null || unit == null) return;
+
+            var parent = hpTextView.transform; // hereda el hover de los números de vida
+            var exists = parent.Find("ManaText");
+
+            // Buscar plantilla de texto (TMP preferido)
+            var templateTMP = hpTextView.GetComponentInChildren<TextMeshProUGUI>(true);
+            var templateUI = (templateTMP == null) ? hpTextView.GetComponentInChildren<Text>(true) : null;
+
+            if (exists != null)
+            {
+                // --- ya existe: asegurar que sale del layout y aplicar offset ---
+                var rt = exists.GetComponent<RectTransform>();
+                if (rt != null)
+                {
+                    var le = exists.GetComponent<LayoutElement>() ?? exists.gameObject.AddComponent<LayoutElement>();
+                    le.ignoreLayout = true; // <- CLAVE para que funcionen los offsets
+
+                    // Anclamos arriba-derecha del contenedor de vida
+                    rt.anchorMin = new Vector2(1f, 1f);
+                    rt.anchorMax = new Vector2(1f, 1f);
+                    rt.pivot = new Vector2(1f, 1f);
+                    rt.sizeDelta = Vector2.zero;
+
+                    // Ahora sí, estos offsets MUEVEN el texto
+                    rt.anchoredPosition = new Vector2(ManaUITextConfig.OFFSET_X, ManaUITextConfig.OFFSET_Y);
+
+                    exists.transform.SetAsLastSibling(); // por si hay solapes, que dibuje encima
+                }
+
+                var view = exists.GetComponent<ManaTextView>() ?? exists.gameObject.AddComponent<ManaTextView>();
+                var (c, m) = ManaProvider.Get(unit);
+                view.UpdateValue(c, m);
+                ManaEvents.Subscribe(unit, (cc, mm) => view.UpdateValue(cc, mm));
+
+                // Limpieza
+                var destroyHook = parent.gameObject.GetComponent<OnDestroyHook>() ?? parent.gameObject.AddComponent<OnDestroyHook>();
+                destroyHook.OnDestroyed += () => ManaEvents.Unsubscribe(unit, view);
+                return;
+            }
+
+            // ---- Crear nuevo ManaText ----
+            var go = new GameObject("ManaText", typeof(RectTransform));
+            var rtNew = go.GetComponent<RectTransform>();
+            go.transform.SetParent(parent, false);
+
+            // ¡Fuera del layout! (igual que hacemos con la barra según su lógica)
+            var leNew = go.AddComponent<LayoutElement>();
+            leNew.ignoreLayout = true; // <- CLAVE
+
+            // Ancla y posición (top-right del contenedor de vida)
+            rtNew.anchorMin = new Vector2(1f, 1f);
+            rtNew.anchorMax = new Vector2(1f, 1f);
+            rtNew.pivot = new Vector2(1f, 1f);
+            rtNew.sizeDelta = Vector2.zero;
+            rtNew.anchoredPosition = new Vector2(ManaUITextConfig.OFFSET_X, ManaUITextConfig.OFFSET_Y);
+
+            TextMeshProUGUI tmp = null;
+            Text uiText = null;
+
+            if (templateTMP != null)
+            {
+                // ---- donde creas TMP ----
+                tmp = go.AddComponent<TextMeshProUGUI>();
+                tmp.font = templateTMP.font;
+                tmp.fontSharedMaterial = templateTMP.fontSharedMaterial;
+                // ANTES: tmp.fontSize = Mathf.Max(8f, templateTMP.fontSize * ManaUITextConfig.FONT_SCALE);
+                // AHORA:
+                tmp.fontSize = Mathf.Max(8f, templateTMP.fontSize * Mathf.Max(ManaUITextConfig.FONT_SCALE_CURRENT, ManaUITextConfig.FONT_SCALE_MAX));
+                tmp.alignment = TextAlignmentOptions.TopRight;
+                tmp.enableWordWrapping = false;
+                tmp.raycastTarget = false;
+                tmp.color = ManaUITextConfig.TEXT_COLOR;
+            }
+            else
+            {
+                // ---- donde creas UI.Text ----
+                uiText = go.AddComponent<Text>();
+                if (templateUI != null)
+                {
+                    uiText.font = templateUI.font;
+                    uiText.resizeTextForBestFit = templateUI.resizeTextForBestFit;
+                    // ANTES: uiText.fontSize = Mathf.Max(8, Mathf.RoundToInt(templateUI.fontSize * ManaUITextConfig.FONT_SCALE));
+                    // AHORA:
+                    uiText.fontSize = Mathf.Max(8, Mathf.RoundToInt(templateUI.fontSize * Mathf.Max(ManaUITextConfig.FONT_SCALE_CURRENT, ManaUITextConfig.FONT_SCALE_MAX)));
+                }
+                uiText.alignment = TextAnchor.UpperRight;
+                uiText.horizontalOverflow = HorizontalWrapMode.Overflow;
+                uiText.verticalOverflow = VerticalWrapMode.Overflow;
+                uiText.raycastTarget = false;
+                uiText.color = ManaUITextConfig.TEXT_COLOR;
+
+            }
+
+            var viewComp = go.AddComponent<ManaTextView>();
+            viewComp.Attach(tmp, uiText);
+            viewComp.SetColor(ManaUITextConfig.TEXT_COLOR);
+
+            var (current, max) = ManaProvider.Get(unit);
+            viewComp.UpdateValue(current, max);
+            ManaEvents.Subscribe(unit, (c, m) => viewComp.UpdateValue(c, m));
+
+            // Que dibuje por encima del de vida
+            go.transform.SetAsLastSibling();
+
+            // Limpieza al destruir el retrato
+            var destroy = parent.gameObject.GetComponent<OnDestroyHook>() ?? parent.gameObject.AddComponent<OnDestroyHook>();
+            destroy.OnDestroyed += () => ManaEvents.Unsubscribe(unit, viewComp);
+        }
+
 
         private static void CreateManaBarVertical(Transform healthContainer, UnitHealthPartProgressView hpProg, UnitEntityData unit)
         {
@@ -352,5 +533,6 @@ namespace CombatOverhaul.Magic.UI
             view.UpdateValue(current, max);
             ManaEvents.Subscribe(unit, (c, m) => view.UpdateValue(c, m));
         }
+
     }
 }
