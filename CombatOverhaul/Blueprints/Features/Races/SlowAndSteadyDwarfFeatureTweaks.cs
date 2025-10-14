@@ -1,25 +1,18 @@
 ﻿using BlueprintCore.Blueprints.CustomConfigurators.Classes;
 using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
-using HarmonyLib;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
-using Kingmaker.Blueprints.JsonSystem;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Enums;
 using Kingmaker.UnitLogic.FactLogic;
 
 namespace CombatOverhaul.Blueprints.Features.Races
 {
-    [HarmonyPatch(typeof(BlueprintsCache), nameof(BlueprintsCache.Init))]
-    internal static class SlowAndSteadyDwarf
+    internal static class SlowAndSteadyDwarfFeatureTweaks
     {
-        private static bool _done;
-
-        static void Postfix()
+        public static void Register()
         {
-            if (_done) return; _done = true;
-            
             var feat = ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.SlowAndSteadyDwarf);
             if (feat == null) return;
 

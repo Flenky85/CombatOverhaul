@@ -61,6 +61,6 @@
 
   <ItemGroup>
     <Folder Include="Blueprints\Buffs\" />
-    <Folder Include="Calculators\" />
+    <Folder Include="Patch\" />
   </ItemGroup>
 </Project>

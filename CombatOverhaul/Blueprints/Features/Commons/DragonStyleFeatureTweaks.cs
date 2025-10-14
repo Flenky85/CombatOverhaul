@@ -1,20 +1,13 @@
 ﻿using BlueprintCore.Blueprints.CustomConfigurators.Classes;
 using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
-using HarmonyLib;
-using Kingmaker.Blueprints.JsonSystem;
 
 namespace CombatOverhaul.Blueprints.Features.Commons
 {
-    [HarmonyPatch(typeof(BlueprintsCache), nameof(BlueprintsCache.Init))]
-    internal static class DragonStylePatch
+    internal static class DragonStyleFeatureTweaks
     {
-        private static bool _done;
-
-        static void Postfix()
+        public static void Register()
         {
-            if (_done) return; _done = true;
-
             FeatureConfigurator.For(FeaturesGuids.DragonStyle)
                 .SetDescriptionValue(
                     "You call upon the spirit of dragonkind, gaining greater resilience, mobility, and fierceness from their blessing.\n" +

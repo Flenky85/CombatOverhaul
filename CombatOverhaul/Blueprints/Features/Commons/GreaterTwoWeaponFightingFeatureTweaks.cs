@@ -1,21 +1,14 @@
-﻿using CombatOverhaul.Guids;
+﻿using BlueprintCore.Blueprints.CustomConfigurators.Classes;
+using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
-using HarmonyLib;
-using Kingmaker.Blueprints.JsonSystem;
 using Kingmaker.UnitLogic.FactLogic;
-using BlueprintCore.Blueprints.CustomConfigurators.Classes;
 
 namespace CombatOverhaul.Blueprints.Features.Commons
 {
-    [HarmonyPatch(typeof(BlueprintsCache), nameof(BlueprintsCache.Init))]
-    internal static class GreaterTwoWeaponFighting
+    internal static class GreaterTwoWeaponFightingFeatureTweaks
     {
-        private static bool _done;
-
-        static void Postfix()
+        public static void Register()
         {
-            if (_done) return; _done = true;
-
             FeatureConfigurator.For(FeaturesGuids.GreaterTwoWeaponFighting)
                 .RemoveComponents(c => c is AddFacts)
                 .SetDescriptionValue(

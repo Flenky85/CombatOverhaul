@@ -1,21 +1,14 @@
 ﻿using BlueprintCore.Blueprints.CustomConfigurators.Classes;
 using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
-using HarmonyLib;
-using Kingmaker.Blueprints.JsonSystem;
 using Kingmaker.UnitLogic.FactLogic;
 
 namespace CombatOverhaul.Blueprints.Features.Commons
 {
-    [HarmonyPatch(typeof(BlueprintsCache), nameof(BlueprintsCache.Init))]
-    internal static class ShiftersEdge
+    internal static class ShiftersEdgeFeatureTweaks
     {
-        private static bool _done;
-
-        static void Postfix()
+        public static void Register()
         {
-            if (_done) return; _done = true;
-
             FeatureConfigurator.For(FeaturesGuids.ShiftersEdge)
                 .RemoveComponents(c => c is AddFacts)
                 .SetDescriptionValue(

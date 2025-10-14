@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using CombatOverhaul.Armor.Patch.UI;
 using HarmonyLib;
 using Kingmaker.Items;
 using Kingmaker.UI.MVVM._VM.Tooltip.Templates;
 using Owlcat.Runtime.UI.Tooltips;
 
-namespace CombatOverhaul.Patch
+namespace CombatOverhaul.Armor.Patch.UI
 {
     [HarmonyPatch(typeof(TooltipTemplateItem), nameof(TooltipTemplateItem.GetBody))]
     [HarmonyPriority(Priority.Last)]

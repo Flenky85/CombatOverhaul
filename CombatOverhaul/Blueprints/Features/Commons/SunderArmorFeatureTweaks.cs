@@ -1,22 +1,14 @@
 ﻿using BlueprintCore.Blueprints.CustomConfigurators.Classes;
-using BlueprintCore.Blueprints.CustomConfigurators.UnitLogic.Abilities;
 using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
-using HarmonyLib;
-using Kingmaker.Blueprints.JsonSystem;
 
-namespace CombatOverhaul.Blueprints.Abilities.Commons
+namespace CombatOverhaul.Blueprints.Features.Commons
 {
-    [HarmonyPatch(typeof(BlueprintsCache), nameof(BlueprintsCache.Init))]
-    internal static class SunderArmor
+    internal static class SunderArmorFeatureTweaks
     {
-        private static bool _done;
-
-        static void Postfix()
+        public static void Register()
         {
-            if (_done) return; _done = true;
-
-            AbilityConfigurator.For(AbilitiesGuids.SunderArmor)
+            FeatureConfigurator.For(FeaturesGuids.SunderArmor)
                 .SetDescriptionValue(
                     "You can attempt to dislodge a piece of armor worn by your opponent. If your combat maneuver is successful, " +
                     "the target loses its bonuses from armor for 1 round.\n" +

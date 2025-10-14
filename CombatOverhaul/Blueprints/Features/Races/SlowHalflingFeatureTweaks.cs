@@ -1,26 +1,20 @@
-﻿using BlueprintCore.Blueprints.CustomConfigurators.Classes;
+﻿// Blueprints/Features/Races/SlowHalflingFeatureTweaks.cs
+using BlueprintCore.Blueprints.CustomConfigurators.Classes;
 using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
-using HarmonyLib;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
-using Kingmaker.Blueprints.JsonSystem;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Enums;
 using Kingmaker.UnitLogic.FactLogic;
 
 namespace CombatOverhaul.Blueprints.Features.Races
 {
-    [HarmonyPatch(typeof(BlueprintsCache), nameof(BlueprintsCache.Init))]
-    internal static class SlowHalfling
+    internal static class SlowHalflingFeatureTweaks
     {
-        private static bool _done;
-
-        static void Postfix()
+        public static void Register()
         {
-            if (_done) return; _done = true;
-
-            var feat = ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.SlowGnome);
+            var feat = ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(FeaturesGuids.SlowHalfling);
             if (feat == null) return;
 
             FeatureConfigurator.For(feat)
@@ -29,8 +23,7 @@ namespace CombatOverhaul.Blueprints.Features.Races
                     if (c.Stat == StatType.Speed && c.Descriptor == ModifierDescriptor.Racial)
                         c.Value = -5;
                 })
-                .SetDescriptionValue(
-                    "Halfling have a base speed of 15 feet.")
+                .SetDescriptionValue("Halfling have a base speed of 15 feet.")
                 .Configure();
         }
     }
