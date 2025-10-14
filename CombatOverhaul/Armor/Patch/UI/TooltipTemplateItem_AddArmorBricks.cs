@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace CombatOverhaul.Armor.Patch.UI
 {
-    internal static class ArmorTooltip_AddArmorBricks
+    internal static class TooltipTemplateItem_AddArmorBricks
     {
         private const string Label_DamageReduction = "Damage Reduction";
         private const string Label_ArmorClassPenalty = "Armor class penalty";
@@ -24,14 +24,14 @@ namespace CombatOverhaul.Armor.Patch.UI
 
             var block = new List<ITooltipBrick>(4)
             {
-                ArmorTooltip_BrickHelpers.Stat(Label_DamageReduction,   drPercent   + "%"),
-                ArmorTooltip_BrickHelpers.SepSmall(),
-                ArmorTooltip_BrickHelpers.Stat(Label_ArmorClassPenalty, acPenaltyPct + "%"),
-                ArmorTooltip_BrickHelpers.SepSmall(),
+                TooltipTemplateItem_BrickHelpers.Stat(Label_DamageReduction,   drPercent   + "%"),
+                TooltipTemplateItem_BrickHelpers.SepSmall(),
+                TooltipTemplateItem_BrickHelpers.Stat(Label_ArmorClassPenalty, acPenaltyPct + "%"),
+                TooltipTemplateItem_BrickHelpers.SepSmall(),
             };
 
             int insertIdx = FindBrickIndexByGlossaryKey(bricks, "ArmorCheckPenalty");
-            ArmorTooltip_BrickHelpers.InsertBlockOrAppend(bricks, insertIdx, block);
+            TooltipTemplateItem_BrickHelpers.InsertBlockOrAppend(bricks, insertIdx, block);
         }
 
         private static int FindBrickIndexByGlossaryKey(List<ITooltipBrick> bricks, string glossaryKey)

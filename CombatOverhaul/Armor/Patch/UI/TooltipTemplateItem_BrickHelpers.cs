@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace CombatOverhaul.Armor.Patch.UI
 {
-    internal static class ArmorTooltip_BrickHelpers
+    internal static class TooltipTemplateItem_BrickHelpers
     {
         public static TooltipBrickIconValueStat Stat(string name, string value) =>
             new TooltipBrickIconValueStat(name, value, null, TooltipIconValueStatType.Normal, null);

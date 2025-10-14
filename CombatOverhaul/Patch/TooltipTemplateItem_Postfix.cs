@@ -9,7 +9,7 @@ namespace CombatOverhaul.Patch
 {
     [HarmonyPatch(typeof(TooltipTemplateItem), nameof(TooltipTemplateItem.GetBody))]
     [HarmonyPriority(Priority.Last)]
-    internal static class ArmorTooltip_Postfix
+    internal static class TooltipTemplateItem_Postfix
     {
         static void Postfix(TooltipTemplateItem __instance, ref IEnumerable<ITooltipBrick> __result)
         {
@@ -17,11 +17,11 @@ namespace CombatOverhaul.Patch
 
             var bricks = __result as List<ITooltipBrick> ?? new List<ITooltipBrick>(__result);
 
-            ArmorTooltip_RemoveMaxDex.RemoveMaxDexBrick(bricks);
+            TooltipTemplateItem_RemoveMaxDex.RemoveMaxDexBrick(bricks);
 
             if (__instance?.m_Item is ItemEntityArmor armor)
             {
-                ArmorTooltip_AddArmorBricks.AddArmorBricks(armor, bricks);
+                TooltipTemplateItem_AddArmorBricks.AddArmorBricks(armor, bricks);
             }
 
             __result = bricks;

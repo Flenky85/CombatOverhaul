@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 namespace CombatOverhaul.Armor.Patch.UI
 {
-    internal static class ArmorTooltip_RemoveMaxDex
+    internal static class TooltipTemplateItem_RemoveMaxDex
     {
         public static void RemoveMaxDexBrick(List<ITooltipBrick> bricks)
         {
-            ArmorTooltip_BrickHelpers.RemoveIconStatWithTrailingByGlossaryKey(
+            TooltipTemplateItem_BrickHelpers.RemoveIconStatWithTrailingByGlossaryKey(
                 bricks,
                 TooltipElement.MaxDexterity.ToString(),
                 removeFollowingText: true,
