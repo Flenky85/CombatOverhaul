@@ -17,7 +17,7 @@ namespace CombatOverhaul.Magic.EventBus
         ITurnBasedModeHandler, IGlobalSubscriber, ISubscriber
     {
         private const string LogPrefix = "[CO][Mana][Regen/RoundStart]";
-        private static readonly BlueprintAbilityResource ManaRes = ManaResource.Mana;
+        private static BlueprintAbilityResource ManaRes => ManaResource.Mana;
 
         public void HandleSurpriseRoundStarted() => TryRegenForParty();
         public void HandleRoundStarted(int round) => TryRegenForParty();

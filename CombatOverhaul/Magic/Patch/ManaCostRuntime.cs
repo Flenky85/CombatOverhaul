@@ -1,41 +1,24 @@
 ﻿using CombatOverhaul.Features;
+using CombatOverhaul.Magic.UI;
 using HarmonyLib;
 using Kingmaker;
-using Kingmaker.Blueprints;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.UnitLogic.Abilities;
-using Kingmaker.UnitLogic.Abilities.Components;
 using UnityEngine;
 
 namespace CombatOverhaul.Magic.Patch
 {
     [HarmonyPatch]
-    internal static class ManaCostRuntime_Level1
+    internal static class ManaCostRuntime
     {
-        private const int Level1Cost = 10;
-
         // ========= Helpers =========
         private static bool IsPartyInCombatCaster(AbilityData ability)
         {
             var caster = ability?.Caster?.Unit;
-            return caster != null && caster.IsPlayerFaction && caster.IsInCombat && Game.Instance?.Player?.IsInCombat == true;
-        }
-
-        private static bool IsLevel1Spell(AbilityData ad)
-        {
-            var ab = ad?.Blueprint;
-            if (ab == null) return false;
-
-            // Evita variantes de toque (para no cobrar dos veces)
-            bool isTouchVariant =
-                ab.GetComponent<AbilityEffectStickyTouch>() != null ||
-                ab.GetComponent<AbilityDeliverTouch>() != null;
-
-            if (isTouchVariant) return false;
-
-            // Usa el nivel “runtime” que ya calcula AbilityData (sirve para listas/clases/items)
-            // 0 = cantrip, 1 = lo que buscamos
-            return ad.SpellLevel == 1 && ab.IsSpell;
+            return caster != null
+                && caster.IsPlayerFaction
+                && caster.IsInCombat
+                && Game.Instance?.Player?.IsInCombat == true;
         }
 
         private static bool HasEnoughMana(UnitEntityData unit, int cost)
@@ -58,19 +41,17 @@ namespace CombatOverhaul.Magic.Patch
             int cur = coll.GetResourceAmount(res);
             int after = Mathf.Clamp(cur - cost, 0, max);
 
-            // setter interno (tu build no tiene SetResourceAmount público)
             var map = coll.m_Resources;
             if (map != null && map.TryGetValue(res, out var uar) && uar != null)
                 uar.Amount = after;
 
-            // refresca UI
-            Magic.UI.ManaEvents.Raise(unit, after, max);
+            ManaEvents.Raise(unit, after, max);
         }
 
-        // ============================================================
-        // 1) BLOQUEAR el casteo si no hay maná: reduce AvailableCount a 0
-        //    AbilityData.GetAvailableForCastCount() existe en tu build.
-        // ============================================================
+        // ==========================================================================//   
+        // 1) Block casting when not enough mana by reducing AvailableCount to 0.    //
+        //    Cantrips are excluded because TryFromAbility returns false for level 0.//
+        // ==========================================================================//
         [HarmonyPatch(typeof(AbilityData), nameof(AbilityData.GetAvailableForCastCount))]
         private static class AbilityData_GetAvailableForCastCount_Patch
         {
@@ -78,23 +59,26 @@ namespace CombatOverhaul.Magic.Patch
             {
                 try
                 {
-                    if (__result <= 0) return; // ya está bloqueado por el juego vanilla
+                    if (__result <= 0) return; 
                     if (!IsPartyInCombatCaster(__instance)) return;
-                    if (!IsLevel1Spell(__instance)) return;
+
+                    if (!ManaCosts.TryFromAbility(__instance, out var cost)) return;
+                    if (cost <= 0) return;
 
                     var caster = __instance.Caster?.Unit;
                     if (caster == null) return;
 
-                    if (!HasEnoughMana(caster, Level1Cost))
-                        __result = 0; // sin maná -> no se puede castear
+                    if (!HasEnoughMana(caster, cost))
+                        __result = 0;
                 }
                 catch { /* swallow */ }
             }
         }
 
-        // ================================================
-        // 2) GASTAR maná al lanzar: AbilityData.Spend()
-        // ================================================
+        // ================================================//
+        // 2) Spend mana on cast: AbilityData.Spend()      //
+        //    Cantrips are excluded by TryFromAbility.     //
+        // ================================================//
         [HarmonyPatch(typeof(AbilityData), nameof(AbilityData.Spend))]
         private static class AbilityData_Spend_Patch
         {
@@ -103,35 +87,24 @@ namespace CombatOverhaul.Magic.Patch
                 try
                 {
                     if (!IsPartyInCombatCaster(__instance)) return;
-                    if (!IsLevel1Spell(__instance)) return;
+                    if (!ManaCosts.TryFromAbility(__instance, out var cost)) return;
+                    if (cost <= 0) return;
 
                     var caster = __instance.Caster?.Unit;
                     if (caster == null) return;
 
-                    // === Guardias para NO gastar si no hay suficiente maná ===
                     var res = ManaResource.Mana;
                     var coll = caster.Descriptor?.Resources;
                     if (res == null || coll == null) return;
                     if (!coll.ContainsResource(res)) coll.Add(res, restoreAmount: false);
 
                     int cur = coll.GetResourceAmount(res);
-                    if (cur < Level1Cost) return; // <-- CLAVE: no gastes si no llega
+                    if (cur < cost) return;
 
-                    // (Opcional) doble check: si el juego considera que no está disponible, no gastar
-                    // if (__instance.GetAvailableForCastCount() <= 0) return;
-
-                    int max = ManaCalc.CalcMaxMana(caster);
-                    int after = Mathf.Clamp(cur - Level1Cost, 0, max);
-
-                    var map = coll.m_Resources; // setter interno: tu build no tiene SetResourceAmount público
-                    if (map != null && map.TryGetValue(res, out var uar) && uar != null)
-                        uar.Amount = after;
-
-                    UI.ManaEvents.Raise(caster, after, max);
+                    SpendMana(caster, cost);
                 }
                 catch { /* swallow */ }
             }
         }
-
     }
 }
