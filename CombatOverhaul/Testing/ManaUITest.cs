@@ -1,4 +1,4 @@
-﻿using CombatOverhaul.Patches.UI.Mana;
+﻿using CombatOverhaul.Magic.UI;
 using Kingmaker;
 using Kingmaker.EntitySystem.Entities;
 

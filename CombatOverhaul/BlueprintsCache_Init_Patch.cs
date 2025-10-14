@@ -1,0 +1,19 @@
+﻿using CombatOverhaul.Features;
+using CombatOverhaul.Magic.UI;
+using HarmonyLib;
+using Kingmaker.Blueprints.JsonSystem;
+
+namespace CombatOverhaul
+{
+    [HarmonyPatch(typeof(BlueprintsCache), nameof(BlueprintsCache.Init))]
+    internal static class Patch_BlueprintsCache_Init
+    {
+        static void Postfix()
+        {
+            MonsterArmorMarkers.Register();
+            ManaResource.Register();
+
+            ManaUI.SetManaResource(ManaResource.Mana);
+        }
+    }
+}

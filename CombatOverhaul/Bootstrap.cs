@@ -1,4 +1,4 @@
-﻿using CombatOverhaul.Bus;
+﻿using CombatOverhaul.Attack.EventBus;
 using Kingmaker;
 using Kingmaker.Items;
 using Kingmaker.PubSubSystem;
