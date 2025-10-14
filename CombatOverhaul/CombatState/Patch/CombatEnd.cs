@@ -1,11 +1,11 @@
 ﻿using CombatOverhaul.Features;
+using CombatOverhaul.Magic;
 using CombatOverhaul.Magic.UI;
 using HarmonyLib;
 using Kingmaker;
 using Kingmaker.Blueprints;
 using Kingmaker.UnitLogic;
 using System;
-using System.Collections.Generic;
 using TurnBased.Controllers;
 using UnityEngine;
 
@@ -32,11 +32,12 @@ namespace CombatOverhaul.CombatState.Patch
                     var coll = u.Descriptor?.Resources;
                     if (coll == null || !coll.ContainsResource(res)) continue;
 
-                    SetResourceAmount(coll, ManaResource.Mana, 0);
+                    int maxMana = ManaCalc.CalcMaxMana(u);
+                    SetResourceAmount(coll, res, maxMana);     // res ya es ManaResource.Mana
+                    ManaEvents.Raise(u, maxMana, maxMana);
 
-                    ManaEvents.Raise(u, 0, 0);
+                    Debug.Log($"[CO][Mana] CombatEnd -> '{u.CharacterName}' mana = {maxMana}/{maxMana}");
 
-                    Debug.Log($"[CO][Mana] CombatEnd -> '{u.CharacterName}' mana = 0");
                 }
 
             }

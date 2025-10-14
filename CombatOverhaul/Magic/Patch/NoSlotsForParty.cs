@@ -9,7 +9,7 @@ namespace CombatOverhaul.Magic.Patch
 {
     /// <summary>
     /// Evita que los miembros de la party (y pets) consuman slots al lanzar hechizos,
-    /// solo durante combate. No modifica blueprints.
+    /// tanto dentro como fuera de combate. No se aplica a summons ni a aliados externos.
     /// Se engancha en Spellbook.SpendInternal(...) que es donde Owlcat descuenta slots.
     /// </summary>
     [HarmonyPatch(typeof(Spellbook), nameof(Spellbook.SpendInternal))]
@@ -23,23 +23,32 @@ namespace CombatOverhaul.Magic.Patch
             bool doSpend,
             ref bool __result)
         {
-            // Solo alteramos en el momento de gastar
+            // Solo alteramos cuando realmente se intentaría gastar
             if (!doSpend) return true;
 
-            // Necesitamos el caster desde 'spell' (cuando doSpend == true Owlcat lo exige) :contentReference[oaicite:1]{index=1}
+            // Caster desde el AbilityData (cuando doSpend == true debería venir)
             UnitEntityData caster = spell?.Caster?.Unit;
             if (caster == null) return true;
-
-            // Solo party/pets y en combate
-            if (!caster.IsPlayerFaction || !caster.IsInCombat || Game.Instance?.Player?.IsInCombat != true)
-                return true;
 
             // Solo hechizos (no SLA/otras abilities)
             if (blueprint == null || !blueprint.IsSpell) return true;
 
+            // Solo party members y pets; fuera aliados y summons
+            if (!IsPartyOrPet(caster)) return true;
+
             // Saltamos el método original -> NO se consumen slots; devolvemos éxito
             __result = true;
             return false;
+        }
+
+        private static bool IsPartyOrPet(UnitEntityData unit)
+        {
+            var player = Game.Instance?.Player;
+            if (player == null || unit == null) return false;
+
+            // Aceptar solo miembros de la party y sus pets
+            var list = player.PartyAndPets;
+            return list != null && list.Contains(unit);
         }
     }
 }

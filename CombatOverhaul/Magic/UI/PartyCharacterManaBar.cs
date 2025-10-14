@@ -89,7 +89,6 @@ namespace CombatOverhaul.Magic.UI
         }
     }
 
-
     internal static class ManaEvents
     {
         private static readonly Dictionary<UnitEntityData, List<Action<int, int>>> _subs =
@@ -206,7 +205,6 @@ namespace CombatOverhaul.Magic.UI
             }
         }
     }
-
 
     // =========================================================
     // ======================  PATCH  ==========================
