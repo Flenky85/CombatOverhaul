@@ -48,7 +48,7 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
 
             int max = ManaCalc.CalcMaxMana(unit);
             var coll = desc.Resources;
-            int cur = coll.ContainsResource(ManaResource) ? coll.GetResourceAmount(ManaResource) : 0;
+            int cur = coll.GetResourceAmount(ManaResource);
 
             if (cur > max) cur = max;
             if (cur < 0) cur = 0;
