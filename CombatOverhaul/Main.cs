@@ -40,7 +40,9 @@ namespace CombatOverhaul
 
                     SubscribeHandlers();
 
-                    Log.Info("Enabled. Harmony patches applied and handlers subscribed.");
+                    Bootstrap.InitOnce();
+
+                    Log.Info("Enabled. Harmony patches applied, handlers subscribed and one-shot recalcs done.");
                 }
                 else
                 {
@@ -48,6 +50,8 @@ namespace CombatOverhaul
 
                     _harmony?.UnpatchAll(HarmonyId);
                     _harmony = null;
+
+                    Bootstrap.Reset();
 
                     Log.Info("Disabled. Handlers unsubscribed and patches removed.");
                 }
@@ -70,6 +74,9 @@ namespace CombatOverhaul
                 _harmony = null;
 
                 _enabled = false;
+
+                Bootstrap.Reset();
+
                 Log.Info("Unloaded.");
             }
             catch (Exception ex)
@@ -89,7 +96,6 @@ namespace CombatOverhaul
             TrySub(() => EventBus.Subscribe(new Damage.EventBus.BABDice_WeaponStats()));
             TrySub(() => EventBus.Subscribe(new Damage.EventBus.AttackDamageScaling()));
             TrySub(() => EventBus.Subscribe(new Magic.EventBus.ManaRegenOnRoundStart()));
-
 
             Log.Info($"Subscribed {_busSubs.Count} handlers.");
         }

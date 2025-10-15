@@ -1,39 +1,21 @@
-﻿using CombatOverhaul.Attack.EventBus;
-using Kingmaker;
-using Kingmaker.Items;
-using Kingmaker.PubSubSystem;
+﻿using Kingmaker;
 
 namespace CombatOverhaul
 {
     internal static class Bootstrap
     {
-        private static bool _subscribed;
-        private static ForceDexForAttack _handler;
-        
-        // Recalcula los stats de armadura/escudo ya equipados para reflejar ArmorBonus=0
         private static bool _armorRecalcDone;
-        
-        // evita doble recalculo
         private static bool _recalcDone;
 
-        internal static void Init()
+        internal static void InitOnce()
         {
-            if (_subscribed) return;
-
-            _handler = new ForceDexForAttack();
-            EventBus.Subscribe(_handler);
-            _subscribed = true;
-
             RecalcMaxDexAllUnitsOnce();
             RecalcAllArmorOnce();
         }
 
-        internal static void Dispose()
+        internal static void Reset()
         {
-            if (!_subscribed) return;
-            EventBus.Unsubscribe(_handler);
-            _handler = null;
-            _subscribed = false;
+            _armorRecalcDone = false;
             _recalcDone = false;
         }
 
@@ -56,8 +38,9 @@ namespace CombatOverhaul
                     shieldArmor?.RecalculateMaxDexBonus();
                 }
             }
-            catch { /* no romper nada si aún no hay estado */ }
+            catch { /* swallow */ }
         }
+
         private static void RecalcAllArmorOnce()
         {
             if (_armorRecalcDone) return;
@@ -77,7 +60,7 @@ namespace CombatOverhaul
                     shieldArmor?.RecalculateStats();
                 }
             }
-            catch { /* silencioso */ }
+            catch { /* swallow */ }
         }
     }
 }
