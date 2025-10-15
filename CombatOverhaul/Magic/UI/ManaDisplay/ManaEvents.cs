@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Kingmaker.EntitySystem.Entities;
+﻿using Kingmaker.EntitySystem.Entities;
 using Kingmaker.PubSubSystem;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace CombatOverhaul.Magic.UI.ManaDisplay
@@ -13,8 +14,8 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
 
     internal static class ManaEvents
     {
-        private static readonly Dictionary<UnitEntityData, List<Action<int, int>>> _subs =
-            new Dictionary<UnitEntityData, List<Action<int, int>>>();
+        private static readonly Dictionary<UnitEntityData, HashSet<Action<int, int>>> _subs =
+            new Dictionary<UnitEntityData, HashSet<Action<int, int>>>();
 
         private static readonly Dictionary<UnitEntityData, UnitBridge> _bridges =
             new Dictionary<UnitEntityData, UnitBridge>();
@@ -23,14 +24,13 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
         {
             if (unit == null || cb == null) return;
 
-            if (!_subs.TryGetValue(unit, out var list))
+            if (!_subs.TryGetValue(unit, out var set))
             {
-                list = new List<Action<int, int>>();
-                _subs[unit] = list;
+                set = new HashSet<Action<int, int>>();
+                _subs[unit] = set;
             }
 
-            if (!list.Contains(cb))
-                list.Add(cb);
+            set.Add(cb);
 
             EnsureBridge(unit);
         }
@@ -39,16 +39,17 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
         {
             if (unit == null) return;
 
-            if (_subs.TryGetValue(unit, out var list))
+            if (_subs.TryGetValue(unit, out var set))
             {
-                for (int i = list.Count - 1; i >= 0; i--)
+                var snap = set.ToArray();
+                for (int i = 0; i < snap.Length; i++)
                 {
-                    var a = list[i];
+                    var a = snap[i];
                     if (a == null || a.Target == owner)
-                        list.RemoveAt(i);
+                        set.Remove(a);
                 }
 
-                if (list.Count == 0)
+                if (set.Count == 0)
                 {
                     _subs.Remove(unit);
                     RemoveBridge(unit);
@@ -73,13 +74,13 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
         private static void NotifyLocal(UnitEntityData unit, int current, int max)
         {
             if (unit == null) return;
-            if (_subs.TryGetValue(unit, out var list))
+            if (_subs.TryGetValue(unit, out var set))
             {
-                var copy = list.ToArray();
-                for (int i = 0; i < copy.Length; i++)
+                var snap = set.ToArray();
+                for (int i = 0; i < snap.Length; i++)
                 {
-                    try { copy[i]?.Invoke(current, max); }
-                    catch (Exception) { }
+                    try { snap[i]?.Invoke(current, max); }
+                    catch (Exception) {  }
                 }
             }
         }
