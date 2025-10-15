@@ -85,6 +85,7 @@ namespace CombatOverhaul.Magic.UI
                 }
 
                 var view = exists.GetComponent<ManaTextView>() ?? exists.gameObject.AddComponent<ManaTextView>();
+                view.SetUnit(unit);
                 var (c, m) = ManaProvider.Get(unit);
                 view.UpdateValue(c, m);
                 ManaEvents.Subscribe(unit, view.UpdateValue);
@@ -140,6 +141,7 @@ namespace CombatOverhaul.Magic.UI
             var viewComp = go.AddComponent<ManaTextView>();
             viewComp.Attach(tmp, uiText);
             viewComp.SetColor(ManaUITextConfig.TEXT_COLOR);
+            viewComp.SetUnit(unit);
 
             var (current, max) = ManaProvider.Get(unit);
             viewComp.UpdateValue(current, max);

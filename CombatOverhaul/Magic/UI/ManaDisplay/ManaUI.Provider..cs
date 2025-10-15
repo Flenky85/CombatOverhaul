@@ -1,6 +1,7 @@
 ﻿using Kingmaker.Blueprints;
 using Kingmaker.EntitySystem.Entities;
 using System.Runtime.CompilerServices;
+using CombatOverhaul.Magic;
 
 namespace CombatOverhaul.Magic.UI.ManaDisplay
 {
@@ -53,6 +54,20 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
             if (cur > max) cur = max;
             if (cur < 0) cur = 0;
             return (cur, max);
+        }
+        public static int GetRegen(UnitEntityData unit)
+        {
+            if (unit == null) return 0;
+            try
+            {
+                int max = ManaCalc.CalcMaxMana(unit);
+                int regen = ManaCalc.CalcManaPerTurn(unit, max);
+                return regen > 0 ? regen : 0;
+            }
+            catch
+            {
+                return 0;
+            }
         }
     }
 }

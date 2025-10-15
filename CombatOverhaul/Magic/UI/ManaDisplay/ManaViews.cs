@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Kingmaker.EntitySystem.Entities;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,29 +43,23 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
         private TextMeshProUGUI _tmp;
         private Text _uiText;
 
+        private UnitEntityData _unit;           
         private int _lastCur = int.MinValue;
         private int _lastMax = int.MinValue;
+        private int _lastRegen = int.MinValue;  
 
         private StringBuilder _sb;
 
         public void Attach(TextMeshProUGUI tmp, Text uiText)
         {
-            _tmp = tmp;
-            _uiText = uiText;
-
+            _tmp = tmp; _uiText = uiText;
             _sb ??= new StringBuilder(32);
 
-            if (_tmp != null)
-            {
-                _tmp.raycastTarget = false;
-                _tmp.richText = true;
-            }
-            if (_uiText != null)
-            {
-                _uiText.raycastTarget = false;
-                _uiText.supportRichText = true;
-            }
+            if (_tmp != null) { _tmp.raycastTarget = false; _tmp.richText = true; }
+            if (_uiText != null) { _uiText.raycastTarget = false; _uiText.supportRichText = true; }
         }
+
+        public void SetUnit(UnitEntityData unit) => _unit = unit;
 
         public void SetColor(Color c)
         {
@@ -74,17 +69,28 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
 
         public void UpdateValue(int current, int max)
         {
-            if (current == _lastCur && max == _lastMax) return;
-            _lastCur = current;
-            _lastMax = max;
+            int regen = ManaProvider.GetRegen(_unit);
 
-            float baseScale = Mathf.Max(ManaUITextConfig.FONT_SCALE_CURRENT, ManaUITextConfig.FONT_SCALE_MAX);
+            if (current == _lastCur && max == _lastMax && regen == _lastRegen) return;
+            _lastCur = current; _lastMax = max; _lastRegen = regen;
+
+            float smallScale = ManaUITextConfig.FONT_SCALE_MAX; 
 
             if (_tmp != null)
             {
-                int percentSmall = Mathf.RoundToInt(100f * (ManaUITextConfig.FONT_SCALE_MAX / baseScale));
+                int percentSmall = Mathf.RoundToInt(100f * smallScale);
 
                 _sb.Clear();
+
+                if (regen > 0)
+                {
+                    _sb.Append("<size=");
+                    _sb.Append(percentSmall);
+                    _sb.Append("%>+");
+                    _sb.Append(regen);
+                    _sb.Append("</size> ");
+                }
+
                 _sb.Append(current);
                 _sb.Append("/<size=");
                 _sb.Append(percentSmall);
@@ -98,9 +104,19 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
 
             if (_uiText != null)
             {
-                int smallPts = Mathf.Max(1, Mathf.RoundToInt(_uiText.fontSize * (ManaUITextConfig.FONT_SCALE_MAX / baseScale)));
+                int smallPts = Mathf.Max(1, Mathf.RoundToInt(_uiText.fontSize * smallScale));
 
                 _sb.Clear();
+
+                if (regen > 0)
+                {
+                    _sb.Append("<size=");
+                    _sb.Append(smallPts);
+                    _sb.Append(">+");
+                    _sb.Append(regen);
+                    _sb.Append("</size> ");
+                }
+
                 _sb.Append(current);
                 _sb.Append("/<size=");
                 _sb.Append(smallPts);
@@ -111,5 +127,6 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
                 _uiText.text = _sb.ToString();
             }
         }
+
     }
 }
