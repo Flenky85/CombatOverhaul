@@ -16,13 +16,13 @@ namespace CombatOverhaul.Magic
 
     internal static class ManaCalc
     {
-        private const int WEIGHT_L10 = 5;
+        private const int WEIGHT_L10 = 4;
         private const int WEIGHT_L6 = 3;
         private const int WEIGHT_L4 = 2;
 
         private const float BONUS_PCT_PER_MOD = 0.00f; 
 
-        private const float REGEN_PCT_OF_MAX = 0.20f;  
+        private const float REGEN_PCT_OF_MAX = 0.33f;  
         private const int REGEN_MIN_FLAT = 1;
 
         public static CasterBuckets GetBuckets(UnitEntityData unit)
@@ -71,7 +71,7 @@ namespace CombatOverhaul.Magic
             float pct = 1f + mod * BONUS_PCT_PER_MOD;
             int result = (int)Math.Round(baseSum * pct, MidpointRounding.AwayFromZero);
             if (result < 0) result = 0;
-            return (int)((result + 10) * 1.5f);
+            return (result + 10);
         }
 
         public static int CalcManaPerTurn(UnitEntityData unit, int? maxManaOpt = null)

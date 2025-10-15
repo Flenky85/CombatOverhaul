@@ -7,14 +7,14 @@ namespace CombatOverhaul.Magic
     public enum ManaCostPerLevel
     {
         Level1 = 10,
-        Level2 = 20,
-        Level3 = 30,
-        Level4 = 40,
-        Level5 = 50,
-        Level6 = 60,
-        Level7 = 70,
-        Level8 = 80,
-        Level9 = 90
+        Level2 = 15,
+        Level3 = 20,
+        Level4 = 25,
+        Level5 = 30,
+        Level6 = 35,
+        Level7 = 40,
+        Level8 = 45,
+        Level9 = 50
     }
 
     public static class ManaCosts
