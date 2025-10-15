@@ -23,28 +23,14 @@ namespace CombatOverhaul.Magic.UI
                 var unit = __instance?.UnitEntityData;
                 if (unit == null) return;
 
-                Transform healthContainer = null;
-                UnitHealthPartProgressView hpProg = __instance.GetComponentInChildren<UnitHealthPartProgressView>(true);
-
-                if (hpProg != null)
-                    healthContainer = hpProg.transform.parent;
-
-                var hpTxt = __instance.GetComponentInChildren<UnitHealthPartTextView>(true);
-                if (healthContainer == null && hpTxt != null)
-                    healthContainer = hpTxt.transform.parent;
-
-                if (healthContainer == null)
-                {
-                    var portrait = __instance.GetComponentInChildren<UnitPortraitPartView>(true);
-                    if (portrait != null) healthContainer = portrait.transform.parent;
-                }
-                if (healthContainer == null) healthContainer = __instance.transform;
+                // CHANGE: centralizamos cómo localizamos el contenedor, y devolvemos también hpProg / hpTxt
+                var healthContainer = FindHealthContainer(__instance, out var hpProg, out var hpTxt);
 
                 var alreadyBar = healthContainer.Find("ManaBar_V");
                 if (alreadyBar != null)
                 {
-                    Refresh(alreadyBar.gameObject, unit);
-                    CreateOrRefreshManaText(hpTxt, unit);
+                    Refresh(alreadyBar.gameObject, unit);    // CHANGE: ahora evita doble-suscripción
+                    CreateOrRefreshManaText(hpTxt, unit);     // texto: crear o refrescar
                     return;
                 }
 
@@ -55,6 +41,25 @@ namespace CombatOverhaul.Magic.UI
             {
                 Debug.LogError("[ManaBarPatch-PC] EX: " + ex);
             }
+        }
+
+        // CHANGE: helper para localizar contenedor + refs útiles
+        private static Transform FindHealthContainer(PartyCharacterPCView view, out UnitHealthPartProgressView hpProg, out UnitHealthPartTextView hpTxt)
+        {
+            hpProg = view.GetComponentInChildren<UnitHealthPartProgressView>(true);
+            hpTxt = view.GetComponentInChildren<UnitHealthPartTextView>(true);
+
+            Transform healthContainer = null;
+            if (hpProg != null) healthContainer = hpProg.transform.parent;
+            if (healthContainer == null && hpTxt != null) healthContainer = hpTxt.transform.parent;
+
+            if (healthContainer == null)
+            {
+                var portrait = view.GetComponentInChildren<UnitPortraitPartView>(true);
+                if (portrait != null) healthContainer = portrait.transform.parent;
+            }
+
+            return healthContainer ?? view.transform;
         }
 
         private static void CreateOrRefreshManaText(UnitHealthPartTextView hpTextView, UnitEntityData unit)
@@ -75,12 +80,8 @@ namespace CombatOverhaul.Magic.UI
                     var le = exists.GetComponent<LayoutElement>() ?? exists.gameObject.AddComponent<LayoutElement>();
                     le.ignoreLayout = true;
 
-                    rt.anchorMin = new Vector2(1f, 1f);
-                    rt.anchorMax = new Vector2(1f, 1f);
-                    rt.pivot = new Vector2(1f, 1f);
-                    rt.sizeDelta = Vector2.zero;
-
-                    rt.anchoredPosition = new Vector2(ManaUITextConfig.OFFSET_X, ManaUITextConfig.OFFSET_Y);
+                    // CHANGE: uso helper para anclar arriba/derecha con offset
+                    SetupTopRightRect(rt, new Vector2(ManaUITextConfig.OFFSET_X, ManaUITextConfig.OFFSET_Y));
                     exists.transform.SetAsLastSibling();
                 }
 
@@ -88,6 +89,9 @@ namespace CombatOverhaul.Magic.UI
                 view.SetUnit(unit);
                 var (c, m) = ManaProvider.Get(unit);
                 view.UpdateValue(c, m);
+
+                // CHANGE: nos aseguramos de no acumular suscripciones
+                ManaEvents.Unsubscribe(unit, view);
                 ManaEvents.Subscribe(unit, view.UpdateValue);
 
                 var destroyHook = parent.gameObject.GetComponent<OnDestroyHook>() ?? parent.gameObject.AddComponent<OnDestroyHook>();
@@ -102,11 +106,8 @@ namespace CombatOverhaul.Magic.UI
             var leNew = go.AddComponent<LayoutElement>();
             leNew.ignoreLayout = true;
 
-            rtNew.anchorMin = new Vector2(1f, 1f);
-            rtNew.anchorMax = new Vector2(1f, 1f);
-            rtNew.pivot = new Vector2(1f, 1f);
-            rtNew.sizeDelta = Vector2.zero;
-            rtNew.anchoredPosition = new Vector2(ManaUITextConfig.OFFSET_X, ManaUITextConfig.OFFSET_Y);
+            // CHANGE: helper de anclaje
+            SetupTopRightRect(rtNew, new Vector2(ManaUITextConfig.OFFSET_X, ManaUITextConfig.OFFSET_Y));
 
             TextMeshProUGUI tmp = null;
             Text uiText = null;
@@ -145,6 +146,9 @@ namespace CombatOverhaul.Magic.UI
 
             var (current, max) = ManaProvider.Get(unit);
             viewComp.UpdateValue(current, max);
+
+            // CHANGE: suscripción segura (sin lambdas anónimas)
+            ManaEvents.Unsubscribe(unit, viewComp);
             ManaEvents.Subscribe(unit, viewComp.UpdateValue);
 
             go.transform.SetAsLastSibling();
@@ -258,9 +262,12 @@ namespace CombatOverhaul.Magic.UI
 
             var (current, max) = ManaProvider.Get(unit);
             view.UpdateValue(current, max);
+
+            // CHANGE: suscripción segura (sin acumular)
+            ManaEvents.Unsubscribe(unit, view);
             ManaEvents.Subscribe(unit, view.UpdateValue);
 
-            var destroyHook = healthContainer.gameObject.AddComponent<OnDestroyHook>();
+            var destroyHook = healthContainer.gameObject.GetComponent<OnDestroyHook>() ?? healthContainer.gameObject.AddComponent<OnDestroyHook>();
             destroyHook.OnDestroyed += () => ManaEvents.Unsubscribe(unit, view);
         }
 
@@ -297,9 +304,26 @@ namespace CombatOverhaul.Magic.UI
         {
             var view = manaBar.GetComponent<ManaBarView>();
             if (view == null) return;
+
             var (current, max) = ManaProvider.Get(unit);
             view.UpdateValue(current, max);
-            ManaEvents.Subscribe(unit, (c, m) => view.UpdateValue(c, m));
+
+            // CHANGE: evitar múltiples suscripciones por parcheos repetidos
+            ManaEvents.Unsubscribe(unit, view);
+            ManaEvents.Subscribe(unit, view.UpdateValue);
+        }
+
+        // CHANGE: helper reutilizable para anclar arriba/derecha con offset
+        private static void SetupTopRightRect(RectTransform rt, Vector2 anchoredOffset)
+        {
+            var le = rt.GetComponent<LayoutElement>() ?? rt.gameObject.AddComponent<LayoutElement>();
+            le.ignoreLayout = true;
+
+            rt.anchorMin = new Vector2(1f, 1f);
+            rt.anchorMax = new Vector2(1f, 1f);
+            rt.pivot = new Vector2(1f, 1f);
+            rt.sizeDelta = Vector2.zero;
+            rt.anchoredPosition = anchoredOffset;
         }
     }
 }
