@@ -58,6 +58,15 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
 
         public static void Raise(UnitEntityData unit, int current, int max)
         {
+            if (unit == null) return;
+
+            if (_bridges.ContainsKey(unit))
+            {
+                Kingmaker.PubSubSystem.EventBus
+                    .RaiseEvent<IManaChangedHandler>(unit, h => h.OnManaChanged(current, max));
+                return;
+            }
+
             NotifyLocal(unit, current, max);
         }
 
