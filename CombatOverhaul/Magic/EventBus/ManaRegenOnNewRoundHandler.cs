@@ -1,5 +1,6 @@
 ﻿using CombatOverhaul.Features;
 using CombatOverhaul.Magic.UI;
+using CombatOverhaul.Utils; // <-- PartyUtils
 using Kingmaker;
 using Kingmaker.Blueprints;
 using Kingmaker.EntitySystem.Entities;
@@ -8,7 +9,7 @@ using Kingmaker.RuleSystem.Rules;
 using Kingmaker.UnitLogic;
 using System;
 using System.Collections.Generic;
-using TurnBased.Controllers; 
+using TurnBased.Controllers;
 using UnityEngine;
 
 namespace CombatOverhaul.Magic.EventBus
@@ -33,8 +34,7 @@ namespace CombatOverhaul.Magic.EventBus
                 var g = Game.Instance;
                 if (g == null) return;
 
-                if (!CombatController.IsInTurnBasedCombat()) return; 
-                if (!(g.Player?.IsInCombat ?? false)) return;        
+                if (!(g.Player?.IsInCombat ?? false)) return;
 
                 var party = g.Player.PartyAndPets;
                 if (party == null) return;
@@ -53,7 +53,7 @@ namespace CombatOverhaul.Magic.EventBus
             foreach (var u in units)
             {
                 if (u == null) continue;
-                if (!u.IsPlayerFaction || !u.IsInCombat) continue;
+                if (!PartyUtils.IsPartyUnitInCombat(u)) continue;
 
                 var state = u.Descriptor?.State;
                 if (state == null || state.IsDead || state.IsFinallyDead) continue;
@@ -108,7 +108,7 @@ namespace CombatOverhaul.Magic.EventBus
                 if (coll == null || res == null) return;
                 EnsureResourceRegistered(coll, res);
 
-                var map = coll.m_Resources; 
+                var map = coll.m_Resources;
                 if (map == null) return;
                 if (!map.TryGetValue(res, out var uar) || uar == null) return;
 
