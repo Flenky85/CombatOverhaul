@@ -77,10 +77,34 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
             if (_subs.TryGetValue(unit, out var set))
             {
                 var snap = set.ToArray();
+
                 for (int i = 0; i < snap.Length; i++)
                 {
                     try { snap[i]?.Invoke(current, max); }
-                    catch (Exception) {  }
+                    catch (Exception) { }
+                }
+
+                bool removedAny = false;
+                for (int i = 0; i < snap.Length; i++)
+                {
+                    var a = snap[i];
+                    if (a == null)
+                    {
+                        removedAny = set.Remove(a) || removedAny;
+                        continue;
+                    }
+
+                    var tgt = a.Target as UnityEngine.Object;
+                    if (tgt == null)
+                    {
+                        removedAny = set.Remove(a) || removedAny;
+                    }
+                }
+
+                if (removedAny && set.Count == 0)
+                {
+                    _subs.Remove(unit);
+                    RemoveBridge(unit);
                 }
             }
         }

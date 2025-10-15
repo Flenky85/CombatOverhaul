@@ -87,7 +87,7 @@ namespace CombatOverhaul.Magic.UI
                 var view = exists.GetComponent<ManaTextView>() ?? exists.gameObject.AddComponent<ManaTextView>();
                 var (c, m) = ManaProvider.Get(unit);
                 view.UpdateValue(c, m);
-                ManaEvents.Subscribe(unit, (cc, mm) => view.UpdateValue(cc, mm));
+                ManaEvents.Subscribe(unit, view.UpdateValue);
 
                 var destroyHook = parent.gameObject.GetComponent<OnDestroyHook>() ?? parent.gameObject.AddComponent<OnDestroyHook>();
                 destroyHook.OnDestroyed += () => ManaEvents.Unsubscribe(unit, view);
@@ -143,7 +143,7 @@ namespace CombatOverhaul.Magic.UI
 
             var (current, max) = ManaProvider.Get(unit);
             viewComp.UpdateValue(current, max);
-            ManaEvents.Subscribe(unit, (c, m) => viewComp.UpdateValue(c, m));
+            ManaEvents.Subscribe(unit, viewComp.UpdateValue);
 
             go.transform.SetAsLastSibling();
 
@@ -256,7 +256,7 @@ namespace CombatOverhaul.Magic.UI
 
             var (current, max) = ManaProvider.Get(unit);
             view.UpdateValue(current, max);
-            ManaEvents.Subscribe(unit, (c, m) => view.UpdateValue(c, m));
+            ManaEvents.Subscribe(unit, view.UpdateValue);
 
             var destroyHook = healthContainer.gameObject.AddComponent<OnDestroyHook>();
             destroyHook.OnDestroyed += () => ManaEvents.Unsubscribe(unit, view);
