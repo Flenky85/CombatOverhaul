@@ -1,7 +1,7 @@
 ﻿using CombatOverhaul.Features;
 using CombatOverhaul.Magic.UI;
+using CombatOverhaul.Utils; 
 using HarmonyLib;
-using Kingmaker;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.UnitLogic.Abilities;
 using UnityEngine;
@@ -11,16 +11,6 @@ namespace CombatOverhaul.Magic.Patch
     [HarmonyPatch]
     internal static class ManaCostRuntime
     {
-        // ========= Helpers =========
-        private static bool IsPartyInCombatCaster(AbilityData ability)
-        {
-            var caster = ability?.Caster?.Unit;
-            return caster != null
-                && caster.IsPlayerFaction
-                && caster.IsInCombat
-                && Game.Instance?.Player?.IsInCombat == true;
-        }
-
         private static bool HasEnoughMana(UnitEntityData unit, int cost)
         {
             var res = ManaResource.Mana;
@@ -48,10 +38,10 @@ namespace CombatOverhaul.Magic.Patch
             ManaEvents.Raise(unit, after, max);
         }
 
-        // ==========================================================================//   
-        // 1) Block casting when not enough mana by reducing AvailableCount to 0.    //
-        //    Cantrips are excluded because TryFromAbility returns false for level 0.//
-        // ==========================================================================//
+        // ==========================================================================   
+        // 1) Block casting when not enough mana by reducing AvailableCount to 0.    
+        //    Cantrips are excluded because TryFromAbility returns false for level 0.
+        // ==========================================================================   
         [HarmonyPatch(typeof(AbilityData), nameof(AbilityData.GetAvailableForCastCount))]
         private static class AbilityData_GetAvailableForCastCount_Patch
         {
@@ -59,8 +49,8 @@ namespace CombatOverhaul.Magic.Patch
             {
                 try
                 {
-                    if (__result <= 0) return; 
-                    if (!IsPartyInCombatCaster(__instance)) return;
+                    if (__result <= 0) return;
+                    if (!PartyUtils.IsPartyCasterInCombat(__instance)) return;
 
                     if (!ManaCosts.TryFromAbility(__instance, out var cost)) return;
                     if (cost <= 0) return;
@@ -75,10 +65,10 @@ namespace CombatOverhaul.Magic.Patch
             }
         }
 
-        // ================================================//
-        // 2) Spend mana on cast: AbilityData.Spend()      //
-        //    Cantrips are excluded by TryFromAbility.     //
-        // ================================================//
+        // =================================================
+        // 2) Spend mana on cast: AbilityData.Spend()      
+        //    Cantrips are excluded by TryFromAbility.     
+        // =================================================
         [HarmonyPatch(typeof(AbilityData), nameof(AbilityData.Spend))]
         private static class AbilityData_Spend_Patch
         {
@@ -86,7 +76,7 @@ namespace CombatOverhaul.Magic.Patch
             {
                 try
                 {
-                    if (!IsPartyInCombatCaster(__instance)) return;
+                    if (!PartyUtils.IsPartyCasterInCombat(__instance)) return;
                     if (!ManaCosts.TryFromAbility(__instance, out var cost)) return;
                     if (cost <= 0) return;
 

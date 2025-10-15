@@ -41,7 +41,6 @@ namespace CombatOverhaul.Magic
 
             if (ad.SpellLevel <= 0) return false;
 
-            if (ab.GetComponent<AbilityEffectStickyTouch>() != null) return false;
             if (ab.GetComponent<AbilityDeliverTouch>() != null) return false;
 
             cost = FromLevel(ad.SpellLevel);
