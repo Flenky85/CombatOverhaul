@@ -80,6 +80,35 @@ namespace CombatOverhaul.Magic.UI
             rt.anchoredPosition = anchoredOffset;
         }
     }
+    
+    internal static class ManaEventUtil
+    {
+        public static void Resubscribe(UnitEntityData unit, object owner, Action<int, int> cb)
+        {
+            ManaEvents.Unsubscribe(unit, owner);
+            ManaEvents.Subscribe(unit, cb);
+        }
+    }
+
+    internal static class UISpriteUtil
+    {
+        private static Sprite _white;
+        public static Sprite White
+        {
+            get
+            {
+                if (_white == null)
+                {
+                    var tex = new Texture2D(1, 1, TextureFormat.RGBA32, false);
+                    tex.SetPixel(0, 0, Color.white);
+                    tex.Apply();
+                    _white = Sprite.Create(tex, new Rect(0, 0, 1, 1),
+                                           new Vector2(0.5f, 0.5f), 100f);
+                }
+                return _white;
+            }
+        }
+    }
 
     internal static class SpriteMaterialCache
     {
@@ -150,9 +179,7 @@ namespace CombatOverhaul.Magic.UI
                 var (current, max) = ManaProvider.Get(unit);
                 view.UpdateValue(current, max);
 
-                // Unsubscribe con OWNER (no método)
-                ManaEvents.Unsubscribe(unit, view);
-                ManaEvents.Subscribe(unit, view.UpdateValue);
+                ManaEventUtil.Resubscribe(unit, view, view.UpdateValue);
 
                 var destroyHook = parent.gameObject.GetComponent<OnDestroyHook>() ?? parent.gameObject.AddComponent<OnDestroyHook>();
                 destroyHook.OnDestroyed += delegate
@@ -206,11 +233,10 @@ namespace CombatOverhaul.Magic.UI
             viewComp.SetColor(ManaUITextConfig.TEXT_COLOR);
             viewComp.SetUnit(unit);
 
-            var pair2 = ManaProvider.Get(unit);
-            viewComp.UpdateValue(pair2.current, pair2.max);
+            var (current2, max2) = ManaProvider.Get(unit);
+            viewComp.UpdateValue(current2, max2);
 
-            ManaEvents.Unsubscribe(unit, viewComp);
-            ManaEvents.Subscribe(unit, viewComp.UpdateValue);
+            ManaEventUtil.Resubscribe(unit, viewComp, viewComp.UpdateValue);
 
             go.transform.SetAsLastSibling();
 
@@ -313,9 +339,7 @@ namespace CombatOverhaul.Magic.UI
             }
             else
             {
-                var tex = new Texture2D(1, 1, TextureFormat.RGBA32, false);
-                tex.SetPixel(0, 0, Color.white); tex.Apply();
-                var spr = Sprite.Create(tex, new Rect(0, 0, 1, 1), new Vector2(0.5f, 0.5f), 100f);
+                var spr = UISpriteUtil.White;
                 fillImg.sprite = spr;
                 bgImg.sprite = spr; bgImg.type = Image.Type.Sliced;
             }
@@ -330,8 +354,7 @@ namespace CombatOverhaul.Magic.UI
             var (current, max) = ManaProvider.Get(unit);
             view.UpdateValue(current, max);
 
-            ManaEvents.Unsubscribe(unit, view);
-            ManaEvents.Subscribe(unit, view.UpdateValue);
+            ManaEventUtil.Resubscribe(unit, view, view.UpdateValue);
 
             var destroyHook = healthContainer.gameObject.GetComponent<OnDestroyHook>() ?? healthContainer.gameObject.AddComponent<OnDestroyHook>();
             destroyHook.OnDestroyed += delegate
@@ -349,8 +372,7 @@ namespace CombatOverhaul.Magic.UI
             var (current, max) = ManaProvider.Get(unit);
             view.UpdateValue(current, max);
 
-            ManaEvents.Unsubscribe(unit, view);
-            ManaEvents.Subscribe(unit, view.UpdateValue);
+            ManaEventUtil.Resubscribe(unit, view, view.UpdateValue);
         }
     }
 }
