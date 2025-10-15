@@ -1,19 +1,38 @@
-﻿using CombatOverhaul.Features;
-using Kingmaker.Blueprints;
+﻿using Kingmaker.Blueprints;
 using Kingmaker.EntitySystem.Entities;
+using System.Runtime.CompilerServices;
 
 namespace CombatOverhaul.Magic.UI.ManaDisplay
 {
     public static class ManaUI
     {
+        private sealed class LastPair { public bool Init; public int Cur; public int Max; }
+        private static readonly ConditionalWeakTable<UnitEntityData, LastPair> _last =
+            new ConditionalWeakTable<UnitEntityData, LastPair>();
+
+
         public static void SetManaResource(BlueprintAbilityResource res)
             => ManaProvider.ManaResource = res;
 
         public static void RefreshUnit(UnitEntityData unit)
         {
             if (unit == null) return;
+
             var (current, max) = ManaProvider.Get(unit);
-            ManaEvents.Raise(unit, current, max);
+
+            if (!_last.TryGetValue(unit, out var box))
+            {
+                box = new LastPair();
+                _last.Add(unit, box);
+            }
+
+            if (!box.Init || box.Cur != current || box.Max != max)
+            {
+                box.Init = true;
+                box.Cur = current;
+                box.Max = max;
+                ManaEvents.Raise(unit, current, max); 
+            }
         }
     }
 
