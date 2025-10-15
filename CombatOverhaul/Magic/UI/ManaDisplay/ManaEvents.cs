@@ -20,6 +20,8 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
         private static readonly Dictionary<UnitEntityData, UnitBridge> _bridges =
             new Dictionary<UnitEntityData, UnitBridge>();
 
+        private static readonly List<Action<int, int>> _scratch = new List<Action<int, int>>(8);
+
         public static void Subscribe(UnitEntityData unit, Action<int, int> cb)
         {
             if (unit == null || cb == null) return;
@@ -42,10 +44,22 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
             if (_subs.TryGetValue(unit, out var set))
             {
                 var snap = set.ToArray();
+
+                var unityOwner = owner as UnityEngine.Object;
+                bool ownerSeemsDestroyed = unityOwner != null && unityOwner == null;
+
                 for (int i = 0; i < snap.Length; i++)
                 {
                     var a = snap[i];
-                    if (a == null || a.Target == owner)
+                    if (a == null)
+                    {
+                        set.Remove(a);
+                        continue;
+                    }
+
+                    var tgtObj = a.Target as UnityEngine.Object;
+
+                    if (a.Target == owner || ownerSeemsDestroyed || tgtObj == null)
                         set.Remove(a);
                 }
 
@@ -56,6 +70,7 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
                 }
             }
         }
+
 
         public static void Raise(UnitEntityData unit, int current, int max)
         {
@@ -76,18 +91,20 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
             if (unit == null) return;
             if (_subs.TryGetValue(unit, out var set))
             {
-                var snap = set.ToArray();
+                _scratch.Clear();
+                foreach (var a in set)
+                    _scratch.Add(a);
 
-                for (int i = 0; i < snap.Length; i++)
+                for (int i = 0; i < _scratch.Count; i++)
                 {
-                    try { snap[i]?.Invoke(current, max); }
-                    catch (Exception) { }
+                    try { _scratch[i]?.Invoke(current, max); }
+                    catch (Exception) {  }
                 }
 
                 bool removedAny = false;
-                for (int i = 0; i < snap.Length; i++)
+                for (int i = 0; i < _scratch.Count; i++)
                 {
-                    var a = snap[i];
+                    var a = _scratch[i];
                     if (a == null)
                     {
                         removedAny = set.Remove(a) || removedAny;
