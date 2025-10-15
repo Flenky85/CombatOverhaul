@@ -2,7 +2,6 @@
 using Kingmaker.PubSubSystem;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace CombatOverhaul.Magic.UI.ManaDisplay
@@ -43,14 +42,16 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
 
             if (_subs.TryGetValue(unit, out var set))
             {
-                var snap = set.ToArray();
+                _scratch.Clear();
+                foreach (var a in set)
+                    _scratch.Add(a);
 
                 var unityOwner = owner as UnityEngine.Object;
                 bool ownerSeemsDestroyed = unityOwner != null && unityOwner == null;
 
-                for (int i = 0; i < snap.Length; i++)
+                for (int i = 0; i < _scratch.Count; i++)
                 {
-                    var a = snap[i];
+                    var a = _scratch[i];
                     if (a == null)
                     {
                         set.Remove(a);
@@ -58,7 +59,6 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
                     }
 
                     var tgtObj = a.Target as UnityEngine.Object;
-
                     if (a.Target == owner || ownerSeemsDestroyed || tgtObj == null)
                         set.Remove(a);
                 }
@@ -75,16 +75,10 @@ namespace CombatOverhaul.Magic.UI.ManaDisplay
         public static void Raise(UnitEntityData unit, int current, int max)
         {
             if (unit == null) return;
-
-            if (_bridges.ContainsKey(unit))
-            {
-                Kingmaker.PubSubSystem.EventBus
-                    .RaiseEvent<IManaChangedHandler>(unit, h => h.OnManaChanged(current, max));
-                return;
-            }
-
-            NotifyLocal(unit, current, max);
+            Kingmaker.PubSubSystem.EventBus
+                .RaiseEvent<IManaChangedHandler>(unit, h => h.OnManaChanged(current, max));
         }
+
 
         private static void NotifyLocal(UnitEntityData unit, int current, int max)
         {
