@@ -1,5 +1,5 @@
 ﻿using CombatOverhaul.Features;
-using CombatOverhaul.Magic.UI;
+using CombatOverhaul.Magic.UI.ManaDisplay;
 using CombatOverhaul.Utils; 
 using HarmonyLib;
 using Kingmaker.EntitySystem.Entities;

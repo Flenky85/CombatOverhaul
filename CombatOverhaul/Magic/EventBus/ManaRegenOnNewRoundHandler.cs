@@ -1,6 +1,6 @@
 ﻿using CombatOverhaul.Features;
-using CombatOverhaul.Magic.UI;
-using CombatOverhaul.Utils; // <-- PartyUtils
+using CombatOverhaul.Magic.UI.ManaDisplay;
+using CombatOverhaul.Utils; 
 using Kingmaker;
 using Kingmaker.Blueprints;
 using Kingmaker.EntitySystem.Entities;
@@ -9,7 +9,6 @@ using Kingmaker.RuleSystem.Rules;
 using Kingmaker.UnitLogic;
 using System;
 using System.Collections.Generic;
-using TurnBased.Controllers;
 using UnityEngine;
 
 namespace CombatOverhaul.Magic.EventBus

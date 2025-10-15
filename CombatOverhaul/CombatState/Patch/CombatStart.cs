@@ -1,6 +1,6 @@
 ﻿using CombatOverhaul.Features;
 using CombatOverhaul.Magic;
-using CombatOverhaul.Magic.UI;
+using CombatOverhaul.Magic.UI.ManaDisplay;
 using HarmonyLib;
 using Kingmaker;
 using Kingmaker.Blueprints;
