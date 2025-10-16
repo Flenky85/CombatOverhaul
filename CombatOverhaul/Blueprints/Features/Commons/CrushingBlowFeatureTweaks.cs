@@ -12,7 +12,6 @@ namespace CombatOverhaul.Blueprints.Features.Commons
         {
             var id = FeaturesGuids.CrushingBlow;
 
-            // Seguridad por si el feature no existe en esta build
             var feat = ResourcesLibrary.TryGetBlueprint<BlueprintFeature>(id);
             if (feat == null) return;
 

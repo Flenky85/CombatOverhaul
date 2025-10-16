@@ -1,71 +1,56 @@
-﻿/*using CombatOverhaul.Features;
-using CombatOverhaul.Magic.UI.ManaDisplay;
-using CombatOverhaul.Utils; 
-using Kingmaker;
+﻿using CombatOverhaul.Features;
+using CombatOverhaul.Magic.UI.ManaDisplay;   // ManaEvents
 using Kingmaker.Blueprints;
 using Kingmaker.EntitySystem.Entities;
-using Kingmaker.PubSubSystem;
-using Kingmaker.RuleSystem.Rules;
 using Kingmaker.UnitLogic;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace CombatOverhaul.Magic.EventBus
+namespace CombatOverhaul.Magic
 {
-    internal sealed class ManaRegenOnRoundStart :
-        ITurnBasedModeHandler, IGlobalSubscriber, ISubscriber
+    /// <summary>
+    /// Lógica de regeneración de maná, separada del bus.
+    /// </summary>
+    internal static class ManaRegenOnNewRound
     {
-        private const string LogPrefix = "[CO][Mana][Regen/RoundStart]";
+        private const string LogPrefix = "[CO][Mana][Regen/NewRound]";
         private static BlueprintAbilityResource ManaRes => ManaResource.Mana;
 
-        public void HandleSurpriseRoundStarted() => TryRegenForParty();
-        public void HandleRoundStarted(int round) => TryRegenForParty();
-
-        public void HandleTurnStarted(UnitEntityData unit) {  }
-        public void HandleUnitControlChanged(UnitEntityData unit) { }
-        public void HandleUnitNotSurprised(UnitEntityData unit, RuleSkillCheck check) {  }
-
-        private static void TryRegenForParty()
+        /// <summary>
+        /// Elegibilidad: solo tiene sentido si el cálculo da capacidad/ritmo positivos.
+        /// Mantiene el comportamiento del original (no “inventa” recursos si no hay max/regen).
+        /// </summary>
+        public static bool IsEligible(UnitEntityData unit)
         {
             try
             {
-                var g = Game.Instance;
-                if (g == null) return;
+                if (unit == null || unit.Descriptor == null || ManaRes == null) return false;
 
-                if (!(g.Player?.IsInCombat ?? false)) return;
+                int max = ManaCalc.CalcMaxMana(unit);
+                if (max <= 0) return false;
 
-                var party = g.Player.PartyAndPets;
-                if (party == null) return;
-
-                foreach (var u in EnumerateEligibleUnits(party))
-                    TryApplyRegenOnce(u);
+                int regen = ManaCalc.CalcManaPerTurn(unit, max);
+                return regen > 0;
             }
-            catch (Exception ex)
+            catch
             {
-                Debug.LogError($"{LogPrefix} EX: {ex}");
+                return false;
             }
         }
 
-        private static IEnumerable<UnitEntityData> EnumerateEligibleUnits(IEnumerable<UnitEntityData> units)
-        {
-            foreach (var u in units)
-            {
-                if (u == null) continue;
-                if (!PartyUtils.IsPartyUnitInCombat(u)) continue;
-
-                var state = u.Descriptor?.State;
-                if (state == null || state.IsDead || state.IsFinallyDead) continue;
-
-                yield return u;
-            }
-        }
-
-        private static void TryApplyRegenOnce(UnitEntityData unit)
+        /// <summary>
+        /// Aplica exactamente la misma lógica que tenías en el archivo original.
+        /// </summary>
+        public static void Apply(UnitEntityData unit)
         {
             try
             {
-                if (ManaRes == null) { Debug.LogWarning($"{LogPrefix} ManaRes null"); return; }
+                if (unit == null) return;
+                if (ManaRes == null)
+                {
+                    Debug.LogWarning($"{LogPrefix} ManaRes null");
+                    return;
+                }
 
                 var coll = unit.Descriptor?.Resources;
                 if (coll == null) return;
@@ -90,7 +75,7 @@ namespace CombatOverhaul.Magic.EventBus
             }
             catch (Exception ex)
             {
-                Debug.LogError($"{LogPrefix} ApplyRegenOnce EX ({unit?.CharacterName}): {ex}");
+                Debug.LogError($"{LogPrefix} Apply EX ({unit?.CharacterName}): {ex}");
             }
         }
 
@@ -120,4 +105,3 @@ namespace CombatOverhaul.Magic.EventBus
         }
     }
 }
-*/

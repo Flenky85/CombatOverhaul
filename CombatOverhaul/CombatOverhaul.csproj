@@ -61,5 +61,6 @@
 
   <ItemGroup>
     <Folder Include="Blueprints\Buffs\" />
+    <Folder Include="Classes\NewRound\Paladin\" />
   </ItemGroup>
 </Project>

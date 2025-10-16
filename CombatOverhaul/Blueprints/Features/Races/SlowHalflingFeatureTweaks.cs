@@ -1,5 +1,4 @@
-﻿// Blueprints/Features/Races/SlowHalflingFeatureTweaks.cs
-using BlueprintCore.Blueprints.CustomConfigurators.Classes;
+﻿using BlueprintCore.Blueprints.CustomConfigurators.Classes;
 using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
 using Kingmaker.Blueprints;

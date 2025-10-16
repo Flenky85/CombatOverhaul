@@ -10,7 +10,7 @@ using System;
 using TurnBased.Controllers;
 using UnityEngine;
 
-namespace CombatOverhaul.CombatState.Patch
+namespace CombatOverhaul.CombatState
 {
     [HarmonyPatch(typeof(CombatController), "HandleCombatStart")]
     internal static class CombatStart

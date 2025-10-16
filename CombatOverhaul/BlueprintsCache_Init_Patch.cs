@@ -1,8 +1,10 @@
 ﻿using CombatOverhaul.Blueprints.Abilities.Commons;
+using CombatOverhaul.Blueprints.AbilitiesResources.Paladin;
 using CombatOverhaul.Blueprints.Features.Commons;
 using CombatOverhaul.Blueprints.Features.Races;
 using CombatOverhaul.Features;
 using CombatOverhaul.Magic.UI.ManaDisplay;
+using CombatOverhaul.Utils;
 using HarmonyLib;
 using Kingmaker.Blueprints.JsonSystem;
 
@@ -52,6 +54,14 @@ namespace CombatOverhaul
             SlowAndSteadyOreadFeatureTweaks.Register();
             SlowGnomeFeatureTweaks.Register();
             SlowHalflingFeatureTweaks.Register();
+
+
+            /////////////
+            //Resources//
+            /////////////
+            Log.Info($"Antes de aplicar funcion register.");
+            //Paladin
+            SmiteEvilTweaks.Register();
         }
     }
 }
