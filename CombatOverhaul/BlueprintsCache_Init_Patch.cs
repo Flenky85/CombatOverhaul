@@ -1,4 +1,5 @@
 ﻿using CombatOverhaul.Blueprints.Abilities.Commons;
+using CombatOverhaul.Blueprints.Abilities.Paladin;
 using CombatOverhaul.Blueprints.AbilitiesResources.Paladin;
 using CombatOverhaul.Blueprints.Features.Commons;
 using CombatOverhaul.Blueprints.Features.Races;
@@ -33,12 +34,19 @@ namespace CombatOverhaul
             //Commons
             CrushingBlowAbilityTweaks.Register();
             SunderArmorAbilityTweaks.Register();
-            
+
+            //Paladin
+            LayOnHandsOthersAbilityTweaks.Register();
+            LayOnHandsSelfAbilityTweaks.Register();
+            SmiteEvilAbilityTweaks.Register();
+            MarkOfJusticeAbilityTweaks.Register();
+            ChannelEnergyPaladinHealAbilityTweaks.Register();
+            ChannelEnergyPaladinHarmAbilityTweaks.Register();
 
             ////////////
             //Features//
             ////////////
-            
+
             //Commons
             CrushingBlowFeatureTweaks.Register();
             DoubleSliceFeatureTweaks.Register();
@@ -61,7 +69,8 @@ namespace CombatOverhaul
             /////////////
             Log.Info($"Antes de aplicar funcion register.");
             //Paladin
-            SmiteEvilTweaks.Register();
+            SmiteEvilResourcesTweaks.Register();
+            LayOnHandsResourcesTweaks.Register();
         }
     }
 }

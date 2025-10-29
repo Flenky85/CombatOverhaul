@@ -1,4 +1,6 @@
-﻿using CombatOverhaul.Utils;
+﻿using CombatOverhaul.Magic;
+using CombatOverhaul.Resources;
+using CombatOverhaul.Utils;
 using Kingmaker;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.PubSubSystem;
@@ -6,7 +8,6 @@ using Kingmaker.RuleSystem.Rules;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using CombatOverhaul.Magic;
 
 namespace CombatOverhaul.CombatState
 {
@@ -63,6 +64,7 @@ namespace CombatOverhaul.CombatState
                     {
                         if (ManaRegenOnNewRound.IsEligible(u))
                             ManaRegenOnNewRound.Apply(u);
+                        AbilityResourceRegenOnNewRound.TryApply(u);
                     }
                     catch (Exception ex)
                     {
