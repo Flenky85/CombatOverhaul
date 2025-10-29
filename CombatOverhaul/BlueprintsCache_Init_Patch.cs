@@ -42,6 +42,8 @@ namespace CombatOverhaul
             MarkOfJusticeAbilityTweaks.Register();
             ChannelEnergyPaladinHealAbilityTweaks.Register();
             ChannelEnergyPaladinHarmAbilityTweaks.Register();
+            DivineWeaponBondAbilityTweaks.Register();
+
 
             ////////////
             //Features//
@@ -71,6 +73,7 @@ namespace CombatOverhaul
             //Paladin
             SmiteEvilResourcesTweaks.Register();
             LayOnHandsResourcesTweaks.Register();
+            WeaponBondResourcesTweaks.Register();
         }
     }
 }

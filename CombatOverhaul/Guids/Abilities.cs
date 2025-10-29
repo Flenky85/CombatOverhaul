@@ -13,5 +13,6 @@
         public const string MarkOfJustice = "7a4f0c48829952e47bb1fd1e4e9da83a";
         public const string ChannelEnergyPaladinHeal = "6670f0f21a1d7f04db2b8b115e8e6abf";
         public const string ChannelEnergyPaladinHarm = "4937473d1cfd7774a979b625fb833b47";
+        public const string DivineWeaponBond = "7ff088ab58c69854b82ea95c2b0e35b4";
     }
 }
