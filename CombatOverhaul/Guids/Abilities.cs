@@ -19,5 +19,8 @@
         public const string DistantMercy = "c8feb35c95f9f83438655f93552b900b";
         public const string HunterBlessing = "a9858668656a56f41a87652d2cd235c0";
         public const string DivineHunterWeaponBond = "8b405b057dc5051448e20041bd366592";
+        public const string ChannelEnergyHospitalerHeal = "0c0cf7fcb356d2448b7d57f2c4db3c0c";
+        public const string ChannelEnergyHospitalerHarm = "cc17243b2185f814aa909ac6b6599eaa";
+
     }
 }

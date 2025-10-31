@@ -5,16 +5,18 @@ using CombatOverhaul.Utils;
 namespace CombatOverhaul.Blueprints.Features.Paladin
 {
     [AutoRegister]
-    internal class ChannelPositiveEnergyFeatureTweaks
+    internal class ChannelPositiveEnergyHospitaler
     {
         public static void Register()
         {
-            FeatureConfigurator.For(FeaturesGuids.ChannelPositiveEnergy)
+            FeatureConfigurator.For(FeaturesGuids.ChannelPositiveEnergyHospitaler)
                 .SetDescriptionValue(
                     "When a paladin reaches 4th level, she gains the supernatural ability to channel " +
-                    "positive energy like a cleric. Using this ability consumes two uses of her lay on " +
-                    "hands ability. This energy can be used to cause or heal damage, depending on the " +
-                    "creatures targeted.\n" +
+                    "positive energy like a cleric. This energy can be used to cause or heal damage, " +
+                    "depending on the creatures targeted.\n" +
+                    "Channel positive energy uses charges; activating this ability expends 6 charges. The paladin begins with 12 " +
+                    "charges, and adds her Cha bonus (if any) to her maximum number of charges. At the start of each round, the " +
+                    "paladin regains 1 charge, up to her maximum number of charges.\n" +
                     "A paladin channels positive energy and can choose to deal damage to undead creatures " +
                     "or to heal living creatures.\n" +
                     "Channeling positive energy causes a burst that affects all creatures of one type(either " +

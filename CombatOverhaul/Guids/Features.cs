@@ -23,10 +23,12 @@
         public const string SmiteEvil = "3a6db57fce75b0244a6a5819528ddf26";
         public const string MarkOfJustice = "9f13fdd044ccb8a439f27417481cb00e";
         public const string LayOnHands = "858a3689c285c844d9e6ce278e686491";
+        public const string ChannelPositiveEnergy = "cb6d55dda5ab906459d18a435994a760";
         public const string DivineGuardianTroth = "d8979d762de7da14ca64f8cedd5c1220";
         public const string LayOnHandsSelfOrTroth = "ba9fa17a17e5a494a93cd181b5615198";
         public const string DivineWeaponBond = "1c7cdc1605554954f838d85bbdd22d90";
         public const string HunterBlessing = "ae98475b3f5d3aa4bb830d352655a8ed";
         public const string DivineHunterWeaponBond = "275d3dd6cad51cf4db9b0bceebff02f2";
+        public const string ChannelPositiveEnergyHospitaler = "a9ab1bbc79ecb174d9a04699986ce8d5";
     }
 }

@@ -16,9 +16,12 @@ namespace CombatOverhaul.Resources
 
         private static readonly List<RegenRule> _rules = new List<RegenRule>
         {
+            //Paladin
             new RegenRule(AbilitiesResourcesGuids.LayOnHands, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.SmiteEvil, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.WeaponBond, flat: 1, percentOfMax: 0f, BuffsGuids.WeaponBond),
+            new RegenRule(AbilitiesResourcesGuids.DivineGuardianTroth, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.ChannelEnergyHospitaler, flat: 1, percentOfMax: 0f),
         };
 
         public static void TryApply(UnitEntityData unit)
