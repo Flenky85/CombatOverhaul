@@ -2,7 +2,6 @@
 using CombatOverhaul.Guids;
 using Kingmaker.Designers.EventConditionActionSystem.Actions;
 using Kingmaker.RuleSystem;
-using Kingmaker.UnitLogic.Abilities;
 using Kingmaker.UnitLogic.Abilities.Components;
 using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Actions;
