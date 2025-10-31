@@ -15,5 +15,6 @@
         public const string ChannelEnergyPaladinHarm = "4937473d1cfd7774a979b625fb833b47";
         public const string DivineWeaponBond = "7ff088ab58c69854b82ea95c2b0e35b4";
         public const string DivineGuardianTroth = "ff898ba2c2ff360419dc75d2efdc5a6a";
+        public const string LayOnHandsSelfOrTroth = "8337cea04c8afd1428aad69defbfc365";
     }
 }

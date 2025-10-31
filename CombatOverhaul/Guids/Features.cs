@@ -24,5 +24,6 @@
         public const string MarkOfJustice = "9f13fdd044ccb8a439f27417481cb00e";
         public const string LayOnHands = "858a3689c285c844d9e6ce278e686491";
         public const string DivineGuardianTroth = "d8979d762de7da14ca64f8cedd5c1220";
+        public const string LayOnHandsSelfOrTroth = "ba9fa17a17e5a494a93cd181b5615198";
     }
 }
