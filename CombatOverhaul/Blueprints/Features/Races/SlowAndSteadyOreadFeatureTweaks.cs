@@ -1,5 +1,4 @@
-﻿// Blueprints/Features/Races/SlowAndSteadyOreadFeatureTweaks.cs
-using BlueprintCore.Blueprints.CustomConfigurators.Classes;
+﻿using BlueprintCore.Blueprints.CustomConfigurators.Classes;
 using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
 using Kingmaker.Blueprints;
@@ -10,6 +9,7 @@ using Kingmaker.UnitLogic.FactLogic;
 
 namespace CombatOverhaul.Blueprints.Features.Races
 {
+    [AutoRegister]
     internal static class SlowAndSteadyOreadFeatureTweaks
     {
         public static void Register()

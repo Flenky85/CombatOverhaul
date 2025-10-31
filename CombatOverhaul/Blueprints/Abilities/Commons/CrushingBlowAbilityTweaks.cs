@@ -5,6 +5,7 @@ using Kingmaker.UnitLogic.Abilities.Blueprints;
 
 namespace CombatOverhaul.Blueprints.Abilities.Commons
 {
+    [AutoRegister]
     internal static class CrushingBlowAbilityTweaks
     {
         public static void Register()

@@ -8,6 +8,7 @@ using Kingmaker.UnitLogic.FactLogic;
 
 namespace CombatOverhaul.Blueprints.Features.Commons
 {
+    [AutoRegister]
     internal static class WeaponFinesseFeatureTweaks
     {
         public static void Register()

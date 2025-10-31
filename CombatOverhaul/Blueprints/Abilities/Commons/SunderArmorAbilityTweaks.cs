@@ -6,6 +6,7 @@ using Kingmaker.UnitLogic.Abilities.Blueprints;
 
 namespace CombatOverhaul.Blueprints.Abilities.Commons
 {
+    [AutoRegister]
     internal static class SunderArmorAbilityTweaks
     {
         public static void Register()

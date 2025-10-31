@@ -3,6 +3,7 @@ using Kingmaker.Blueprints;
 
 namespace CombatOverhaul.Blueprints.AbilitiesResources.Paladin
 {
+    [AutoRegister]
     internal static class WeaponBondResourcesTweaks
     {
         public static void Register()

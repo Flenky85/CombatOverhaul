@@ -5,6 +5,7 @@ using Kingmaker.UnitLogic.FactLogic;
 
 namespace CombatOverhaul.Blueprints.Features.Commons
 {
+    [AutoRegister]
     internal static class DoubleSliceFeatureTweaks
     {
         public static void Register()

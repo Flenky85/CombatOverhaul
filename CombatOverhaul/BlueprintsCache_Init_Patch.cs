@@ -1,12 +1,6 @@
-﻿using CombatOverhaul.Blueprints.Abilities.Commons;
-using CombatOverhaul.Blueprints.Abilities.Paladin;
-using CombatOverhaul.Blueprints.AbilitiesResources.Paladin;
-using CombatOverhaul.Blueprints.Features.Commons;
-using CombatOverhaul.Blueprints.Features.Paladin;
-using CombatOverhaul.Blueprints.Features.Races;
-using CombatOverhaul.Features;
+﻿using CombatOverhaul.Blueprints;
 using CombatOverhaul.Magic.UI.ManaDisplay;
-using CombatOverhaul.Utils;
+using CombatOverhaul.Features;
 using HarmonyLib;
 using Kingmaker.Blueprints.JsonSystem;
 
@@ -16,68 +10,19 @@ namespace CombatOverhaul
     [HarmonyPriority(Priority.Last)]
     internal static class Patch_BlueprintsCache_Init
     {
-        private static bool _initialized; 
+        private static bool _initialized;
 
         static void Postfix()
         {
             if (_initialized) return;
             _initialized = true;
 
+            
             MonsterArmorMarkers.Register();
             ManaResource.Register();
             ManaUI.SetManaResource(ManaResource.Mana);
 
-            
-            /////////////
-            //Abilities//
-            /////////////
-            
-            //Commons
-            CrushingBlowAbilityTweaks.Register();
-            SunderArmorAbilityTweaks.Register();
-
-            //Paladin
-            LayOnHandsOthersAbilityTweaks.Register();
-            LayOnHandsSelfAbilityTweaks.Register();
-            SmiteEvilAbilityTweaks.Register();
-            MarkOfJusticeAbilityTweaks.Register();
-            ChannelEnergyPaladinHealAbilityTweaks.Register();
-            ChannelEnergyPaladinHarmAbilityTweaks.Register();
-            DivineWeaponBondAbilityTweaks.Register();
-
-
-            ////////////
-            //Features//
-            ////////////
-
-            //Commons
-            CrushingBlowFeatureTweaks.Register();
-            DoubleSliceFeatureTweaks.Register();
-            DragonStyleFeatureTweaks.Register();
-            GreaterTwoWeaponFightingFeatureTweaks.Register();
-            ImprovedTwoWeaponFightingFeatureTweaks.Register();
-            ShiftersEdgeFeatureTweaks.Register();
-            SunderArmorFeatureTweaks.Register();
-            WeaponFinesseFeatureTweaks.Register();
-
-            //Race
-            SlowAndSteadyDwarfFeatureTweaks.Register();
-            SlowAndSteadyOreadFeatureTweaks.Register();
-            SlowGnomeFeatureTweaks.Register();
-            SlowHalflingFeatureTweaks.Register();
-
-            //Paladin
-            SmiteEvilFeatureTweaks.Register();
-
-
-            /////////////
-            //Resources//
-            /////////////
-            Log.Info($"Antes de aplicar funcion register.");
-            //Paladin
-            SmiteEvilResourcesTweaks.Register();
-            LayOnHandsResourcesTweaks.Register();
-            WeaponBondResourcesTweaks.Register();
+            BlueprintsAutoRegistrar.RunAll();
         }
     }
 }

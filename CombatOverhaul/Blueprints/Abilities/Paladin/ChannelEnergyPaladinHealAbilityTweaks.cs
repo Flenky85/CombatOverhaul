@@ -4,6 +4,7 @@ using Kingmaker.UnitLogic.Abilities.Components;
 
 namespace CombatOverhaul.Blueprints.Abilities.Paladin
 {
+    [AutoRegister]
     internal static class ChannelEnergyPaladinHealAbilityTweaks
     {
         public static void Register()

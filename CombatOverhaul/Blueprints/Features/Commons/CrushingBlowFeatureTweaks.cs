@@ -6,6 +6,7 @@ using Kingmaker.Blueprints.Classes;
 
 namespace CombatOverhaul.Blueprints.Features.Commons
 {
+    [AutoRegister]
     internal static class CrushingBlowFeatureTweaks
     {
         public static void Register()

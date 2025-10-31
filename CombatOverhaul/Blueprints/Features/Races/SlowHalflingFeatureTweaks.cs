@@ -9,6 +9,7 @@ using Kingmaker.UnitLogic.FactLogic;
 
 namespace CombatOverhaul.Blueprints.Features.Races
 {
+    [AutoRegister]
     internal static class SlowHalflingFeatureTweaks
     {
         public static void Register()

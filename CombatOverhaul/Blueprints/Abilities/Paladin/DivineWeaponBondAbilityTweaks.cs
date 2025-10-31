@@ -8,6 +8,7 @@ using Kingmaker.UnitLogic.Mechanics.Actions;
 
 namespace CombatOverhaul.Blueprints.Abilities.Paladin
 {
+    [AutoRegister]
     internal static class DivineWeaponBondAbilityTweaks
     {
         public static void Register()

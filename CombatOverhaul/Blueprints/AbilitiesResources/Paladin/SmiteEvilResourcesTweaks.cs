@@ -3,6 +3,7 @@ using Kingmaker.Blueprints;
 
 namespace CombatOverhaul.Blueprints.AbilitiesResources.Paladin
 {
+    [AutoRegister]
     internal static class SmiteEvilResourcesTweaks
     {
         public static void Register()

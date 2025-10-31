@@ -4,6 +4,7 @@ using CombatOverhaul.Utils;
 
 namespace CombatOverhaul.Blueprints.Features.Paladin
 {
+    [AutoRegister]
     internal class SmiteEvilFeatureTweaks
     {
         public static void Register()
@@ -21,7 +22,7 @@ namespace CombatOverhaul.Blueprints.Features.Paladin
                     "Smite evil uses charges; activating this ability expends 3 charges. The paladin begins with 3 " +
                     "charges, and at 3rd level and every 3 levels thereafter she gains 1 additional charge. " +
                     "At the start of each round, the paladin regains 1 charge, up to her maximum number of charges."
-                    )
+                )
                 .Configure();
         }
     }

@@ -4,6 +4,7 @@ using CombatOverhaul.Utils;
 
 namespace CombatOverhaul.Blueprints.Features.Commons
 {
+    [AutoRegister]
     internal static class SunderArmorFeatureTweaks
     {
         public static void Register()
