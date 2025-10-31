@@ -26,5 +26,7 @@
         public const string DivineGuardianTroth = "d8979d762de7da14ca64f8cedd5c1220";
         public const string LayOnHandsSelfOrTroth = "ba9fa17a17e5a494a93cd181b5615198";
         public const string DivineWeaponBond = "1c7cdc1605554954f838d85bbdd22d90";
+        public const string HunterBlessing = "ae98475b3f5d3aa4bb830d352655a8ed";
+        public const string DivineHunterWeaponBond = "275d3dd6cad51cf4db9b0bceebff02f2";
     }
 }

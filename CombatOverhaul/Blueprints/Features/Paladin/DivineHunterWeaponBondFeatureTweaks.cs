@@ -1,19 +1,17 @@
-﻿using BlueprintCore.Blueprints.CustomConfigurators.Classes.Selection;
+﻿using BlueprintCore.Blueprints.CustomConfigurators.Classes;
 using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
 
-namespace CombatOverhaul.Blueprints.FeatureSelections.Paladin
+namespace CombatOverhaul.Blueprints.Features.Paladin
 {
     [AutoRegister]
-    internal class DivineWeaponBondSelection
+    internal class DivineWeaponBondFeatureTweaks
     {
         public static void Register()
         {
-            FeatureSelectionConfigurator.For(FeaturesSelectionsGuids.PaladinDivineBondSelection)
+            FeatureConfigurator.For(FeaturesGuids.DivineWeaponBond)
                 .SetDescriptionValue(
-                    "Upon reaching 5th level, a paladin forms a divine bond with her god. This bond can take one of " +
-                    "two forms. Once the form is chosen, it cannot be changed.\n" +
-                    "The first type of bond allows a paladin to form a divine bond with her weapon.As a swift action, " +
+                    "Upon reaching 5th level, a paladin forms a divine bond with her weapon. As a swift action, " +
                     "she can call upon the aid of a celestial spirit for 4 rounds.\n" +
                     "At 5th level, this spirit grants the weapon a + 1 enhancement bonus.For every three levels beyond " +
                     "5th, the weapon gains another + 1 enhancement bonus, to a maximum of + 6 at 20th level.These bonuses " +
@@ -25,12 +23,7 @@ namespace CombatOverhaul.Blueprints.FeatureSelections.Paladin
                     "Divine weapon bond uses charges; activating this ability expends 3 charges. The paladin begins with 3 " +
                     "charges, and at 8th level and every 4 levels thereafter she gains 1 additional charge. " +
                     "At the start of each round, the paladin regains 1 charge, up to her maximum number of charges. While Divine " +
-                    "Weapon Bond is active, you do not regain charges at the start of each round.\n" +
-                    "The second type of bond allows a paladin to gain the service of an unusually intelligent, strong, and " +
-                    "loyal steed to serve her in her crusade against evil.This mount is a heavy horse.This mount functions as " +
-                    "a druid's animal companion, using the paladin's level as her effective druid level.\n" +
-                    "At 11th level, the mount gains the celestial creature simple template.\n" +
-                    "At 15th level, a paladin's mount gains spell resistance equal to the paladin's level + 11."
+                    "Weapon Bond is active, you do not regain charges at the start of each round."
                 )
                 .Configure();
         }
