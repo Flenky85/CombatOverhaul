@@ -18,5 +18,8 @@
         public const string SlowGnome = "09bc9ccb8ee0ffe4b8827066b1ed7e11";
         public const string SlowHalfling = "b8926aeaac17dc7408a5059788255819";
         public const string SlowAndSteadyOread = "a9a3a4766b88af74a9d226dddf2927eb";
+
+        //Paladin
+        public const string SmiteEvil = "3a6db57fce75b0244a6a5819528ddf26";
     }
 }

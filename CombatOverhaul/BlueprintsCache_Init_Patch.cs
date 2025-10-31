@@ -2,6 +2,7 @@
 using CombatOverhaul.Blueprints.Abilities.Paladin;
 using CombatOverhaul.Blueprints.AbilitiesResources.Paladin;
 using CombatOverhaul.Blueprints.Features.Commons;
+using CombatOverhaul.Blueprints.Features.Paladin;
 using CombatOverhaul.Blueprints.Features.Races;
 using CombatOverhaul.Features;
 using CombatOverhaul.Magic.UI.ManaDisplay;
@@ -64,6 +65,9 @@ namespace CombatOverhaul
             SlowAndSteadyOreadFeatureTweaks.Register();
             SlowGnomeFeatureTweaks.Register();
             SlowHalflingFeatureTweaks.Register();
+
+            //Paladin
+            SmiteEvilFeatureTweaks.Register();
 
 
             /////////////
