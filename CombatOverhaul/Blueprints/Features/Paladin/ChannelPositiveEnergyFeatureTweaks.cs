@@ -1,10 +1,6 @@
 ﻿using BlueprintCore.Blueprints.CustomConfigurators.Classes;
 using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
-using Kingmaker.Assets.Designers.EventConditionActionSystem.Conditions;
-using Kingmaker.Visual.Decals;
-using System.Runtime.Remoting.Messaging;
-using static Kingmaker.Blueprints.BlueprintAbilityResource;
 
 namespace CombatOverhaul.Blueprints.Features.Paladin
 {
