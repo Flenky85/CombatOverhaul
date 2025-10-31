@@ -12,7 +12,7 @@ namespace CombatOverhaul.Blueprints.Features.Paladin
             FeatureConfigurator.For(FeaturesGuids.MarkOfJustice)
                 .SetDescriptionValue(
                     "At 11th level, a paladin can expend 6 charges of her smite evil ability to " +
-                    "grant the ability to smite evil to all allies for 1 minute, using her bonuses. " +
+                    "grant the ability to smite evil to all allies for 3 rounds, using her bonuses. " +
                     "As a swift action, the paladin chooses one target within sight to smite. If this " +
                     "target is evil, the paladin's allies add her Charisma bonus (if any) to their " +
                     "attack rolls and add her paladin level to all damage rolls made against the target " +
