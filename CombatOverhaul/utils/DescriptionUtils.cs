@@ -1,4 +1,5 @@
-﻿using BlueprintCore.Blueprints.CustomConfigurators.Classes; 
+﻿using BlueprintCore.Blueprints.CustomConfigurators.Classes;
+using BlueprintCore.Blueprints.CustomConfigurators.Classes.Selection;
 using BlueprintCore.Blueprints.CustomConfigurators.UnitLogic.Abilities; 
 using BlueprintCore.Utils; 
 using Kingmaker.Localization;
@@ -46,6 +47,17 @@ namespace CombatOverhaul.Utils
 
         public static AbilityConfigurator SetDescriptionValue(
             this AbilityConfigurator cfg, string text, bool tagEncyclopedia = true)
+        {
+            return cfg.OnConfigure(bp =>
+            {
+                var v = Process(text, tagEncyclopedia);
+                PutResolved(bp.m_Description, v);
+                PutResolved(bp.m_DescriptionShort, v);
+            });
+        }
+
+        public static FeatureSelectionConfigurator SetDescriptionValue(
+            this FeatureSelectionConfigurator cfg, string text, bool tagEncyclopedia = true)
         {
             return cfg.OnConfigure(bp =>
             {

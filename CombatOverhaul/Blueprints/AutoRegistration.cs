@@ -37,7 +37,7 @@ namespace CombatOverhaul.Blueprints
                             binder: null, types: Type.EmptyTypes, modifiers: null)
                     })
                     .Where(x => x.Attr != null && x.Register != null)
-                    .OrderBy(x => x.Type.FullName, StringComparer.Ordinal) // orden estable sin phases/order
+                    .OrderBy(x => x.Type.FullName, StringComparer.Ordinal) 
                     .ToList();
 
                 Log.Info("[AutoReg] Found " + types.Count + " tweak(s) to register.");
@@ -58,7 +58,6 @@ namespace CombatOverhaul.Blueprints
                 }
 
 #if DEBUG
-                // Aviso útil para clases "*Tweaks" con Register() pero sin [AutoRegister]
                 var missed = asm.GetTypes()
                     .Where(t => t.IsClass
                                 && t.Name.EndsWith("Tweaks")
