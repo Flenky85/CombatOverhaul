@@ -10,6 +10,7 @@
         public const string ChannelEnergyHospitaler = "b0e0c7716ab27c64fb4b131c9845c596";
         public const string MartyrPerformance = "875aac46f5e879f4c9ec3ba46847d86e";
         public const string Stonestrike = "b71e5bbcaf874270a83b8b2b56fd8d0d";
-        
+        public const string StonelordDefesniveStance = "cea8780f80a640c3adb0435b321ad9ce";
+
     }
 }
