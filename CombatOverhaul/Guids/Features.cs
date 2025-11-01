@@ -32,5 +32,6 @@
         public const string ChannelPositiveEnergyHospitaler = "a9ab1bbc79ecb174d9a04699986ce8d5";
         public const string MartyrPerformanceResourceFact = "8504fad23ce93d44caf69550b8059e7b";
         public const string Stigmata = "d87665d2bff740d4daf07ddd36759b34";
+        public const string Stonestrike = "402c7820f7804cb7b56ab13cc7a9022b";
     }
 }

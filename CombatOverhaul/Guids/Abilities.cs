@@ -21,6 +21,6 @@
         public const string DivineHunterWeaponBond = "8b405b057dc5051448e20041bd366592";
         public const string ChannelEnergyHospitalerHeal = "0c0cf7fcb356d2448b7d57f2c4db3c0c";
         public const string ChannelEnergyHospitalerHarm = "cc17243b2185f814aa909ac6b6599eaa";
-
+        public const string Stonestrike = "2ef0536855d74af6a37a00e10ea0e994";
     }
 }
