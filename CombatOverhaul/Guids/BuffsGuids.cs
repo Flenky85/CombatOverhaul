@@ -5,6 +5,8 @@
         //Commons Buffs
         public const string DragonStyle = "cc03b87fd3a797f4e953773db424cee7";
         public const string SunderArmor = "f508d20a350acb34db6293f5654f0b24";
+        public const string Fatigued = "e6f2fc5d73d88064583cb828801212f4";
+        public const string Exhausted = "46d1b9cc3d0fd36469a471b047d773a2";
 
         //Paladin
         public const string WeaponBond = "bf570774501886f47b395a4bfe75eeb2";

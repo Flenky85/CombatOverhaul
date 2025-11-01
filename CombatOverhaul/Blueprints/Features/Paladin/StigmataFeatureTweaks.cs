@@ -19,7 +19,7 @@ namespace CombatOverhaul.Blueprints.Features.Paladin
                     "stigmata assist his allies, duplicating inspire courage bardic performance of a bard of " +
                     "his paladin level. At 10th level, he can choose to duplicate the effects of inspire " +
                     "greatness. At 16th level, he can choose to duplicate the effects of inspire heroics.\n" +
-                    "hymns of faith uses charges; activating this ability expends 1 charges per round. The paladin begins with 3 " +
+                    "Hymns of faith uses charges; activating this ability expends 1 charges per round. The paladin begins with 3 " +
                     "charges; she also adds her Cha bonus (if any) to her maximum number of charges. At the start of her turn, if this ability " +
                     "is not active that round, the paladin regains 1 charges, up to her maximum number of charges."
                 )
