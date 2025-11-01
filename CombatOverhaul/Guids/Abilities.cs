@@ -34,5 +34,10 @@
         public const string PowerOfFaith5 = "c89c4918529156a4d8636ed9060dc5cd";
         public const string ShiningLight = "6aeff8f6d01adff40866f292f7655472";
 
+        //Spells
+        //Level 1
+        public const string BurningHands = "4783c3709a74a794dbe7c8e7e0b1b038";
+        public const string CauseFear = "bd81a3931aa285a4f9844585b5d97e51";
+
     }
 }
