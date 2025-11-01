@@ -26,6 +26,8 @@ namespace CombatOverhaul.Resources
             new RegenRule(AbilitiesResourcesGuids.MartyrPerformance, flat: 1, percentOfMax: 0f, BuffsGuids.MartyrGreatness, BuffsGuids.MartyrCourage, BuffsGuids.MartyrHeroics),
             new RegenRule(AbilitiesResourcesGuids.Stonestrike, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.StonelordDefesniveStance, flat: 1, percentOfMax: 0f, BuffsGuids.StonelordDefensiveStance, BuffsGuids.Fatigued, BuffsGuids.Exhausted),
+            new RegenRule(AbilitiesResourcesGuids.AllIsDarkness, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.TorturedCrusadeLayOnHands, flat: 1, percentOfMax: 0f),
         };
 
         public static void TryApply(UnitEntityData unit)

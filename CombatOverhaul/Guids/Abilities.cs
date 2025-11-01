@@ -22,5 +22,11 @@
         public const string ChannelEnergyHospitalerHeal = "0c0cf7fcb356d2448b7d57f2c4db3c0c";
         public const string ChannelEnergyHospitalerHarm = "cc17243b2185f814aa909ac6b6599eaa";
         public const string Stonestrike = "2ef0536855d74af6a37a00e10ea0e994";
+        public const string AllIsDarkness = "a4ba84cd7a2341409e91d487edcbea82";
+        public const string FinalJustice = "de48d9180fd247eaa704c7c71a551d4d";
+        public const string AloneInTheDark = "eda05d33809d4a81993021a3359f8a5b";
+        public const string SecondChance = "544546d914e64c609a0c03735a123b5c";
+        public const string SecondChancelvl8 = "180568e019c744e2969081e474c4402d";
+
     }
 }

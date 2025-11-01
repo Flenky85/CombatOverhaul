@@ -34,6 +34,8 @@
         public const string Stigmata = "d87665d2bff740d4daf07ddd36759b34";
         public const string Stonestrike = "402c7820f7804cb7b56ab13cc7a9022b";
         public const string StonelordDefensiveStance = "fe51d20029234a09ae0eb84e2b9f90c3";
-        
+        public const string AllIsDarkness = "2ddbfce6b2844c60bb28ecf33923d2a2";
+        public const string FinalJustice = "f54a0205f63f4012b37c9a3e6b88dd1d";
+        public const string SecondChance = "dad3bd49a6bb4c5f871a8c6888201452";
     }
 }
