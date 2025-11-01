@@ -1,4 +1,6 @@
-﻿using CombatOverhaul.Guids;
+﻿using BlueprintCore.Blueprints.CustomConfigurators;
+using BlueprintCore.Utils;
+using CombatOverhaul.Guids;
 using Kingmaker.Blueprints;
 
 namespace CombatOverhaul.Blueprints.AbilitiesResources.Paladin
@@ -8,12 +10,13 @@ namespace CombatOverhaul.Blueprints.AbilitiesResources.Paladin
     {
         public static void Register()
         {
-            var res = ResourcesLibrary.TryGetBlueprint<BlueprintAbilityResource>(AbilitiesResourcesGuids.WeaponBond);
-            if (res == null) return;
-
+            var res = BlueprintTool.Get<BlueprintAbilityResource>(AbilitiesResourcesGuids.WeaponBond);
             var amt = res.m_MaxAmount;
             amt.BaseValue = 3;
-            res.m_MaxAmount = amt;
+
+            AbilityResourceConfigurator.For(AbilitiesResourcesGuids.WeaponBond)
+              .SetMaxAmount(amt)
+              .Configure();
         }
     }
 }

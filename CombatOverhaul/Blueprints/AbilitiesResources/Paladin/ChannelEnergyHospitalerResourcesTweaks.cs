@@ -1,4 +1,6 @@
-﻿using CombatOverhaul.Guids;
+﻿using BlueprintCore.Blueprints.CustomConfigurators;
+using BlueprintCore.Utils;
+using CombatOverhaul.Guids;
 using Kingmaker.Blueprints;
 
 namespace CombatOverhaul.Blueprints.AbilitiesResources.Paladin
@@ -8,12 +10,13 @@ namespace CombatOverhaul.Blueprints.AbilitiesResources.Paladin
     {
         public static void Register()
         {
-            var res = ResourcesLibrary.TryGetBlueprint<BlueprintAbilityResource>(AbilitiesResourcesGuids.ChannelEnergyHospitaler);
-            if (res == null) return;
+            var res = BlueprintTool.Get<BlueprintAbilityResource>(AbilitiesResourcesGuids.ChannelEnergyHospitaler);
+            var amt = res.m_MaxAmount;   
+            amt.BaseValue = 12;          
 
-            var amt = res.m_MaxAmount;
-            amt.BaseValue = 12;
-            res.m_MaxAmount = amt;
+            AbilityResourceConfigurator.For(AbilitiesResourcesGuids.ChannelEnergyHospitaler)
+              .SetMaxAmount(amt)         
+              .Configure();
         }
     }
 }

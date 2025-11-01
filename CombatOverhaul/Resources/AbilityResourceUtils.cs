@@ -25,6 +25,7 @@ namespace CombatOverhaul.Resources
             new RegenRule(AbilitiesResourcesGuids.ChannelEnergyHospitaler, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.MartyrPerformance, flat: 1, percentOfMax: 0f, BuffsGuids.MartyrGreatness, BuffsGuids.MartyrCourage, BuffsGuids.MartyrHeroics),
             new RegenRule(AbilitiesResourcesGuids.Stonestrike, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.StonelordDefesniveStance, flat: 1, percentOfMax: 0f, BuffsGuids.StonelordDefensiveStance),
         };
 
         public static void TryApply(UnitEntityData unit)
