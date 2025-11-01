@@ -19,6 +19,9 @@
         public const string SlowHalfling = "b8926aeaac17dc7408a5059788255819";
         public const string SlowAndSteadyOread = "a9a3a4766b88af74a9d226dddf2927eb";
 
+        //Class Feats
+        public const string ExtraLayOnHands = "a2b2f20dfb4d3ed40b9198e22be82030";
+
         //Paladin
         public const string SmiteEvil = "3a6db57fce75b0244a6a5819528ddf26";
         public const string MarkOfJustice = "9f13fdd044ccb8a439f27417481cb00e";
@@ -37,5 +40,8 @@
         public const string AllIsDarkness = "2ddbfce6b2844c60bb28ecf33923d2a2";
         public const string FinalJustice = "f54a0205f63f4012b37c9a3e6b88dd1d";
         public const string SecondChance = "dad3bd49a6bb4c5f871a8c6888201452";
+        public const string ShiningLightAditionalUse = "f1339b083cf65644ca8dbbfa836adb24";
+        public const string ShiningLight = "a6da390e9deeca2468ca0786a0ba225c";
+        
     }
 }

@@ -28,6 +28,7 @@ namespace CombatOverhaul.Resources
             new RegenRule(AbilitiesResourcesGuids.StonelordDefesniveStance, flat: 1, percentOfMax: 0f, BuffsGuids.StonelordDefensiveStance, BuffsGuids.Fatigued, BuffsGuids.Exhausted),
             new RegenRule(AbilitiesResourcesGuids.AllIsDarkness, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.TorturedCrusadeLayOnHands, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.ShiningLight, flat: 1, percentOfMax: 0f),
         };
 
         public static void TryApply(UnitEntityData unit)

@@ -27,6 +27,12 @@
         public const string AloneInTheDark = "eda05d33809d4a81993021a3359f8a5b";
         public const string SecondChance = "544546d914e64c609a0c03735a123b5c";
         public const string SecondChancelvl8 = "180568e019c744e2969081e474c4402d";
+        public const string PowerOfFaith1 = "7ed6c1501a8c7224bac037dcee4b6705";
+        public const string PowerOfFaith2 = "64351f4936663d64bb0ab30e5902d45e";
+        public const string PowerOfFaith3 = "1bcef5aeeee69944b882718474ea53e2";
+        public const string PowerOfFaith4 = "1785979af3db14f428a8a70943ea3852";
+        public const string PowerOfFaith5 = "c89c4918529156a4d8636ed9060dc5cd";
+        public const string ShiningLight = "6aeff8f6d01adff40866f292f7655472";
 
     }
 }

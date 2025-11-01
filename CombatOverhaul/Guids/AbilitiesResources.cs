@@ -13,5 +13,6 @@
         public const string StonelordDefesniveStance = "cea8780f80a640c3adb0435b321ad9ce";
         public const string AllIsDarkness = "7b5115b376fd4987b2c070da20ba91ea";
         public const string TorturedCrusadeLayOnHands = "47a984229de549869278b7c78a075e53";
+        public const string ShiningLight = "7892a17840adb5741839512a1694cf47";
     }
 }
