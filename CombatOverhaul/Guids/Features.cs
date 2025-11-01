@@ -21,6 +21,8 @@
 
         //Class Feats
         public const string ExtraLayOnHands = "a2b2f20dfb4d3ed40b9198e22be82030";
+        public const string ExtraPerformanceMartyr = "639ce2b85a13404caa618f36748d7fa5";
+        public const string ExtraChannelHospitaler = "8d4f82fdb4d09b247ae8cd1ae7ce02de";
 
         //Paladin
         public const string SmiteEvil = "3a6db57fce75b0244a6a5819528ddf26";
