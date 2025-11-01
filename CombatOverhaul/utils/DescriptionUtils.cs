@@ -77,5 +77,24 @@ namespace CombatOverhaul.Utils
                 PutResolved(bp.m_DescriptionShort, v);
             });
         }
+
+        public static AbilityConfigurator SetDurationValue(
+            this AbilityConfigurator cfg, string text, bool tagEncyclopedia = false)
+        {
+            return cfg.OnConfigure(bp =>
+            {
+                var v = Process(text, tagEncyclopedia);
+                PutResolved(bp.LocalizedDuration, v);
+            });
+        }
+        public static AbilityConfigurator SetSavingThrowValue(
+            this AbilityConfigurator cfg, string text, bool tagEncyclopedia = false)
+        {
+            return cfg.OnConfigure(bp =>
+            {
+                var v = Process(text, tagEncyclopedia);
+                PutResolved(bp.LocalizedSavingThrow, v);
+            });
+        }
     }
 }

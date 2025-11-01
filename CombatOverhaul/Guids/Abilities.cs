@@ -38,6 +38,13 @@
         //Level 1
         public const string BurningHands = "4783c3709a74a794dbe7c8e7e0b1b038";
         public const string CauseFear = "bd81a3931aa285a4f9844585b5d97e51";
+        public const string ColorSpray = "91da41b9793a4624797921f221db653c";
+        public const string CorrosiveTouch = "1a40fc88aeac9da4aa2fbdbb88335f5d";
+        public const string EarPiercingScream = "8e7cfa5f213a90549aadd18f8f6f4664";
+        public const string EnlargePerson = "c60969e7f264e6d4b84a1499fdcf9039";
+        public const string ExpeditiousRetreat = "4f8181e7a7f1d904fbaea64220e83379";
+        public const string FlareBurst = "39a602aa80cc96f4597778b6d4d49c0a";
+        
 
     }
 }

@@ -49,7 +49,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Paladin
                             },
                             Value = new ContextDiceValue
                             {
-                                DiceType = DiceType.D6,
+                                DiceType = DiceType.D4,
                                 DiceCountValue = new ContextValue { ValueType = ContextValueType.Rank },
                                 BonusValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 0 }
                             },
@@ -75,8 +75,9 @@ namespace CombatOverhaul.Blueprints.Abilities.Paladin
                     cfg.m_UseMax = true;
                     cfg.m_Max = 4;
                 })
+                .SetDurationValue("1d2 rounds or 1 round")
                 .SetDescriptionValue(
-                    "The affected creature takes 1d6 points of damage per caster level (maximum 4d6) " +
+                    "The affected creature takes 1d4 points of damage per caster level (maximum 4d4) " +
                     "and becomes frightened for 1d2 rounds. If the target succeeds at a Will save, it " +
                     "instead takes half damage and is shaken for 1 round. Creatures with 6 or more HD " +
                     "are immune to this effect. Cause fear dispels remove fear."
