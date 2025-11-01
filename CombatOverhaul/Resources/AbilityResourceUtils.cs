@@ -3,6 +3,7 @@ using Kingmaker.Blueprints;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Buffs.Blueprints;
+using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -22,6 +23,7 @@ namespace CombatOverhaul.Resources
             new RegenRule(AbilitiesResourcesGuids.WeaponBond, flat: 1, percentOfMax: 0f, BuffsGuids.WeaponBond),
             new RegenRule(AbilitiesResourcesGuids.DivineGuardianTroth, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.ChannelEnergyHospitaler, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.MartyrPerformance, flat: 1, percentOfMax: 0f, BuffsGuids.MartyrGreatness, BuffsGuids.MartyrCourage, BuffsGuids.MartyrHeroics),
         };
 
         public static void TryApply(UnitEntityData unit)
@@ -48,8 +50,8 @@ namespace CombatOverhaul.Resources
 
             if (!col.ContainsResource(bp)) return;
 
-            if (!string.IsNullOrEmpty(rule.SkipIfHasBuffGuid) && HasBuff(unit, rule.SkipIfHasBuffGuid))
-                return;
+            if (rule.SkipIfHasBuffGuids != null && rule.SkipIfHasBuffGuids.Any(g => HasBuff(unit, g)))
+                return; 
 
             if (col.HasMaxAmount(bp)) return;
 
@@ -77,14 +79,15 @@ namespace CombatOverhaul.Resources
             public readonly string Guid;
             public readonly int Flat;
             public readonly float PercentOfMax;
-            public readonly string SkipIfHasBuffGuid; 
 
-            public RegenRule(string guid, int flat = 0, float percentOfMax = 0f, string skipIfHasBuffGuid = null) 
+            public readonly string[] SkipIfHasBuffGuids;
+
+            public RegenRule(string guid, int flat = 0, float percentOfMax = 0f, params string[] skipIfHasBuffGuids)
             {
                 Guid = guid;
                 Flat = flat;
                 PercentOfMax = percentOfMax;
-                SkipIfHasBuffGuid = skipIfHasBuffGuid; 
+                SkipIfHasBuffGuids = skipIfHasBuffGuids;
             }
         }
 

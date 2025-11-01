@@ -30,5 +30,7 @@
         public const string HunterBlessing = "ae98475b3f5d3aa4bb830d352655a8ed";
         public const string DivineHunterWeaponBond = "275d3dd6cad51cf4db9b0bceebff02f2";
         public const string ChannelPositiveEnergyHospitaler = "a9ab1bbc79ecb174d9a04699986ce8d5";
+        public const string MartyrPerformanceResourceFact = "8504fad23ce93d44caf69550b8059e7b";
+        public const string Stigmata = "d87665d2bff740d4daf07ddd36759b34";
     }
 }
