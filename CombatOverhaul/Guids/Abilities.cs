@@ -61,7 +61,21 @@
         public const string ShockingGraspCast = "ab395d2335d3f384e99dddee8562978f";
         public const string Sleep = "bb7ecad2d3d2c8247a38f44855c99061";
         public const string SnowBall = "9f10909f0be1f5141bf1c102041f93d9";
-        
+        public const string StoneFist = "85067a04a97416949b5d1dbf986d93f3";
+        public const string StunningBarrier = "a5ec7892fb1c2f74598b3a82f3fd679f";
+        public const string SummonMonsterISingle = "8fd74eddd9b6c224693d9ab241f25e84";
+        public const string TouchOfGracelessness = "5d38c80a819e8084ba19b29a865312c2";
+        public const string TouchOfGracelessnessCast = "ad10bfec6d7ae8b47870e3a545cc8900";
+        public const string TrueStrike = "2c38da66e5a599347ac95b3294acbe00";
+        public const string Vanish = "f001c73999fb5a543a199f890108d936";
+        public const string Hypnotism = "88367310478c10b47903463c5d0152b0";
+        public const string MagicWeapon = "d7fdd79f0f6b6a2418298e936bb68e40";
+        public const string MagicWeaponPrimary = "e805c0e867b583b4f8c24b2b045b5be3";
+        public const string MagicWeaponSecondary = "1db3c324e531992469a0d2a1f1063fa6";
+        public const string IncendiaryRunes = "1626dbd11c4143b2a5641da8f227b78c";
+        //Level 2
+        public const string BoneFists = "0da2046b4517427bb9b2e304ea6342bf";
+
 
 
 

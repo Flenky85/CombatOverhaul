@@ -18,5 +18,6 @@
         //Spells
         //Level 1
         public const string RayOfEnfeeblement = "7dc2c05760ed40a49af10c1ce6ded033";
+        public const string TouchOfGracelessness = "dc2fb898c3d07a546b31bd5d49ffadba";
     }
 }
