@@ -19,5 +19,10 @@
         //Level 1
         public const string RayOfEnfeeblement = "7dc2c05760ed40a49af10c1ce6ded033";
         public const string TouchOfGracelessness = "dc2fb898c3d07a546b31bd5d49ffadba";
+        public const string ExpeditiousRetreat = "9ea4ec3dc30cd7940a372a4d699032e7";
+        //Level 2
+        public const string AcidArrow = "e52b0f098512c0b4388ef42764c51bdf";
+        public const string FalseLife = "0fdb3cca6744fd94b9436459e6d9b947";
+        
     }
 }

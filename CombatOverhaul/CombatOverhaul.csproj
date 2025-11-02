@@ -60,7 +60,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Blueprints\Abilities\Spells\Level 2\" />
     <Folder Include="Blueprints\ActivatableAbilities\" />
     <Folder Include="Classes\NewRound\Paladin\" />
   </ItemGroup>

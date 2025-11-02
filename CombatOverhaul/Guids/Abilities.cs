@@ -75,6 +75,30 @@
         public const string IncendiaryRunes = "1626dbd11c4143b2a5641da8f227b78c";
         //Level 2
         public const string BoneFists = "0da2046b4517427bb9b2e304ea6342bf";
+        public const string MortalTerror = "8bc127ed66044685957e54f19d8dbdb7";
+        public const string AcidArrow = "9a46dfd390f943647ab4395fc997936d";
+        public const string AnimalAspectBase = "d4b28341acdfa9443a3a779acb58be51";
+        public const string AnimalAspectGorilla = "a09966aa734f13f4b8e1d77f99be182b";
+        public const string AnimalAspectMonkey = "9d77bb24637d0ef469c830622bd6a230";
+        public const string AnimalAspectRacoon = "48f8f5ead2653b64f8b4febc0b01f39f";
+        public const string AnimalAspectRaptor = "a2cad54019ee78e47ad6c3babd32bcca";
+        public const string BearsEndurance = "a900628aea19aa74aad0ece0e65d091a";
+        public const string Blindness = "46fd02ad56c35224c9c91c88cd457791";
+        public const string Blur = "14ec7a4e52e90fa47a4c8d63c69fd5c1";
+        public const string Boneshaker = "b7731c2b4fa1c9844a092329177be4c3";
+        public const string BullsStrength = "4c3d08935262b6544ae97599b3a9556d";
+        public const string BurningArc = "eaac3d36e0336cb479209a6f65e25e7c";
+        public const string CatGrace = "de7a025d48ad5da4991e7d3c682cf69d";
+        public const string CommandUndead = "0b101dd5618591e478f825f0eef155b4";
+        public const string CreatePit = "29ccc62632178d344ad0be0865fd3113";
+        public const string EaglesSplendor = "446f7bf201dc1934f96ac0a26e324803";
+        public const string FalseLife = "7a5b5bf845779a941a67251539545762";
+        public const string FoxCunning = "ae4d3ad6a8fda1542acf2e9bbc13d113";
+        public const string FrigidTouch = "c83447189aabc72489164dfc246f3a36";
+        public const string Glitterdust = "ce7dad2b25acf85429b6c9550787b2d9";
+        public const string HideousLaughter = "fd4d9fd7f87575d47aafe2a64a6e2d8d";
+
+
 
 
 
@@ -83,3 +107,4 @@
 
     }
 }
+
