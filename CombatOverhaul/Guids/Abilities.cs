@@ -44,7 +44,22 @@
         public const string EnlargePerson = "c60969e7f264e6d4b84a1499fdcf9039";
         public const string ExpeditiousRetreat = "4f8181e7a7f1d904fbaea64220e83379";
         public const string FlareBurst = "39a602aa80cc96f4597778b6d4d49c0a";
-        
+        public const string Grease = "95851f6e85fe87d4190675db0419d112";
+        public const string HurricaneBow = "3e9d1119d43d07c4c8ba9ebfd1671952";
+        public const string MageArmor = "9e1ad5d6f87d19e4d8883d63a6e35568";
+        public const string Shield = "ef768022b0785eb43a18969903c537c4";
+        public const string MagicMissile = "4ac47ddb9fa1eaf43a1b6809980cfbd2";
+        public const string ProtectionFromAlignment = "433b1faf4d02cc34abb0ade5ceda47c4";
+        public const string ProtectionFromChaos = "1eaf1020e82028d4db55e6e464269e00";
+        public const string ProtectionFromGood = "2ac7637daeb2aa143a3bae860095b63e";
+        public const string ProtectionFromLaw = "c3aafbbb6e8fc754fb8c82ede3280051";
+        public const string ProtectionFromEvil = "eee384c813b6d74498d1b9cc720d61f4";
+        public const string RayOfEnfeeblement = "450af0402422b0b4980d9c2175869612";
+
+
+
+
+
 
     }
 }

@@ -10,11 +10,11 @@ using Kingmaker.UnitLogic.Mechanics.Actions;
 namespace CombatOverhaul.Blueprints.Abilities.Paladin
 {
     [AutoRegister]
-    internal static class ExpeditiousRetreatAbilityTweaks
+    internal static class HurricaneBowAbilityTweaks
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.ExpeditiousRetreat)
+            AbilityConfigurator.For(AbilitiesGuids.HurricaneBow)
                 .SetActionType(UnitCommand.CommandType.Swift)
                 .SetIsFullRoundAction(false)
                 .EditComponent<AbilityEffectRunAction>(c =>

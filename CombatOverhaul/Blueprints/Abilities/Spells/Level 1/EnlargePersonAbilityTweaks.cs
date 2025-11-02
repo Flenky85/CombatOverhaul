@@ -8,7 +8,6 @@ using Kingmaker.UnitLogic.Abilities.Components;
 using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Actions;
-using Kingmaker.UnitLogic.Mechanics.Components;
 
 namespace CombatOverhaul.Blueprints.Abilities.Paladin
 {
@@ -43,7 +42,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Paladin
                     applyC.DurationValue.DiceCountValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 0 };
                     applyC.DurationValue.BonusValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 6 };
                 })
-                .SetDurationValue("6 rounds")
+                .SetDuration6RoundsShared()
                 .Configure();
         }
     }

@@ -14,5 +14,9 @@
         public const string MartyrGreatness = "aed91b87b1126c14fb5ce45f5012f8d5";
         public const string MartyrHeroics = "3575eff0b0bff244e8f692c66f3eb46b";
         public const string StonelordDefensiveStance = "99ab5d010faa4c83b7d41bdd6b1afa83";
+
+        //Spells
+        //Level 1
+        public const string RayOfEnfeeblement = "7dc2c05760ed40a49af10c1ce6ded033";
     }
 }

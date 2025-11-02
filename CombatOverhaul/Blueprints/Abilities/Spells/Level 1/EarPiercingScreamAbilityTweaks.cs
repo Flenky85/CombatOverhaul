@@ -49,7 +49,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Paladin
                     cfg.m_Max = 4;    
                 },
                 cfg => cfg.m_Type == AbilityRankType.DamageDice || cfg.m_Type == AbilityRankType.StatBonus)
-                .SetDurationValue("1d2 rounds")
+                .SetDuration1d2RoundsShared()
                 .SetDescriptionValue(
                     "You unleash a powerful scream, inaudible to all but a single target. The target is dazed for " +
                     "1d2 rounds and takes 1d4 points of sonic damage per caster level (maximum 4d4). A successful " +

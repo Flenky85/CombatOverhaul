@@ -4,6 +4,7 @@ using BlueprintCore.Blueprints.CustomConfigurators.Classes.Selection;
 using BlueprintCore.Blueprints.CustomConfigurators.UnitLogic.Abilities; 
 using BlueprintCore.Utils; 
 using Kingmaker.Localization;
+using Kingmaker.Utility;
 
 namespace CombatOverhaul.Utils
 {
@@ -94,6 +95,40 @@ namespace CombatOverhaul.Utils
             {
                 var v = Process(text, tagEncyclopedia);
                 PutResolved(bp.LocalizedSavingThrow, v);
+            });
+        }
+
+        // --- Warning! Key ---
+        private const string Key_Duration_6Rounds = "CO.Duration.6Rounds";
+        private const string Key_Duration_2d3Rounds = "CO.Duration.2d3Rounds";
+        private const string Key_Duration_1d2Rounds = "CO.Duration.1d2Rounds";
+
+        private static LocalizedString LsFromKey(string key, string valueIfMissing)
+        {
+            var pack = LocalizationManager.CurrentPack;
+            pack?.PutString(key, valueIfMissing); 
+            return new LocalizedString { m_Key = key };
+        }
+
+        public static AbilityConfigurator SetDuration6RoundsShared(this AbilityConfigurator cfg)
+        {
+            return cfg.OnConfigure(bp =>
+            {
+                bp.LocalizedDuration = LsFromKey(Key_Duration_6Rounds, "6 rounds");
+            });
+        }
+        public static AbilityConfigurator SetDuration2d3RoundsShared(this AbilityConfigurator cfg)
+        {
+            return cfg.OnConfigure(bp =>
+            {
+                bp.LocalizedDuration = LsFromKey(Key_Duration_2d3Rounds, "2d3 rounds");
+            });
+        }
+        public static AbilityConfigurator SetDuration1d2RoundsShared(this AbilityConfigurator cfg)
+        {
+            return cfg.OnConfigure(bp =>
+            {
+                bp.LocalizedDuration = LsFromKey(Key_Duration_1d2Rounds, "1d2 rounds");
             });
         }
     }
