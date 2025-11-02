@@ -55,7 +55,13 @@
         public const string ProtectionFromLaw = "c3aafbbb6e8fc754fb8c82ede3280051";
         public const string ProtectionFromEvil = "eee384c813b6d74498d1b9cc720d61f4";
         public const string RayOfEnfeeblement = "450af0402422b0b4980d9c2175869612";
-
+        public const string RayOfSickening = "fa3078b9976a5b24caf92e20ee9c0f54";
+        public const string ReducePerson = "4e0e9aba6447d514f88eff1464cc4763";
+        public const string ShockingGraspEffect = "17451c1327c571641a1345bd31155209";
+        public const string ShockingGraspCast = "ab395d2335d3f384e99dddee8562978f";
+        public const string Sleep = "bb7ecad2d3d2c8247a38f44855c99061";
+        public const string SnowBall = "9f10909f0be1f5141bf1c102041f93d9";
+        
 
 
 
