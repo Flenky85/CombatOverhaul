@@ -97,14 +97,40 @@
         public const string FrigidTouch = "c83447189aabc72489164dfc246f3a36";
         public const string Glitterdust = "ce7dad2b25acf85429b6c9550787b2d9";
         public const string HideousLaughter = "fd4d9fd7f87575d47aafe2a64a6e2d8d";
-
-
-
-
-
-
-
-
+        public const string Invisibility = "89940cde01689fb46946b2f8cd7b66b7";
+        public const string MirrorImage = "3e4ab69ada402d145a5e0ad3ad4b8564";
+        public const string MoltenOrb = "42a65895ba0cb3a42b6019039dd2bff1";
+        public const string OwlsWisdom = "f0455c9295b53904f9e02fc571dd2ce1";
+        public const string PerniciousPoison = "dee3074b2fbfb064b80b973f9b56319e";
+        public const string ProtectionFromAlignmentCommunal = "2cadf6c6350e4684baa109d067277a45";
+        public const string ProtectionFromChaosCommunal = "0ec75ec95d9e39d47a23610123ba1bad";
+        public const string ProtectionFromEvilCommunal = "93f391b0c5a99e04e83bbfbe3bb6db64";
+        public const string ProtectionFromGoodCommunal = "5bfd4cce1557d5744914f8f6d85959a4";
+        public const string ProtectionFromLawCommunal = "8b8ccc9763e3cc74bbf5acc9c98557b9";
+        public const string ProtectionFromArrows = "c28de1f98a3f432448e52e5d47c73208";
+        public const string ResistEnergy = "21ffef7791ce73f468b6fca4d9371e8b";
+        public const string ResistAcid = "fedc77de9b7aad54ebcc43b4daf8decd";
+        public const string ResistCold = "5368cecec375e1845ae07f48cdc09dd1";
+        public const string ResistElectricity = "90987584f54ab7a459c56c2d2f22cee2";
+        public const string ResistFire = "ddfb4ac970225f34dbff98a10a4a8844";
+        public const string ResistSonic = "8d3b10f92387c84429ced317b06ad001";
+        public const string Scare = "08cb5f4c3b2695e44971bf5c45205df0";
+        public const string ScorchingRay = "cdb106d53c65bbc4086183d54c3b97c7";
+        public const string SeeInvisibility = "30e5dc243f937fc4b95d2f8f4e1b7ff3";
+        public const string SenseVitals = "82962a820ebc0e7408b8582fdc3f4c0c";
+        public const string StoneCall = "5181c2ed0190fc34b8a1162783af5bf4";
+        public const string SummonElementalSmallBase = "970c6db48ff0c6f43afc9dbb48780d03";
+        public const string SummonElementalSmallAir = "9cc6b61eba880b944a8f489c44640b5c";
+        public const string SummonElementalSmallEarth = "69b36426bb910e341a943f101daed594";
+        public const string SummonElementalSmallFire = "d8f88028204bc2041be9d9d51f58e6a5";
+        public const string SummonElementalSmallWater = "107788f47c4481f4db6da06498b28270";
+        public const string SummonMonsterIIBase = "1724061e89c667045a6891179ee2e8e7";
+        public const string SummonMonsterIId3 = "6223958f3615eeb4d91e52ba57820878";
+        public const string SummonMonsterIISingle = "7ab27a0d547742741beb5d089f1c3852";
+        public const string Web = "134cb6d492269aa4f8662700ef57449f";
+        public const string GhoulTouchAbility = "cea2f6ead41c449191e1acc4ca488bd0";
+        public const string GhoulTouchCast = "a2b05555c704458aaadc34be52a63633";
+        public const string HauntingMists = "ed22aa8751c049fa915dabfa29712c08";
     }
 }
 

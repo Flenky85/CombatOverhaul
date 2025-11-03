@@ -17,7 +17,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Paladin
         public static void Register()
         {
             AbilityConfigurator.For(AbilitiesGuids.EnlargePerson)
-                .SetActionType(UnitCommand.CommandType.Standard)   
+                .SetActionType(UnitCommand.CommandType.Swift)   
                 .SetIsFullRoundAction(false)                       
                 .EditComponent<AbilityEffectRunAction>(c =>
                 {

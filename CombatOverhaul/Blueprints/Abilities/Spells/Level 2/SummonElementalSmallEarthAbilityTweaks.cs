@@ -10,11 +10,11 @@ using Kingmaker.UnitLogic.Mechanics.Actions;
 namespace CombatOverhaul.Blueprints.Abilities.Paladin
 {
     [AutoRegister]
-    internal static class SummonMonsterISingleAbilityTweaks
+    internal static class SummonElementalSmallEarthAbilityTweaks
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.SummonMonsterISingle)
+            AbilityConfigurator.For(AbilitiesGuids.SummonElementalSmallEarth)
                 .SetActionType(UnitCommand.CommandType.Standard)  
                 .SetIsFullRoundAction(false)
                 .EditComponent<AbilityEffectRunAction>(c =>

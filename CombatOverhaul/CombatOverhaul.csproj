@@ -61,6 +61,5 @@
 
   <ItemGroup>
     <Folder Include="Blueprints\ActivatableAbilities\" />
-    <Folder Include="Classes\NewRound\Paladin\" />
   </ItemGroup>
 </Project>
