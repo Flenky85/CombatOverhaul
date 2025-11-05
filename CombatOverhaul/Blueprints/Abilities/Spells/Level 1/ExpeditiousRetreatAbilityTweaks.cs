@@ -26,6 +26,10 @@ namespace CombatOverhaul.Blueprints.Abilities.Paladin
                     apply.DurationValue.BonusValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 6 };
                 })
                 .SetDuration6RoundsShared()
+                .SetDescriptionValue(
+                    "This spell increases your base speed by 15 feet. This adjustment is treated as an enhancement bonus. There " +
+                    "is no effect on other modes of movement, such as burrow, climb, fly, or swim."
+                )
                 .Configure();
         }
     }

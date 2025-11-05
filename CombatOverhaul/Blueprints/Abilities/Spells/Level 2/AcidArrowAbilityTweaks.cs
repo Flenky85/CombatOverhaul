@@ -1,6 +1,12 @@
-﻿using BlueprintCore.Blueprints.CustomConfigurators.UnitLogic.Abilities;
+﻿using BlueprintCore.Actions.Builder;
+using BlueprintCore.Blueprints.CustomConfigurators;
+using BlueprintCore.Blueprints.CustomConfigurators.UnitLogic.Abilities;
+using BlueprintCore.Utils;
 using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
+using Kingmaker.Blueprints;
+using Kingmaker.ElementsSystem;
+using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Enums;
 using Kingmaker.Enums.Damage;
 using Kingmaker.RuleSystem;
@@ -9,6 +15,7 @@ using Kingmaker.UnitLogic.Abilities.Components;
 using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Actions;
 using Kingmaker.UnitLogic.Mechanics.Components;
+using System.Linq;
 
 namespace CombatOverhaul.Blueprints.Abilities.Paladin
 {
@@ -21,20 +28,18 @@ namespace CombatOverhaul.Blueprints.Abilities.Paladin
                 .EditComponent<AbilityEffectRunAction>(c =>
                 {
                     var dmg = (ContextActionDealDamage)c.Actions.Actions[0];
-                    dmg.DamageType = new DamageTypeDescription
-                    {
-                        Type = DamageType.Energy,
-                        Energy = DamageEnergyType.Acid
-                    };
+                    dmg.DamageType = new DamageTypeDescription { Type = DamageType.Energy, Energy = DamageEnergyType.Acid };
                     dmg.Value.DiceType = DiceType.D4;
+
                     dmg.Value.DiceCountValue = new ContextValue
                     {
                         ValueType = ContextValueType.Rank,
-                        ValueRank = AbilityRankType.DamageDice 
+                        ValueRank = AbilityRankType.Default
                     };
                     dmg.Value.BonusValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 0 };
 
                     var apply = (ContextActionApplyBuff)c.Actions.Actions[1];
+                    apply.UseDurationSeconds = false;
                     apply.DurationValue.Rate = DurationRate.Rounds;
                     apply.DurationValue.DiceType = DiceType.Zero;
                     apply.DurationValue.DiceCountValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 0 };
@@ -44,22 +49,31 @@ namespace CombatOverhaul.Blueprints.Abilities.Paladin
                         ValueRank = AbilityRankType.DamageDiceAlternative
                     };
                 })
-                .EditComponent<ContextRankConfig>(cfg =>
-                {
-                    cfg.m_Type = AbilityRankType.DamageDiceAlternative;
-                    cfg.m_Progression = ContextRankProgression.StartPlusDivStep; 
-                    cfg.m_StartLevel = 0;
-                    cfg.m_StepLevel = 3;
-                    cfg.m_UseMax = true;   
-                    cfg.m_Max = 6;         
-                })
                 .AddComponent(new ContextRankConfig
                 {
-                    m_Type = AbilityRankType.DamageDice,
+                    m_Type = AbilityRankType.Default,
                     m_BaseValueType = ContextRankBaseValueType.CasterLevel,
                     m_Progression = ContextRankProgression.AsIs,
                     m_UseMax = true,
-                    m_Max = 6
+                    m_Max = 6,
+                    m_AffectedByIntensifiedMetamagic = false
+                })
+                .EditComponent<ContextRankConfig>(cfg =>
+                {
+                    if (cfg.m_Type != AbilityRankType.DamageDiceAlternative) return;
+
+                    cfg.m_BaseValueType = ContextRankBaseValueType.CasterLevel;
+                    cfg.m_Progression = ContextRankProgression.Custom;
+                    cfg.m_CustomProgression = new[]
+                    {
+                        new ContextRankConfig.CustomProgressionItem { BaseValue = 1,  ProgressionValue = 1 }, 
+                        new ContextRankConfig.CustomProgressionItem { BaseValue = 3,  ProgressionValue = 2 }, 
+                        new ContextRankConfig.CustomProgressionItem { BaseValue = 6,  ProgressionValue = 3 }, 
+                        new ContextRankConfig.CustomProgressionItem { BaseValue = 20, ProgressionValue = 3 }, 
+                    };
+                    cfg.m_UseMax = true;
+                    cfg.m_Max = 3;
+                    cfg.m_AffectedByIntensifiedMetamagic = false;
                 })
                 .SetDescriptionValue(
                     "An arrow of acid springs from your hand and speeds to its target. You must succeed " +

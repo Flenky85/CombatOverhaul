@@ -6,6 +6,9 @@
         public const string CrushingBlow = "957a10e303269324dbf1a70513f37559";
         public const string SunderArmor = "fa9bfb9fd997faf49a108c4b17a00504";
 
+        //Others
+        public const string TurnBack = "bd09b025ee2a82f46afab922c4decca9";
+
         //Paladin
         public const string LayOnHandsOthers = "caae1dc6fcf7b37408686971ee27db13";
         public const string LayOnHandsSelf = "8d6073201e5395d458b8251386d72df1";
@@ -131,6 +134,133 @@
         public const string GhoulTouchAbility = "cea2f6ead41c449191e1acc4ca488bd0";
         public const string GhoulTouchCast = "a2b05555c704458aaadc34be52a63633";
         public const string HauntingMists = "ed22aa8751c049fa915dabfa29712c08";
+        //Level 3
+        public const string AnimateDeadLesser = "57fcf8016cf04da4a8b33d2add14de7e";
+        public const string BatteringBlast = "0a2f7c6aa81bc6548ac7780d8b70bcbc";
+        public const string BeastShapeI = "61a7ed778dd93f344a5dacdbad324cc9";
+        public const string Blink = "045351f1421ee3f449a9143db701d192";
+        public const string DeepSlumber = "7658b74f626c56a49939d9c20580885e";
+        public const string Displacement = "903092f6488f9ce45a80943923576ab3";
+        public const string ExcruciatingDeformation = "448aa456600749d18c14ad979cc88a67";
+        public const string Fireball = "2d81362af43aeac4387a3d4fced489c3";
+        public const string ForcePunchEffect = "130e0b433e205294c964c5ce3e0c17ed";
+        public const string Haste = "486eaff58293f6441a5c2759c4872f98";
+        public const string Heroism = "5ab0d42fb68c9e34abae4921822b9d63";
+        public const string HoldPerson = "c7104f7526c4c524f91474614054547e";
+        public const string LightningBolt = "d2cff9243a7ee804cb6d5be47af30c73";
+        public const string ProtectionFromArrowsCommunal = "96c9d98b6a9a7c249b6c4572e4977157";
+        public const string ProtectionFromAcid = "3d77ee3fc4913c44b9df7c5bbcdc4906";
+        public const string ProtectionFromCold = "021d39c8e0eec384ba69140f4875e166";
+        public const string ProtectionFromElectricity = "e24ce0c3e8eaaaf498d3656b534093df";
+        public const string ProtectionFromEnergy = "d2f116cfe05fcdd4a94e80143b67046f";
+        public const string ProtectionFromFire = "3f9605134d34e1243b096e1f6cb4c148";
+        public const string ProtectionFromSonic = "0cee375b4e5265a46a13fc269beb8763";
+        public const string Rage = "97b991256e43bb140b263c326f690ce2";
+        public const string RayOfExhaustion = "8eead52509987034ea9025d60cc05985";
+        public const string ResistAcidCommunal = "feb51767db2ae54409e41ec224071819";
+        public const string ResistColdCommunal = "b229c12f1c2db3c48a50beda6c33bde0";
+        public const string ResistElectricityCommunal = "96ec0a066f55ef5458040be1f0929216";
+        public const string ResistEnergyCommunal = "7bb0c402f7f789d4d9fae8ca87b4c7e2";
+        public const string ResistFireCommunal = "832bf98966e72cd478eecc9f8ba829f5";
+        public const string ResistSonicCommunal = "c9b73a202d818c240b1f46e8e16395f2";
+        public const string SeeInvisibilityCommunal = "1a045f845778dc54db1c2be33a8c3c0a";
+        public const string Slow = "f492622e473d34747806bdb39356eb89";
+        public const string SpikedPit = "46097f610219ac445b4d6403fc596b9f";
+        public const string StinkingCloud = "68a9e6d7256f1354289a39003a46d826";
+        public const string SummonMonsterIIIBase = "5d61dde0020bbf54ba1521f7ca0229dc";
+        public const string SummonMonsterIIId3 = "28f49845fad6a534b95a65b6cea8f8d6";
+        public const string SummonMonsterIIId4plus1 = "7b531828b885e8b47a7b06a6f1a34805";
+        public const string SummonMonsterIIISingle = "15b5efe371d47c944b58444e7b734ffb";
+        public const string VampiricTouch = "6cbb040023868574b992677885390f92";
+        public const string MagicWeaponGreater = "0f92caa35619f234298d95a4b6dda90d";
+        public const string MagicWeaponGreaterPrimary = "a3fe23711486ee9489af1dadd6906149";
+        public const string MagicWeaponGreaterSecondary = "89c13df989e5e624692134d55195121a";
+        public const string VengefulComets = "0e1272506f9f4480b7c3e7e1e53b6439";
+        public const string VengefulCometsAttack = "788a5a29ade54215af346efa2287073b";
+        public const string ExplosiveRunes = "ff652882623d43f184eb6abef741e20e";
+        public const string KeenEdge = "64923c9c808143c7ab7adba5a27f0ca4";
+        public const string KeenEdgePrimary = "457ac329db0c4628ae03e9ef10ea4678";
+        public const string KeenEdgeSecondary = "7ff5ed1e11cf41eda6d8f8d8c76db102";
+        public const string SilverDarts = "b0ffc8eaff404f2e9e0a3ee9f4c35486";
+        public const string BestowCurse = "989ab5c44240907489aba0a8568d0603";
+        public const string BestowCurseDeterioration = "69851cc3b821c2d479ac1f2d86e8ffa5";
+        public const string BestowCurseFeebleBody = "0c853a9f35a7bf749821ebe5d06fade7";
+        public const string BestowCurseIdiocy = "a9c4c2552b9a9564e8ee2eb3b20cc66d";
+        public const string BestowCurseWeakness = "f428939d629fa9942a55e1a144edd294";
+        public const string CrushingDespair = "4baf4109145de4345861fe0f2209d903";
+        public const string Contagion = "48e2744846ed04b4580be1a3343a5d3d";
+        public const string ContagionBlindingSicknessResolve = "f9e7a49da9eff3d4a98b646bf6c16cc4";
+        public const string ContagionBubonicPlagueResolve = "8adcc5db933f4464cbd45817ec81c3aa";
+        public const string ContagionCackleFeverResolve = "78f6126335c7f48448b88762935b232e";
+        public const string ContagionMindFireResolve = "8cdc071f953733049bab19ac2d15dda6";
+        public const string ContagionShakesResolve = "662d281795158394289b0c3efdd8d17b";
+        public const string RemoveCurse = "b48674cef2bff5e478a007cf57d8345b";
+        public const string OverwhelmingGrief = "dd2918e4a77c50044acba1ac93494c36";
+        public const string AngelicAspect = "75a10d5a635986641bfbcceceec87217";
+        //Level 4
+        public const string AcidPit = "1407fb5054d087d47a4c40134c809f12";
+        public const string AnimalAspectGreaterBase = "c9c56af3b25be3942aa0ffd12f11cf35";
+        public const string AnimalAspectGreaterGorilla = "a3b1801c312c37342b83de1c2a324b73";
+        public const string AnimalAspectGreaterMonkey = "51e7dbca6acff7844a10785e715abc6c";
+        public const string AnimalAspectGreaterRacoon = "4643935aa6c93d4448acb3188b0baed9";
+        public const string AnimalAspectGreaterRaptor = "e41dbc71b7ac7b54c8d23055c3c8e6bf";
+        public const string AnimateDead = "4b76d32feb089ad4499c3a1ce8e1ac27";
+        public const string BeastShapeII = "5d4028eb28a106d4691ed1b92bbb1915";
+        public const string Boneshatter = "f2f1efac32ea2884e84ecaf14657298b";
+        public const string ConfusionSpell = "cf6c901fb7acc904e85c63b342e9c949";
+        public const string ControlledFireball = "f72f8f03bf0136c4180cd1d70eb773a5";
+        public const string DimensionDoorBase = "4a648b57935a59547b7a2ee86fb4f26a";
+        public const string DimensionDoorCasterOnly = "a9b8be9b87865744382f7c64e599aeb2";
+        public const string DragonsBreath = "5e826bcdfde7f82468776b55315b2403";
+        public const string DragonsBreathBlack = "13ec8518bcf242e44aae59c1fd4f7198";
+        public const string DragonsBreathBlue = "2809e762f83cbdb47b2f8b7816cc2a34";
+        public const string DragonsBreathBrass = "5f42562e8700a6049abd256cf91e3e55";
+        public const string DragonsBreathGold = "e6f5453df86bd714fa33b14c994739f3";
+        public const string DragonsBreathGreen = "48c4433acbcecae499d1d38a56f72f36";
+        public const string DragonsBreathSilver = "45e0813484581514fbfcf49939ee050d";
+        public const string ElementalBodyIBase = "690c90a82bf2e58449c6b541cb8ea004";
+        public const string ElementalBodyIAir = "650f8c91aaa5b114db83f541addd66d6";
+        public const string ElementalBodyIEarth = "5990d4f32cf8c6241948d2993d09179d";
+        public const string ElementalBodyIFire = "bb6bb6d6d4b27514dae8ec694433dcd3";
+        public const string ElementalBodyIWater = "2d46a6f1dbef51f4c9e14fc163ee4124";
+        public const string Enervation = "f34fb78eaaec141469079af124bcfa0f";
+        public const string EnlargePersonMass = "66dc49bf154863148bd217287079245e";
+        public const string FalseLifeGreater = "dc6af3b4fd149f841912d8a3ce0983de";
+        public const string Fear = "d2aeac47450c76347aebbc02e4f463e0";
+        public const string IceStorm = "fcb028205a71ee64d98175ff39a0abf9";
+        public const string InvisibilityGreater = "ecaa0def35b38f949bd1976a6c9539e0";
+        public const string ObsidianFlow = "e48638596c955a74c8a32dbc90b518c1";
+        public const string PhantasmalKiller = "6717dbaef00c0eb4897a1c908a75dfe5";
+        public const string ProtectionFromAcidCommunal = "de4e28c053d936d45b6c9e361f90acc2";
+        public const string ProtectionFromColdCommunal = "3bd50e8acc303d244a1cec9df04ad050";
+        public const string ProtectionFromElectricityCommunal = "f10cd112b876a6f449d52dee0a57e602";
+        public const string ProtectionFromEnergyCommunal = "76a629d019275b94184a1a8733cac45e";
+        public const string ProtectionFromFireCommunal = "2903d31d6c8356547aa4aae5a3e7a655";
+        public const string ProtectionFromSonicCommunal = "b065b2f0589225f4897fc8b345acbfb6";
+        public const string RainbowPattern = "4b8265132f9c8174f87ce7fa6d0fe47b";
+        public const string ReducePersonMass = "2427f2e3ca22ae54ea7337bbab555b16";
+        public const string Shout = "f09453607e683784c8fca646eec49162";
+        public const string Stoneskin = "c66e86905f7606c4eaa5c774f0357b2b";
+        public const string SummonElementalMediumAir = "cce8eca4409e1be4794ce94597034f38";
+        public const string SummonElementalMediumBase = "e42b1dbff4262c6469a9ff0a6ce730e3";
+        public const string SummonElementalMediumEarth = "4ed414d36753459499578c9c3eb38b17";
+        public const string SummonElementalMediumFire = "7b30211b83d55194db872b6c9c0d9cc1";
+        public const string SummonElementalMediumWater = "2c86e646a17f6064994ba7e8da4dd77c";
+        public const string SummonMonsterIVBase = "7ed74a3ec8c458d4fb50b192fd7be6ef";
+        public const string SummonMonsterIVd3 = "e73c4562e99c7764a9207710facc61d2";
+        public const string SummonMonsterIVd4plus1 = "24ed31f7b42eb5f4ab461be90d479066";
+        public const string SummonMonsterIVSingle = "efa433a38e9c7c14bb4e780f8a3fe559";
+        public const string SymbolOfRevelation = "48a555180a109e545a6e367b1bd3f535";
+        public const string TouchOfSlime = "1e481e03d9cf1564bae6b4f63aed2d1a";
+        public const string TouchOfSlimeCast = "84ccca10da2a4484c89a837fbea2a829";
+        public const string VolcanicStorm = "16ce660837fb2544e96c3b7eaad73c63";
+        public const string CurseOfMagicNegation = "c0c2ef5955cb415ca482597f1bfc4eca";
+        public const string Echolocation = "20b548bf09bb3ea4bafea78dcb4f3db6";
+        //Level 5
+        public const string AcidicSpray = "c543eef6d725b184ea8669dd09b3894c";
+        public const string AnimalGrowth = "56923211d2ac95e43b8ac5031bab74d8";
+
+
     }
 }
 

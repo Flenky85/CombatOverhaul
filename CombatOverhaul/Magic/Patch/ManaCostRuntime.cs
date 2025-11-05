@@ -61,7 +61,7 @@ namespace CombatOverhaul.Magic.Patch
                     if (!HasEnoughMana(caster, cost))
                         __result = 0;
                 }
-                catch { /* swallow */ }
+                catch {  }
             }
         }
 

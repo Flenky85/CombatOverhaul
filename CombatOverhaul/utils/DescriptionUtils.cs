@@ -101,9 +101,11 @@ namespace CombatOverhaul.Utils
         // --- Warning! Key ---
         private const string Key_Duration_6Rounds = "CO.Duration.6Rounds";
         private const string Key_Duration_4Rounds = "CO.Duration.4Rounds";
+        private const string Key_Duration_3Rounds = "CO.Duration.3Rounds";
         private const string Key_Duration_2d4Rounds = "CO.Duration.2d4Rounds";
         private const string Key_Duration_2d3Rounds = "CO.Duration.2d3Rounds";
         private const string Key_Duration_1d4Rounds = "CO.Duration.1d4Rounds";
+        private const string Key_Duration_1d3Rounds = "CO.Duration.1d3Rounds";
         private const string Key_Duration_1d2Rounds = "CO.Duration.1d2Rounds";
 
         private static LocalizedString LsFromKey(string key, string valueIfMissing)
@@ -127,6 +129,13 @@ namespace CombatOverhaul.Utils
                 bp.LocalizedDuration = LsFromKey(Key_Duration_4Rounds, "4 rounds");
             });
         }
+        public static AbilityConfigurator SetDuration3RoundsShared(this AbilityConfigurator cfg)
+        {
+            return cfg.OnConfigure(bp =>
+            {
+                bp.LocalizedDuration = LsFromKey(Key_Duration_3Rounds, "3 rounds");
+            });
+        }
         public static AbilityConfigurator SetDuration2d4RoundsShared(this AbilityConfigurator cfg)
         {
             return cfg.OnConfigure(bp =>
@@ -146,6 +155,13 @@ namespace CombatOverhaul.Utils
             return cfg.OnConfigure(bp =>
             {
                 bp.LocalizedDuration = LsFromKey(Key_Duration_1d4Rounds, "1d4 rounds");
+            });
+        }
+        public static AbilityConfigurator SetDuration1d3RoundsShared(this AbilityConfigurator cfg)
+        {
+            return cfg.OnConfigure(bp =>
+            {
+                bp.LocalizedDuration = LsFromKey(Key_Duration_1d3Rounds, "1d3 rounds");
             });
         }
         public static AbilityConfigurator SetDuration1d2RoundsShared(this AbilityConfigurator cfg)

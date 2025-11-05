@@ -23,6 +23,13 @@
         //Level 2
         public const string AcidArrow = "e52b0f098512c0b4388ef42764c51bdf";
         public const string FalseLife = "0fdb3cca6744fd94b9436459e6d9b947";
-        
+        //Level 3
+        public const string ProtectionFromAcid = "6f9d4b5d2fe2f684e816a54b4973cc58";
+        public const string ProtectionFromCold = "ebf84606d5179af4baf9d4589d191c05";
+        public const string ProtectionFromElectricity = "1b0cd0ee398bd9b46888fe58cac4bda9";
+        public const string ProtectionFromFire = "52a2552185c4a7c4ba30e421b9e27224";
+        public const string ProtectionFromSonic = "e40277752759edb49b557ce8399596bc";
+        //Level 4
+        public const string Stoneskin = "37a956d0e7a84ab0bb66baf784767047";
     }
 }

@@ -23,9 +23,9 @@ namespace CombatOverhaul.Blueprints.Abilities.Paladin
                     apply.DurationValue.Rate = DurationRate.Rounds;
                     apply.DurationValue.DiceType = DiceType.Zero;
                     apply.DurationValue.DiceCountValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 0 };
-                    apply.DurationValue.BonusValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 6 };
+                    apply.DurationValue.BonusValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 3 };
                 })
-                .SetDuration6RoundsShared()
+                .SetDuration3RoundsShared()
                 .Configure();
         }
     }
