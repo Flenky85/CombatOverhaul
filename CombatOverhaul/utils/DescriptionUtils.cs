@@ -43,7 +43,6 @@ namespace CombatOverhaul.Utils
             {
                 var v = Process(text, tagEncyclopedia);
                 PutResolved(bp.m_Description, v);
-                PutResolved(bp.m_DescriptionShort, v); 
             });
         }
 
@@ -54,7 +53,6 @@ namespace CombatOverhaul.Utils
             {
                 var v = Process(text, tagEncyclopedia);
                 PutResolved(bp.m_Description, v);
-                PutResolved(bp.m_DescriptionShort, v);
             });
         }
 
@@ -65,7 +63,6 @@ namespace CombatOverhaul.Utils
             {
                 var v = Process(text, tagEncyclopedia);
                 PutResolved(bp.m_Description, v);
-                PutResolved(bp.m_DescriptionShort, v);
             });
         }
         public static ActivatableAbilityConfigurator SetDescriptionValue(
@@ -75,7 +72,6 @@ namespace CombatOverhaul.Utils
             {
                 var v = Process(text, tagEncyclopedia);
                 PutResolved(bp.m_Description, v);
-                PutResolved(bp.m_DescriptionShort, v);
             });
         }
 
@@ -88,6 +84,7 @@ namespace CombatOverhaul.Utils
                 PutResolved(bp.LocalizedDuration, v);
             });
         }
+
         public static AbilityConfigurator SetSavingThrowValue(
             this AbilityConfigurator cfg, string text, bool tagEncyclopedia = false)
         {
