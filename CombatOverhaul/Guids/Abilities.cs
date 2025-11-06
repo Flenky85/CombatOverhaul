@@ -270,6 +270,7 @@
         public const string Echolocation = "20b548bf09bb3ea4bafea78dcb4f3db6";
         public const string ChainsOfLight = "f8cea58227f59c64399044a82c9735c4";
         public const string Serenity = "d316d3d94d20c674db2c24d7de96f6a7";
+        public const string AngelicAspectGreater = "b1c7576bd06812b42bda3f09ab202f14";
         //Level 5
         public const string AcidicSpray = "c543eef6d725b184ea8669dd09b3894c";
         public const string AnimalGrowth = "56923211d2ac95e43b8ac5031bab74d8";
@@ -381,13 +382,118 @@
         public const string CreateUndeadBase = "76a11b460be25e44ca85904d6806e5a3";
         public const string CreateUndeadGraveknight = "9b75cb3bd3108a24c81329a3734f2248";
         public const string CreateUndeadLivingArmor = "43a1ea314c59c4a4eb2c193a1e17b805";
-
-
-
+        public const string PlagueStorm = "82a5b848c05e3f342b893dedb1f9b446";
+        public const string PlagueStormBlindingSickness = "2dc03fae8128c84479f5c4bebae97001";
+        public const string PlagueStormBubonicPlague = "e76b0dd9972fcaf499f5d447d0c8e145";
+        public const string PlagueStormCackleFever = "d8a892e03d893114c9cc90cd297c762f";
+        public const string PlagueStormMindFire = "09c29ca00a6360742a27d5e33e9fc003";
+        public const string PlagueStormShakes = "da07f3866c316e642a2db61768071c61";
+        public const string UmbralStrike = "474ed0aa656cc38499cc9a073d113716";
+        public const string ShoutGreater = "fd0d3840c48cafb44bb29e8eb74df204";
         //Level7
         public const string Repulsion = "cb55ae9517a444548d3457f91f829679";
+        public const string CausticEruption = "8c29e953190cc67429dc9c701b16b7c2";
+        public const string CircleOfClarity = "f333185ae986b2a45823cce86535a122";
+        public const string ElementalBodyIVAir = "ee63301f83c76694692d4704d8a05bdc";
+        public const string ElementalBodyIVBase = "376db0590f3ca4945a8b6dc16ed14975";
+        public const string ElementalBodyIVEarth = "facdc8851a0b3f44a8bed50f0199b83c";
+        public const string ElementalBodyIVFire = "c281eeecc554b72449fef43924e522ce";
+        public const string ElementalBodyIVWater = "96d2ab91f2d2329459a8dab496c5bede";
+        public const string FingerOfDeath = "6f1dcf6cfa92d1948a740195707c0dbe";
+        public const string FingerOfDeathSithud = "e03024c8a03f454db5b78660f524757d";
+        public const string Firebrand = "98734a2665c18cd4db71878b0532024a";
+        public const string FormOfTheDragonII = "666556ded3a32f34885e8c318c3a0ced";
+        public const string FormOfTheDragonIIBlack = "6bf16ce26218a8c4d83be46f728b988c";
+        public const string FormOfTheDragonIIBlue = "4f35ef15da877154897da5753a1ef6c0";
+        public const string FormOfTheDragonIIBrass = "f600fa881abbe904483a19a45a4c30db";
+        public const string FormOfTheDragonIIBronze = "74b250652bff49b449cdbf9a716a817c";
+        public const string FormOfTheDragonIICopper = "9c5b14468fcc97349bd9f1d51b5683c8";
+        public const string FormOfTheDragonIIGold = "72a3ccf67437f4342b2d23634271de77";
+        public const string FormOfTheDragonIIGreen = "86974eb3b760af4459144e047ed423fa";
+        public const string FormOfTheDragonIIRed = "b5f8f544b7802bd4197a34f162fee6f1";
+        public const string FormOfTheDragonIISilver = "c7adf4e83543f45419a37e6fb3651c77";
+        public const string FormOfTheDragonIIWhite = "91b46b3b1dd4b984092bf997495aeff2";
+        public const string HoldPersonMass = "defbbeaef79eda64abc645036228a31b";
+        public const string IceBody = "89778dc261fe6094bb2445cb389842d2";
+        public const string InvisibilityMass = "98310a099009bbd4dbdf66bcef58b4cd";
+        public const string KiShout = "5c8cde7f0dcec4e49bfa2632dfe2ecc0";
+        public const string LegendaryProportions = "da1b292d91ba37948893cdbe9ea89e28";
+        public const string PolymorphGreaterBase = "a9fc28e147dbb364ea4a3c1831e7e55f";
+        public const string PolymorphGreaterDragonBlack = "1879c6d863758c54085d3e5bcafa26f4";
+        public const string PolymorphGreaterDragonBlue = "07e1a623d980cc8458f7f637b21c1b68";
+        public const string PolymorphGreaterDragonBrass = "e135ae7588972d144bec027902d1bc22";
+        public const string PolymorphGreaterDragonGold = "f7de833b55f92e243ad045b319b7ba95";
+        public const string PolymorphGreaterDragonGreen = "9cb55798ee8999542ac49ce0899380cf";
+        public const string PolymorphGreaterDragonSilver = "a62c6b235d13b684086d00ee94a5f233";
+        public const string PolymorphGreaterElementalAir = "da424ee2441464d4c87ff91de9cd600b";
+        public const string PolymorphGreaterElementalEarth = "e9d281e342bbd78479e2cfc9aa48499e";
+        public const string PolymorphGreaterElementalFire = "f4027096eba0bdf4b92c2e712a2e1889";
+        public const string PolymorphGreaterElementalWater = "7887dd5d176e3504cae7b1e6d23eff57";
+        public const string PolymorphGreaterShamblingMound = "223b4f19be8458d44b0110c91250048c";
+        public const string PolymorphGreaterSmilodon = "763430b60405dc645a048b4be22d3f63";
+        public const string PolymorphGreaterWyvern = "39d4eeb58ddb6cc4dacf2e11d345bc5f";
+        public const string SummonElementalGreaterAir = "a4849d6bd536ade48a3839a4ad960a8b";
+        public const string SummonElementalGreaterBase = "8eb769e3b583f594faabe1cfdb0bb696";
+        public const string SummonElementalGreaterEarth = "3ecd589cf1a55df42a3b66940ee93ea4";
+        public const string SummonElementalGreaterFire = "35c6b4497a5bfd24aabe0cf28507abef";
+        public const string SummonElementalGreaterWater = "cfa3ff71a42ab8a4c8a8a4b5db3f04d4";
+        public const string SummonMonsterVIIBase = "ab167fd8203c1314bac6568932f1752f";
+        public const string SummonMonsterVIId3 = "43f763d347eb2744caed9c656ba89531";
+        public const string SummonMonsterVIId4plus1 = "6e805a9e3ff445146a6386f5a704d4bc";
+        public const string SummonMonsterVIISingle = "2920d48574933c24391fbb9e18f87bf5";
+        public const string SummonNaturesAllyVII = "051b979e7d7f8ec41b9fa35d04746b33";
+        public const string SummonNaturesAllyVIId3 = "533f8cee65aa2fc448d6d2a7e5d28bb6";
+        public const string SummonNaturesAllyVIId4plus1 = "b81bb947975c4e34395ab4e09a036a16";
+        public const string SummonNaturesAllyVIISingle = "6d8d59aa38713be4fa3be76c19107cc0";
+        public const string WalkThroughSpace = "368d7cf2fb69d8a46be5a650f5a5a173";
+        public const string WavesOfEctasy = "1e2d1489781b10a45a3b70192bba9be3";
+        public const string WavesOfExhaustion = "3e4d3b9a5bd03734d9b053b9067c2f38";
+        public const string ArchonsTrumpet = "c6c516e59ca34f34aefb82a850287b97";
+        //Level8
+        public const string CreateUndeadGreaterBase = "8ba9b6e4df4c46a597154e2b8e7e6e4a";
+        public const string CreateUndeadGreaterDevourer = "05cf9c97639f476f82e15c740068d7f6";
+        public const string CreateUndeadGreaterDevourerSithhud = "5a564328d42842e8b03e6da41129c34b";
+        public const string CreateUndeadGreaterShadowGreater = "b8fdf9d9e84c490d8a57d49ed344571e";
+        public const string EuphoricTranquility = "cbf3bafa8375340498b86a3313a11e2f";
+        public const string EuphoricTranquilityCast = "740d943e42b60f64a8de74926ba6ddf7";
+        public const string FormOfTheDragonIII = "1cdc4ad4c208246419b98a35539eafa6";
+        public const string FormOfTheDragonIIIBlack = "c12c98cfd3cde22488f09e9618ff7435";
+        public const string FormOfTheDragonIIIBlue = "5c6791821d8a2ae4cb134a4bd925de50";
+        public const string FormOfTheDragonIIIBrass = "4fda7f6a51d989a4794ff4401178b5fe";
+        public const string FormOfTheDragonIIIBronze = "04d7a690e60feca40890bc3db144b335";
+        public const string FormOfTheDragonIIICopper = "ab069196fb37dfc4e848fe482f7f620d";
+        public const string FormOfTheDragonIIIGold = "c511266a705a6e94186cb51e0503775f";
+        public const string FormOfTheDragonIIIGreen = "00b3a04140c39b447925fe5a79522087";
+        public const string FormOfTheDragonIIIRed = "2c1ee791f53ed4f42bd86d8659c638c0";
+        public const string FormOfTheDragonIIISilver = "0b1e76be6f786ca45b2ac247ac3a278e";
+        public const string FormOfTheDragonIIIWhite = "ded61c155aaa39440be67f877623378e";
+        public const string FrightfulAspect = "e788b02f8d21014488067bdd3ba7b325";
+        public const string HorridWilting = "08323922485f7e246acb3d2276515526";
+        public const string IronBody = "198fcc43490993f49899ed086fe723c1";
+        public const string MindBlank = "df2a0ba6b6dcecf429cbb80a56fee5cf";
+        public const string PolarRay = "17696c144a0194c478cbe402b496cb23";
+        public const string PredictionOfFailure = "0e67fa8f011662c43934d486acc50253";
+        public const string ProtectionFromSpells = "42aa71adc7343714fa92e471baa98d42";
+        public const string RiftOfRuin = "dd3dacafcf40a0145a5824c838e2698d";
+        public const string Seamantle = "7ef49f184922063499b8f1346fb7f521";
+        public const string Soulreaver = "b4afacd337dac4a40a769a567c038ab7";
+        public const string Stormbolts = "7cfbefe0931257344b2cb7ddc4cdff6f";
+        public const string SummonElementalElderAir = "333efbf776ab61c4da53e9622751d95f";
+        public const string SummonElementalElderBase = "8a7f8c1223bda1541b42fd0320cdbe2b";
+        public const string SummonElementalElderEarth = "65254c7a2cf18944287207e1de3e44e8";
+        public const string SummonElementalElderFire = "e4926aa766a1cc048835237b3a97597d";
+        public const string SummonElementalElderWater = "1e54cc4ef5b261248adb30916ba49e72";
+        public const string SummonMonsterVIIIBase = "d3ac756a229830243a72e84f3ab050d0";
+        public const string SummonMonsterVIIId3 = "ddc1d195a4434374e860b1568cfc7d11";
+        public const string SummonMonsterVIIId4plus1 = "12815be343acc4c45b24554089c8c4bc";
+        public const string SummonMonsterVIIISingle = "eb6df7ddfc0669d4fb3fc9af4bd34bca";
+        public const string SummonNaturesAllyVIII = "ea78c04f0bd13d049a1cce5daf8d83e0";
+        public const string SummonNaturesAllyVIIId3 = "256739c1e61e3f64eaf71734d271f4be";
+        public const string SummonNaturesAllyVIIId4plus1 = "86f4287572bef49449b9d06c66adf456";
+        public const string SummonNaturesAllyVIIISingle = "8d3d5b62878d5b24391c1d7834d0d706";
+        public const string Sunburst = "e96424f70ff884947b06f41a765b7658";
 
-        
+
     }
 }
 

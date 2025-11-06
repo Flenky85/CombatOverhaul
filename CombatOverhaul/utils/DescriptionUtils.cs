@@ -104,6 +104,7 @@ namespace CombatOverhaul.Utils
         private const string Key_Duration_1d4Rounds = "CO.Duration.1d4Rounds";
         private const string Key_Duration_1d3Rounds = "CO.Duration.1d3Rounds";
         private const string Key_Duration_1d2Rounds = "CO.Duration.1d2Rounds";
+        private const string Key_Duration_Permanent2d3Rounds = "CO.Duration.Permanent2d3Rounds";
 
         private static LocalizedString LsFromKey(string key, string valueIfMissing)
         {
@@ -168,6 +169,12 @@ namespace CombatOverhaul.Utils
                 bp.LocalizedDuration = LsFromKey(Key_Duration_1d2Rounds, "1d2 rounds");
             });
         }
-
+        public static AbilityConfigurator SetDurationPermanet2d3RoundsShared(this AbilityConfigurator cfg)
+        {
+            return cfg.OnConfigure(bp =>
+            {
+                bp.LocalizedDuration = LsFromKey(Key_Duration_Permanent2d3Rounds, "Permament or 2d3 rounds");
+            });
+        }
     }
 }

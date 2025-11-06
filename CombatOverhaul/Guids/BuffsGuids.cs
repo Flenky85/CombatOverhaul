@@ -40,5 +40,7 @@
         public const string ElementalAssessorColdBuff = "19e4cb7ff0bef034e819ee27649cf8f8";
         public const string ElementalAssessorElectricityBuff = "7389f35292798914cab1238d0f10e821";
         public const string ElementalAssessorFireBuff = "8f57c7d7bdf4d8e43a8efb51a7ffd306";
+        //Level 7
+        public const string CausticEruptionBuff = "02a4d7303f0eeee408d7c7e5908ba339";
     }
 }
