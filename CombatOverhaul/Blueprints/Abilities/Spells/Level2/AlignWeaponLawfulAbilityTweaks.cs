@@ -3,17 +3,20 @@ using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
 using Kingmaker.RuleSystem;
 using Kingmaker.UnitLogic.Abilities.Components;
+using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Actions;
 
-namespace CombatOverhaul.Blueprints.Abilities.Spells.Level3
+namespace CombatOverhaul.Blueprints.Abilities.Spells.Level2
 {
     [AutoRegister]
-    internal static class ProtectionFromArrowsCommunalAbilityTweaks
+    internal static class AlignWeaponLawfulAbilityTweaks
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.ProtectionFromArrowsCommunal)
+            AbilityConfigurator.For(AbilitiesGuids.AlignWeaponLawful)
+                .SetActionType(UnitCommand.CommandType.Swift)
+                .SetIsFullRoundAction(false)
                 .EditComponent<AbilityEffectRunAction>(c =>
                 {
                     var apply = (ContextActionApplyBuff)c.Actions.Actions[0];

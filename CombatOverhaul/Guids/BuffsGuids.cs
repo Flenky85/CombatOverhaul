@@ -23,6 +23,7 @@
         //Level 2
         public const string AcidArrowBuff = "e52b0f098512c0b4388ef42764c51bdf";
         public const string FalseLifeBuff = "0fdb3cca6744fd94b9436459e6d9b947";
+        public const string AidBuff = "319b4679f25779e4e9d04360381254e1";
         //Level 3
         public const string ProtectionFromAcidBuff = "6f9d4b5d2fe2f684e816a54b4973cc58";
         public const string ProtectionFromColdBuff = "ebf84606d5179af4baf9d4589d191c05";
