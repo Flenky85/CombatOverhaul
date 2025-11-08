@@ -662,6 +662,11 @@ namespace CombatOverhaul.Guids
         public const string ShapechangeShamblingMound = "a05f296f1f9b4204f9c0dcbf85e7e8a7";
         public const string ShapechangeSmilodon = "560f972f81457e8449f9d2559851cf20";
         public const string ShapechangeWyvern = "91d243b3a4fcd614e8a753125ab30acd";
+        public const string HealMass = "867524328b54f25488d371214eea0d90";
+        public const string HealMassDamage = "7df289eaaf1233248b7be754f894de2e";
+        public const string Implosion = "78abd9a61abf4c80a8a8cf05ff55f033";
+        public const string ImplosionSelfAddActionBuff = "e14b01c46eac41f790b723985b67607a";
+        public const string PolarMidnight = "ba48abb52b142164eba309fd09898856";
 
     }
 }

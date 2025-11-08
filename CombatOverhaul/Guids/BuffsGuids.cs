@@ -43,5 +43,7 @@
         public const string ElementalAssessorFireBuff = "8f57c7d7bdf4d8e43a8efb51a7ffd306";
         //Level 7
         public const string CausticEruptionBuff = "02a4d7303f0eeee408d7c7e5908ba339";
+        //Level 9
+        public const string ImplosionBuff = "4a5c014570e34fb78258b4cd5b67eda6";
     }
 }
