@@ -20,6 +20,8 @@
         public const string RayOfEnfeeblementBuff = "7dc2c05760ed40a49af10c1ce6ded033";
         public const string TouchOfGracelessnessBuff = "dc2fb898c3d07a546b31bd5d49ffadba";
         public const string ExpeditiousRetreatBuff = "9ea4ec3dc30cd7940a372a4d699032e7";
+        public const string AcidMawBuff = "f1a6799b05a40144d9acdbdca1d7c228";
+        public const string AcidMawDamageBuff = "0e49c9cb5370ffd4082ff0ca8fbea642";
         //Level 2
         public const string AcidArrowBuff = "e52b0f098512c0b4388ef42764c51bdf";
         public const string FalseLifeBuff = "0fdb3cca6744fd94b9436459e6d9b947";

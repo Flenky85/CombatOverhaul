@@ -3,6 +3,8 @@
     internal static class AbilityAreaEffectGuids
     {
         //Spells
+        //Level3
+        public const string SpikeGrowthArea = "16e0e4c6a16f68c49832340b93706499";
         //Level5
         public const string PillarOfLifeaArea = "7d0cebd89884679469533be8b680d55c";
         //Level6

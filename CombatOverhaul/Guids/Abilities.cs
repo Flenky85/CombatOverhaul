@@ -97,6 +97,13 @@ namespace CombatOverhaul.Guids
         public const string ShieldOfFaith = "183d5bb91dea3a1489a6db6c9cb64445";
         public const string StrandOfTheTangledKnot = "c9a44aa36957416db24aee8c4e3b6f59";
         public const string UnbreakableHeart = "dd38f33c56ad00a4da386c1afaa49967";
+        public const string AcidMaw = "75de4ded3e731dc4f84d978fe947dc67";
+        public const string AspectOfTheFalcon = "7bdb6a9fb6b37614e96f155748ae50c6";
+        public const string Entangle = "0fd00984a2c0e0a429cf1a911b4ec5ca";
+        public const string FaerieFire = "4d9bf81b7939b304185d58a09960f589";
+        public const string FeatherStep = "f3c0b267dd17a2a45a40805e31fe3cd1";
+        public const string Longstrider = "14c90900b690cac429b229efdf416127";
+        public const string MagicFang = "403cf599412299a4f9d5d925c7b9fb33";
         //Level 2
         public const string BoneFists = "0da2046b4517427bb9b2e304ea6342bf";
         public const string MortalTerror = "8bc127ed66044685957e54f19d8dbdb7";
@@ -180,6 +187,13 @@ namespace CombatOverhaul.Guids
         public const string RemoveParalysis = "f8bce986adfc88544a42bf4ab7ae75b2";
         public const string RestorationLesser = "e84fc922ccf952943b5240293669b171";
         public const string SoundBurst = "c3893092a333b93499fd0a21845aa265";
+        public const string AspectOfTheBear = "a4ad1b8fa11e7c347a608c004efce9d5";
+        public const string Barkskin = "5b77d7cc65b8ab74688e74a37fc2f553";
+        public const string HoldAnimal = "41bab342089c0254ca222eb918e98cd4";
+        public const string NaturalRythm = "dde924776bd7ad247928b5efbfacfbdd";
+        public const string PoxPustules = "bc153808ef4884a4594bc9bec2299b69";
+        public const string SickeningEntanglement = "6c7467f0344004d48848a43d8c078bf8";
+        public const string WinterGrasp = "406c6e4a631b43ce8f7a77844b75bf75";
         //Level 3
         public const string AnimateDeadLesser = "57fcf8016cf04da4a8b33d2add14de7e";
         public const string BatteringBlast = "0a2f7c6aa81bc6548ac7780d8b70bcbc";
@@ -263,6 +277,17 @@ namespace CombatOverhaul.Guids
         public const string PrayerBuffAbility = "c1f9524c409c4962afbf68ab28f9822e";
         public const string PrayerDebuffAbility = "087a4f8b9a85470793d17d9911615608";
         public const string NeutralizePoison = "e7240516af4241b42b2cd819929ea9da";
+        public const string BurningEntangle = "8a76293f5ab8485da95ef6293a11358c";
+        public const string CallLightning = "2a9ef0e0b5822a24d88b16673a267456";
+        public const string CallLightningAbility = "0bd54216d38852947930320f6269a9d7";
+        public const string DominateAnimal = "754c478a2aa9bb54d809e648c3f7ac0e";
+        public const string FeatherStepMass = "d219494150ac1f24f9ce14a3d4f66d26";
+        public const string LongstriderGreater = "e80a4d6c0efa5774cbd515e3e37095b0";
+        public const string MagicFangGreater = "f1100650705a69c4384d3edd88ba0f52";
+        public const string Poison = "d797007a142a6c0409a74b064065a15e";
+        public const string SoothingMud = "1a36c8b9ed655c249a9f9e8d4731f001";
+        public const string SpikeGrowth = "29b0f9026ad05e14789d84e867cc6dff";
+        public const string SpitVenom = "9779c8578acd919419f563c33d7b2af5";
         //Level 4
         public const string AcidPit = "1407fb5054d087d47a4c40134c809f12";
         public const string AnimalAspectGreaterBase = "c9c56af3b25be3942aa0ffd12f11cf35";
@@ -665,7 +690,6 @@ namespace CombatOverhaul.Guids
         public const string HealMass = "867524328b54f25488d371214eea0d90";
         public const string HealMassDamage = "7df289eaaf1233248b7be754f894de2e";
         public const string Implosion = "78abd9a61abf4c80a8a8cf05ff55f033";
-        public const string ImplosionSelfAddActionBuff = "e14b01c46eac41f790b723985b67607a";
         public const string PolarMidnight = "ba48abb52b142164eba309fd09898856";
 
     }
