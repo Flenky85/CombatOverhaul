@@ -7,15 +7,15 @@ using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Actions;
 
-namespace CombatOverhaul.Blueprints.Abilities.Spells.Level3
+namespace CombatOverhaul.Blueprints.Abilities.Spells.Level4
 {
     [AutoRegister]
-    internal static class MagicalVestmentArmorAbilityTweaks
+    internal static class DeathWardAbilityTweaks
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.MagicalVestmentArmor)
-                .SetActionType(UnitCommand.CommandType.Swift)
+            AbilityConfigurator.For(AbilitiesGuids.DeathWard)
+                .SetActionType(UnitCommand.CommandType.Free)
                 .SetIsFullRoundAction(false)
                 .EditComponent<AbilityEffectRunAction>(c =>
                 {

@@ -17,24 +17,27 @@ namespace CombatOverhaul.Blueprints.Abilities.Spells.Level3
             AbilityConfigurator.For(AbilitiesGuids.DelayPoisonCommunal)
                 .EditComponent<AbilityEffectRunAction>(c =>
                 {
-                    var cond = (Conditional)c.Actions.Actions[0];
-                    var apply = (ContextActionApplyBuff)cond.IfFalse.Actions[0];
-
+                    var apply = (ContextActionApplyBuff)c.Actions.Actions[0];
+                    apply.Permanent = false;
                     apply.UseDurationSeconds = false;
-                    apply.DurationValue.Rate = DurationRate.Rounds;
-                    apply.DurationValue.DiceType = DiceType.Zero;
-                    apply.DurationValue.DiceCountValue = new ContextValue
+                    apply.DurationValue = new ContextDurationValue
                     {
-                        ValueType = ContextValueType.Simple,
-                        Value = 0
-                    };
-                    apply.DurationValue.BonusValue = new ContextValue
-                    {
-                        ValueType = ContextValueType.Simple,
-                        Value = 6
+                        Rate = DurationRate.Rounds,
+                        DiceType = DiceType.Zero,
+                        DiceCountValue = new ContextValue
+                        {
+                            ValueType = ContextValueType.Simple,
+                            Value = 0
+                        },
+                        BonusValue = new ContextValue
+                        {
+                            ValueType = ContextValueType.Simple,
+                            Value = 12
+                        },
+                        m_IsExtendable = true
                     };
                 })
-                .SetDuration6RoundsShared()
+                .SetDuration12RoundsShared()
                 .Configure();
         }
     }

@@ -9,26 +9,27 @@ using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Actions;
 using Kingmaker.UnitLogic.Mechanics.Components;
 
-namespace CombatOverhaul.Blueprints.Abilities.Spells.Level3
+namespace CombatOverhaul.Blueprints.Abilities.Spells.Level5
 {
     [AutoRegister]
-    internal static class InflictSeriousWoundsAbilityTweaks
+    internal static class CleanseAbilityTweaks
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.InflictSeriousWounds)
+            AbilityConfigurator.For(AbilitiesGuids.Cleanse)
                 .EditComponent<ContextRankConfig>(r =>
                 {
-                    r.m_BaseValueType = ContextRankBaseValueType.CasterLevel;
-                    r.m_Progression = ContextRankProgression.AsIs;
-                    r.m_UseMax = true;
-                    r.m_Max = 8;
+                    if (r.m_Type == AbilityRankType.Default)
+                    {
+                        r.m_BaseValueType = ContextRankBaseValueType.CasterLevel;
+                        r.m_Progression = ContextRankProgression.AsIs;
+                        r.m_UseMax = true;
+                        r.m_Max = 12;
+                    }
                 })
                 .EditComponent<AbilityEffectRunAction>(c =>
                 {
-                    var cond = (Conditional)c.Actions.Actions[0];
-                    var heal = (ContextActionHealTarget)cond.IfTrue.Actions[0];
-
+                    var heal = (ContextActionHealTarget)c.Actions.Actions[0];
                     heal.Value.DiceType = DiceType.D4;
                     heal.Value.DiceCountValue = new ContextValue
                     {
@@ -42,9 +43,9 @@ namespace CombatOverhaul.Blueprints.Abilities.Spells.Level3
                     };
                 })
                 .SetDescriptionValue(
-                    "When laying your hand upon a creature, you channel negative energy that deals 1d4 points of damage per caster level " +
-                    "(maximum 8d4).\n" +
-                    "Since undead are powered by negative energy, this spell deals cures such a creature or a like amount of damage, rather than harming it."
+                    "This spell cures 1d4 points of damage per caster level (maximum 12d4) and ends any " +
+                    "and all of the following adverse conditions affecting you: ability damage, blinded, confused, " +
+                    "dazzled, diseased, exhausted, fatigued, nauseated, poisoned, and sickened."
                 )
                 .Configure();
         }

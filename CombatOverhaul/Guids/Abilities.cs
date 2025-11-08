@@ -1,4 +1,8 @@
-﻿namespace CombatOverhaul.Guids
+﻿using BlueprintCore.Utils;
+using Kingmaker.Blueprints;
+using Kingmaker.UnitLogic.Abilities.Blueprints;
+
+namespace CombatOverhaul.Guids
 {
     internal static class AbilitiesGuids
     {
@@ -252,6 +256,13 @@
         public const string MagicalVestment = "2d4263d80f5136b4296d6eb43a221d7d";
         public const string MagicalVestmentArmor = "956309af83352714aa7ee89fb4ecf201";
         public const string MagicalVestmentShield = "adcda176d1756eb45bd5ec9592073b09";
+        public const string RemoveBlindness = "c927a8b0cd3f5174f8c0b67cdbfde539";
+        public const string RemoveDisease = "4093d5a0eb5cae94e909eb1e0e1a6b36";
+        public const string SearingLight = "bf0accce250381a44b857d4af6c8e10d";
+        public const string Prayer = "faabd2cc67efa4646ac58c7bb3e40fcc";
+        public const string PrayerBuffAbility = "c1f9524c409c4962afbf68ab28f9822e";
+        public const string PrayerDebuffAbility = "087a4f8b9a85470793d17d9911615608";
+        public const string NeutralizePoison = "e7240516af4241b42b2cd819929ea9da";
         //Level 4
         public const string AcidPit = "1407fb5054d087d47a4c40134c809f12";
         public const string AnimalAspectGreaterBase = "c9c56af3b25be3942aa0ffd12f11cf35";
@@ -318,6 +329,28 @@
         public const string ChainsOfLight = "f8cea58227f59c64399044a82c9735c4";
         public const string Serenity = "d316d3d94d20c674db2c24d7de96f6a7";
         public const string AngelicAspectGreater = "b1c7576bd06812b42bda3f09ab202f14";
+        public const string ChaosHammer = "c42ac3feb96d1e54e9bc77c84082f05f";
+        public const string HolySmite = "ad5ed5ea4ec52334a94e975a64dad336";
+        public const string OrdersWrath = "1ec8f035d8329134d96cdc7b90fdc2e1";
+        public const string UnholyBlight = "a02cf51787df937489ef5d4cf5970335";
+        public const string CrusadersEdge = "a26c23a887a6f154491dc2cefdad2c35";
+        public const string CrusadersEdgeCast = "be5452c422a6ea744bf1037b0a443bb1";
+        public const string CureCriticalWounds = "0d657aa811b310e4bbd8586e60156a2d";
+        public const string CureCriticalWoundsDamage = "7d626a2c5eee30b47bbf7fee36d05309";
+        public const string InflictCriticalWounds = "3cf05ef7606f06446ad357845cb4d430";
+        public const string InflictCriticalWoundsDamage = "2737152467af53b4f9800e7a60644bb6";
+        public const string DeathWard = "0413915f355a38146bc6ad40cdf27b3f";
+        public const string DeathWardCast = "e9cc9378fd6841f48ad59384e79e9953";
+        public const string DivinePower = "ef16771cb05d1344989519e87f25b3c5";
+        public const string FreedomOfMovement = "4c349361d720e844e846ad8c19959b1e";
+        public const string FreedomOfMovementCast = "0087fc2d64b6095478bc7b8d7d512caf";
+        public const string Restoration = "f2115ac1148256b4ba20788f7e966830";
+        public const string ShieldOfDawn = "62888999171921e4dafb46de83f4d67d";
+        public const string ForcedRepentance = "cc0aeb74b35cb7147bff6c53538bbc76";
+        public const string BlessingOfLuckAndResolveMass = "462c21cebf7820c40a87f5e4d03e17cf";
+        public const string Eaglesoul = "332ad68273db9704ab0e92518f2efd1c";
+        public const string BestowGraceOfTheChampion = "3cf5b2bd093a36a468b4ece38ad4d5fa";
+        public const string BestowGraceOfTheChampionCast = "199d585bff173c74b86387856919242c";
         //Level 5
         public const string AcidicSpray = "c543eef6d725b184ea8669dd09b3894c";
         public const string AnimalGrowth = "56923211d2ac95e43b8ac5031bab74d8";
@@ -369,6 +402,28 @@
         public const string VampiricShadowShield = "a34921035f2a6714e9be5ca76c5e34b5";
         public const string WavesOfFatigue = "8878d0c46dfbd564e9d5756349d5e439";
         public const string WrackingRay = "1cde0691195feae45bab5b83ea3f221e";
+        public const string BreathOfLifeTouch = "cbd03c874e39e6c4795fe0093544f2a2";
+        public const string Cleanse = "be2062d6d85f4634ea4f26e9e858c3b8";
+        public const string CommandGreater = "cb15cc8d7a5480648855a23b3ba3f93d";
+        public const string CommandGreaterApproach = "305e7eebe6572d44eb44f29b43436d77";
+        public const string CommandGreaterFall = "4cffe11248cb2134d98c9e39a827476a";
+        public const string CommandGreaterFlee = "c0373cd86479df24d9f03bb23a99d57c";
+        public const string CommandGreaterHalt = "138bdf210567a45449151ac47630cecd";
+        public const string CureLightWoundsMass = "5d3d689392e4ff740a761ef346815074";
+        public const string CureLightWoundsMassDamage = "fb7e5fe8b5750f9408398d9659b0f98f";
+        public const string InflictLightWoundsMass = "9da37873d79ef0a468f969e4e5116ad2";
+        public const string InflictLightWoundsMassDamage = "b70d903464a738148a19bed630b91f8c";
+        public const string DisruptingWeapon = "6ab3056345b78164fa34b2c947b52083";
+        public const string DisruptingWeaponCast = "46c96cc3a3ef35243915ff3452dfacf5";
+        public const string FlameStrike = "f9910c76efc34af41b6e43d5d8752f0f";
+        public const string PillarOfLife = "aca83c764d751594287f18b817814bce";
+        public const string ProfaneNimbus = "b56521d58f996cd4299dab3f38d5fe31";
+        public const string SacredNimbus = "bf74b3b54c21a9344afe9947546e036f";
+        public const string SlayLiving = "a6e59e74cba46a44093babf6aec250fc";
+        public const string SpellResistance = "0a5ddfbcfb3989543ac7c936fc256889";
+        public const string Vinetrap = "6d1d48a939ce475409f06e1b376bc386";
+        public const string BurstOfGlory = "1bc83efec9f8c4b42a46162d72cbf494";
+        public const string RighteousMight = "90810e5cf53bf854293cbd5ea1066252";
         //Level6
         public const string AcidFog = "dbf99b00cd35d0a4491c6cc9e771b487";
         public const string BansheeBlast = "d42c6d3f29e07b6409d670792d72bc82";
@@ -438,6 +493,17 @@
         public const string UmbralStrike = "474ed0aa656cc38499cc9a073d113716";
         public const string ShoutGreater = "fd0d3840c48cafb44bb29e8eb74df204";
         public const string OverwhelmingPresence = "41cf93453b027b94886901dbfc680cb9";
+        public const string CureModerateWoundsMass = "571221cc141bc21449ae96b3944652aa";
+        public const string CureModerateWoundsMassDamage = "638363b5afb817d4684c021d36279904";
+        public const string InflictModerateWoundsMass = "03944622fbe04824684ec29ff2cec6a7";
+        public const string InflictModerateWoundsMasssDamage = "89ddb1b4dafc5f541a3dacafbf9ea2dd";
+        public const string BladeBarrier = "36c8971e91f1745418cc3ffdfac17b74";
+        public const string Heal = "ff8f1534f66559c478448723e16b6624";
+        public const string HealDamage = "6ecd2657cb645274cbc167d667ac521d";
+        public const string Harm = "137af566f68fd9b428e2e12da43c1482";
+        public const string HarmDamage = "3da67f8b941308348b7101e7ef418f52";
+        public const string InspiringRecovery = "788d72e7713cf90418ee1f38449416dc";
+        public const string InspiringRecoveryBurst = "2763a0d6d73dd564895887eb0fd3d147";
         //Level7
         public const string Repulsion = "cb55ae9517a444548d3457f91f829679";
         public const string CausticEruption = "8c29e953190cc67429dc9c701b16b7c2";
@@ -497,6 +563,16 @@
         public const string WavesOfEctasy = "1e2d1489781b10a45a3b70192bba9be3";
         public const string WavesOfExhaustion = "3e4d3b9a5bd03734d9b053b9067c2f38";
         public const string ArchonsTrumpet = "c6c516e59ca34f34aefb82a850287b97";
+        public const string BreathofFliesAbility = "4912cf545d1e48ba8f786dc67d5abb4b";
+        public const string Destruction = "3b646e1db3403b940bf620e01d2ce0c7";
+        public const string CureSeriousWoundsMass = "0cea35de4d553cc439ae80b3a8724397";
+        public const string CureSeriousWoundsMassDamage = "21d02c685b2e64b4f852b3efcb0b5ca6";
+        public const string InflictSeriousWoundsMass = "820170444d4d2a14abc480fcbdb49535";
+        public const string InflictSeriousWoundsMassDamage = "aba480ce9381684408290f5434402a32";
+        public const string JoltingPortent = "0dd638688edf68a4da865752d7b9ee82";
+        public const string PoisonBreath = "b5be90707c17a9643b90d90b7c4096e2";
+        public const string RestorationGreater = "fafd77c6bfa85c04ba31fdc1c962c914";
+        public const string FireStorm = "e3d0dfe1c8527934294f241e0ae96a8d";
         //Level8
         public const string CreateUndeadGreaterBase = "8ba9b6e4df4c46a597154e2b8e7e6e4a";
         public const string CreateUndeadGreaterDevourer = "05cf9c97639f476f82e15c740068d7f6";
@@ -540,6 +616,14 @@
         public const string SummonNaturesAllyVIIId4plus1 = "86f4287572bef49449b9d06c66adf456";
         public const string SummonNaturesAllyVIIISingle = "8d3d5b62878d5b24391c1d7834d0d706";
         public const string Sunburst = "e96424f70ff884947b06f41a765b7658";
+        public const string CloakOfChaos = "9155dbc8268da1c49a7fc4834fa1a4b1";
+        public const string CureCriticalWoundsMass = "1f173a16120359e41a20fc75bb53d449";
+        public const string CureCriticalWoundsMassDamage = "0cce61a5e5108114092f9773572c78b8";
+        public const string InflictCriticalWoundsMass = "5ee395a2423808c4baf342a4f8395b19";
+        public const string InflictCriticalWoundsMassDamage = "e05c263048e835043bb2784601dca339";
+        public const string ShieldOfLaw = "73e7728808865094b8892613ddfaf7f5";
+        public const string UnholyAura = "47f9cb1c367a5e4489cfa32fce290f86";
+        public const string HolyAura = "808ab74c12df8784ab4eeaf6a107dbea";
         //Level9
         public const string MeteorSwarm = "5e36df08c71748f7936bce310181fb71";
         public const string SymbolOfVulnerability = "9cebb7c46c8d4c55a0e98da9b103fd37";
@@ -578,6 +662,7 @@
         public const string ShapechangeShamblingMound = "a05f296f1f9b4204f9c0dcbf85e7e8a7";
         public const string ShapechangeSmilodon = "560f972f81457e8449f9d2559851cf20";
         public const string ShapechangeWyvern = "91d243b3a4fcd614e8a753125ab30acd";
+
     }
 }
 

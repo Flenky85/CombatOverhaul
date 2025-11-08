@@ -9,31 +9,24 @@ using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Actions;
 using Kingmaker.UnitLogic.Mechanics.Components;
 
-namespace CombatOverhaul.Blueprints.Abilities.Spells.Level3
+namespace CombatOverhaul.Blueprints.Abilities.Spells.Level6
 {
     [AutoRegister]
-    internal static class InflictSeriousWoundsAbilityTweaks
+    internal static class HarmAbilityTweaks
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.InflictSeriousWounds)
-                .EditComponent<ContextRankConfig>(r =>
-                {
-                    r.m_BaseValueType = ContextRankBaseValueType.CasterLevel;
-                    r.m_Progression = ContextRankProgression.AsIs;
-                    r.m_UseMax = true;
-                    r.m_Max = 8;
-                })
+            AbilityConfigurator.For(AbilitiesGuids.Harm)
                 .EditComponent<AbilityEffectRunAction>(c =>
                 {
-                    var cond = (Conditional)c.Actions.Actions[0];
-                    var heal = (ContextActionHealTarget)cond.IfTrue.Actions[0];
+                    var root = (Conditional)c.Actions.Actions[0];
+                    var heal = (ContextActionHealTarget)root.IfTrue.Actions[0];
 
                     heal.Value.DiceType = DiceType.D4;
                     heal.Value.DiceCountValue = new ContextValue
                     {
                         ValueType = ContextValueType.Rank,
-                        ValueRank = AbilityRankType.Default
+                        ValueRank = AbilityRankType.DamageDice
                     };
                     heal.Value.BonusValue = new ContextValue
                     {
@@ -41,10 +34,19 @@ namespace CombatOverhaul.Blueprints.Abilities.Spells.Level3
                         Value = 0
                     };
                 })
+                .EditComponent<ContextRankConfig>(r =>
+                {
+                    r.m_Type = AbilityRankType.DamageDice;
+                    r.m_BaseValueType = ContextRankBaseValueType.CasterLevel;
+                    r.m_Progression = ContextRankProgression.AsIs;
+                    r.m_UseMax = true;
+                    r.m_Max = 14;
+                    r.m_AffectedByIntensifiedMetamagic = false;
+                })
                 .SetDescriptionValue(
-                    "When laying your hand upon a creature, you channel negative energy that deals 1d4 points of damage per caster level " +
-                    "(maximum 8d4).\n" +
-                    "Since undead are powered by negative energy, this spell deals cures such a creature or a like amount of damage, rather than harming it."
+                    "Harm charges a subject with negative energy that deal 1d4 points of damage per caster level (to a maximum of 14d4). " +
+                    "If the creature makes a successful Will save, harm deals half this amount.\n" +
+                    "If used on an undead creature, harm acts like heal."
                 )
                 .Configure();
         }
