@@ -21,7 +21,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Spells.Level7
                     cfg.m_BaseValueType = ContextRankBaseValueType.CasterLevel;
                     cfg.m_Progression = ContextRankProgression.AsIs;
                     cfg.m_UseMax = true;
-                    cfg.m_Max = 14;
+                    cfg.m_Max = 16;
                     cfg.m_AffectedByIntensifiedMetamagic = true;
                 })
                 .EditComponent<AbilityEffectRunAction>(c =>
@@ -41,7 +41,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Spells.Level7
                 })
                 .SetDescriptionValue(
                     "When a fire storm spell is cast, the whole area is shot through with sheets of roaring flame. " +
-                    "All enemy creatures within the area take 1d4 points of fire damage per caster level (maximum 14d4). " +
+                    "All enemy creatures within the area take 1d4 points of fire damage per caster level (maximum 16d4). " +
                     "Creatures that fail their Reflex save catch on fire, taking 4d6 points of fire damage each round after " +
                     "that until the flames are extinguished by making a successful Reflex save."
                 )

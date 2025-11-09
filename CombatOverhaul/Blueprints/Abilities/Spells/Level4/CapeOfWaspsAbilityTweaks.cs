@@ -1,21 +1,20 @@
 ﻿using BlueprintCore.Blueprints.CustomConfigurators.UnitLogic.Abilities;
 using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
-using Kingmaker.Designers.EventConditionActionSystem.Actions;
 using Kingmaker.RuleSystem;
 using Kingmaker.UnitLogic.Abilities.Components;
 using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Actions;
 
-namespace CombatOverhaul.Blueprints.Abilities.Spells.Level3
+namespace CombatOverhaul.Blueprints.Abilities.Spells.Level4
 {
     [AutoRegister]
-    internal static class LongstriderGreaterAbilityTweaks
+    internal static class CapeOfWaspsAbilityTweaks
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.LongstriderGreater)
+            AbilityConfigurator.For(AbilitiesGuids.CapeOfWasps)
                 .SetActionType(UnitCommand.CommandType.Swift)
                 .SetIsFullRoundAction(false)
                 .EditComponent<AbilityEffectRunAction>(c =>

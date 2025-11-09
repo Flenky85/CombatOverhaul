@@ -23,6 +23,7 @@ namespace CombatOverhaul.Magic
             if (ad == null) return false;
 
             var ab = ad.Blueprint;
+            if (ad.Spellbook == null) return false;
             if (ab == null || !ab.IsSpell) return false;
             if (ab.GetComponent<AbilityDeliverTouch>() != null) return false; 
             if (ad.SpellLevel <= 0) return false;

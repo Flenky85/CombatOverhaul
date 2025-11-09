@@ -288,6 +288,7 @@ namespace CombatOverhaul.Guids
         public const string SoothingMud = "1a36c8b9ed655c249a9f9e8d4731f001";
         public const string SpikeGrowth = "29b0f9026ad05e14789d84e867cc6dff";
         public const string SpitVenom = "9779c8578acd919419f563c33d7b2af5";
+        public const string LifeBlast = "a8666d26bbbd9b640958284e0eee3602";
         //Level 4
         public const string AcidPit = "1407fb5054d087d47a4c40134c809f12";
         public const string AnimalAspectGreaterBase = "c9c56af3b25be3942aa0ffd12f11cf35";
@@ -376,6 +377,13 @@ namespace CombatOverhaul.Guids
         public const string Eaglesoul = "332ad68273db9704ab0e92518f2efd1c";
         public const string BestowGraceOfTheChampion = "3cf5b2bd093a36a468b4ece38ad4d5fa";
         public const string BestowGraceOfTheChampionCast = "199d585bff173c74b86387856919242c";
+        public const string CapeOfWasps = "e418c20c8ce362943a8025d82c865c1c";
+        public const string FlameStrike = "f9910c76efc34af41b6e43d5d8752f0f";
+        public const string ExplosionOfRot = "98544596a01d4f7bbf7cc3ff98a1fb69";
+        public const string SlowMud = "6b30813c3709fc44b92dc8fd8191f345";
+        public const string SpikeStones = "d1afa8bc28c99104da7d784115552de5";
+        public const string ThirstingEntangle = "b844a29343974aeab1d37d38db2f530e";
+        public const string ThornBody = "2daf9c5112f16d54ab3cd6904c705c59";
         //Level 5
         public const string AcidicSpray = "c543eef6d725b184ea8669dd09b3894c";
         public const string AnimalGrowth = "56923211d2ac95e43b8ac5031bab74d8";
@@ -440,7 +448,6 @@ namespace CombatOverhaul.Guids
         public const string InflictLightWoundsMassDamage = "b70d903464a738148a19bed630b91f8c";
         public const string DisruptingWeapon = "6ab3056345b78164fa34b2c947b52083";
         public const string DisruptingWeaponCast = "46c96cc3a3ef35243915ff3452dfacf5";
-        public const string FlameStrike = "f9910c76efc34af41b6e43d5d8752f0f";
         public const string PillarOfLife = "aca83c764d751594287f18b817814bce";
         public const string ProfaneNimbus = "b56521d58f996cd4299dab3f38d5fe31";
         public const string SacredNimbus = "bf74b3b54c21a9344afe9947546e036f";
@@ -449,6 +456,18 @@ namespace CombatOverhaul.Guids
         public const string Vinetrap = "6d1d48a939ce475409f06e1b376bc386";
         public const string BurstOfGlory = "1bc83efec9f8c4b42a46162d72cbf494";
         public const string RighteousMight = "90810e5cf53bf854293cbd5ea1066252";
+        public const string AspectOfTheWolf = "6126b36fe22291543ad72f8b9f0d53a7";
+        public const string BlessingOfTheSalamander = "9256a86aec14ad14e9497f6b60e26f3f";
+        public const string CallLightningStorm = "d5a36a7ee8177be4f848b953d1c53c84";
+        public const string CallLightningStormAbility = "cad052ef098f9f247ab73ae4c37ac687";
+        public const string CaveFangs = "bacba2ff48d498b46b86384053945e83";
+        public const string CaveFangsStalactites = "949d5ee85b7237042a4b47bc504dd763";
+        public const string CaveFangsStalactitesAbility = "039681ca00c74f24eb302f340f8c6be7";
+        public const string CaveFangsStalagmites = "3f2192a2b1324a6469d4de19cd600449";
+        public const string CaveFangsStalagmitesAbility = "8ec73d388f0875640af8df799f7f16b5";
+        public const string TidalSurge = "50bdf209dede4ce1acc722d5fdfcf53c";
+        public const string TidalSurgeCone = "ba954ab0a0144afea612ff16177511af";
+        public const string TidalSurgeLine = "224269cbe09b4f439f71d9d3ebff1959";
         //Level6
         public const string AcidFog = "dbf99b00cd35d0a4491c6cc9e771b487";
         public const string BansheeBlast = "d42c6d3f29e07b6409d670792d72bc82";
@@ -529,6 +548,8 @@ namespace CombatOverhaul.Guids
         public const string HarmDamage = "3da67f8b941308348b7101e7ef418f52";
         public const string InspiringRecovery = "788d72e7713cf90418ee1f38449416dc";
         public const string InspiringRecoveryBurst = "2763a0d6d73dd564895887eb0fd3d147";
+        public const string PoisonBreath = "b5be90707c17a9643b90d90b7c4096e2";
+        public const string PrimalRegression = "07d577a74441a3a44890e3006efcf604";
         //Level7
         public const string Repulsion = "cb55ae9517a444548d3457f91f829679";
         public const string CausticEruption = "8c29e953190cc67429dc9c701b16b7c2";
@@ -595,9 +616,11 @@ namespace CombatOverhaul.Guids
         public const string InflictSeriousWoundsMass = "820170444d4d2a14abc480fcbdb49535";
         public const string InflictSeriousWoundsMassDamage = "aba480ce9381684408290f5434402a32";
         public const string JoltingPortent = "0dd638688edf68a4da865752d7b9ee82";
-        public const string PoisonBreath = "b5be90707c17a9643b90d90b7c4096e2";
         public const string RestorationGreater = "fafd77c6bfa85c04ba31fdc1c962c914";
         public const string FireStorm = "e3d0dfe1c8527934294f241e0ae96a8d";
+        public const string Changestaff = "26be70c4664d07446bdfe83504c1d757";
+        public const string CreepingDoom = "b974af13e45639a41a04843ce1c9aa12";
+        public const string Sunbeam = "1fca0ba2fdfe2994a8c8bc1f0f2fc5b1";
         //Level8
         public const string CreateUndeadGreaterBase = "8ba9b6e4df4c46a597154e2b8e7e6e4a";
         public const string CreateUndeadGreaterDevourer = "05cf9c97639f476f82e15c740068d7f6";
@@ -649,6 +672,7 @@ namespace CombatOverhaul.Guids
         public const string ShieldOfLaw = "73e7728808865094b8892613ddfaf7f5";
         public const string UnholyAura = "47f9cb1c367a5e4489cfa32fce290f86";
         public const string HolyAura = "808ab74c12df8784ab4eeaf6a107dbea";
+        public const string AnimalShapes = "cf689244b2c7e904eb85f26fd6e81552";
         //Level9
         public const string MeteorSwarm = "5e36df08c71748f7936bce310181fb71";
         public const string SymbolOfVulnerability = "9cebb7c46c8d4c55a0e98da9b103fd37";
@@ -691,6 +715,13 @@ namespace CombatOverhaul.Guids
         public const string HealMassDamage = "7df289eaaf1233248b7be754f894de2e";
         public const string Implosion = "78abd9a61abf4c80a8a8cf05ff55f033";
         public const string PolarMidnight = "ba48abb52b142164eba309fd09898856";
+        public const string SummonElderWorm = "954f1469ed62843409783c9fa7472998";
+        public const string ElementalSwarm = "0340fe43f35e7a448981b646c638c83d";
+        public const string ElementalSwarmAir = "07e8f6479cbcc3f46a12696784805305";
+        public const string ElementalSwarmEarth = "a6c41f10be92dec488276ab079a296c8";
+        public const string ElementalSwarmFire = "1c509c6f186528b49a291ab77f7f997d";
+        public const string ElementalSwarmWater = "a0df3fc5fda5c7b4bbec8443e5bb315a";
+
 
     }
 }

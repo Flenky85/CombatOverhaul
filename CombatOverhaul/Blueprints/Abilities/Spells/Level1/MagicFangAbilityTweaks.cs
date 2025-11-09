@@ -14,7 +14,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Spells.Level1
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.MagicFang)
+            AbilityConfigurator.For(AbilitiesGuids.MagicFangGreater)
                 .SetActionType(UnitCommand.CommandType.Swift)
                 .SetIsFullRoundAction(false)
                 .EditComponent<AbilityEffectRunAction>(c =>

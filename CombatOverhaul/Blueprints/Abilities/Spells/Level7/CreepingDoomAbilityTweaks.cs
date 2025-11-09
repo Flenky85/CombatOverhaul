@@ -2,40 +2,40 @@
 using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
 using Kingmaker.RuleSystem;
+using Kingmaker.UnitLogic.Abilities.Blueprints;
 using Kingmaker.UnitLogic.Abilities.Components;
 using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Actions;
 
-namespace CombatOverhaul.Blueprints.Abilities.Spells.Level3
+namespace CombatOverhaul.Blueprints.Abilities.Spells.Level7
 {
     [AutoRegister]
-    internal static class DominateAnimalAbilityTweaks
+    internal static class CreepingDoomAbilityTweaks
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.DominateAnimal)
-                .SetActionType(UnitCommand.CommandType.Standard)
+            AbilityConfigurator.For(AbilitiesGuids.CreepingDoom)
+                .SetActionType(UnitCommand.CommandType.Standard)  
                 .SetIsFullRoundAction(false)
                 .EditComponent<AbilityEffectRunAction>(c =>
                 {
-                    var cond = (ContextActionConditionalSaved)c.Actions.Actions[0];
-                    var apply = (ContextActionApplyBuff)cond.Failed.Actions[0];
+                    var spawn = (ContextActionSpawnMonster)c.Actions.Actions[0];
 
-                    apply.DurationValue.Rate = DurationRate.Rounds;
-                    apply.DurationValue.DiceType = DiceType.D3;
-                    apply.DurationValue.DiceCountValue = new ContextValue
-                    {
-                        ValueType = ContextValueType.Simple,
-                        Value = 2
-                    };
-                    apply.DurationValue.BonusValue = new ContextValue
+                    spawn.DurationValue.Rate = DurationRate.Rounds;
+                    spawn.DurationValue.DiceType = DiceType.Zero;
+                    spawn.DurationValue.DiceCountValue = new ContextValue
                     {
                         ValueType = ContextValueType.Simple,
                         Value = 0
                     };
+                    spawn.DurationValue.BonusValue = new ContextValue
+                    {
+                        ValueType = ContextValueType.Simple,
+                        Value = 6
+                    };
                 })
-                .SetDuration2d3RoundsShared()
+                .SetDuration6RoundsShared()
                 .Configure();
         }
     }

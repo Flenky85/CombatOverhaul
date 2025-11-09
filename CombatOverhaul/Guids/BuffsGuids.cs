@@ -47,5 +47,13 @@
         public const string CausticEruptionBuff = "02a4d7303f0eeee408d7c7e5908ba339";
         //Level 9
         public const string ImplosionBuff = "4a5c014570e34fb78258b4cd5b67eda6";
+        public const string ElementalSwarmAirSecondWaveBuff = "b1350480c7164d147b6daea79249e289";
+        public const string ElementalSwarmAirThirdWaveBuff = "5614a5774ada0b34d963fb067c496314";
+        public const string ElementalSwarmEarthSecondWaveBuff = "cb28b3e83051c574a9ea8dfdf005d17b";
+        public const string ElementalSwarmEarthThirdWaveBuff = "2bca8ababe2ebec4fb0aa04869532bb3";
+        public const string ElementalSwarmFireSecondWaveBuff = "31be680eff22032469d249b39f97ad77";
+        public const string ElementalSwarmFireThirdWaveBuff = "2bca899fc47261448a7df17e3eefa486";
+        public const string ElementalSwarmWaterSecondWaveBuff = "b42b60b2c09a5d048802444cc778f861";
+        public const string ElementalSwarmWaterThirdWaveBuff = "313c1a83b45d86b48abdf06cb354c91f";
     }
 }

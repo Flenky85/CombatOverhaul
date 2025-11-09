@@ -18,7 +18,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Spells.Level3
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.AngelicAspect)
+            AbilityConfigurator.For(AbilitiesGuids.SpitVenom)
                 .AddComponent<ContextRankConfig>(cfg =>
                 {
                     cfg.m_Type = AbilityRankType.Default;

@@ -7,6 +7,8 @@
         public const string SpikeGrowthArea = "16e0e4c6a16f68c49832340b93706499";
         //Level5
         public const string PillarOfLifeaArea = "7d0cebd89884679469533be8b680d55c";
+        public const string CaveFangsStalagmitesArea = "104bb16f7c3717f44859d0aea97251ce";
+        public const string CaveFangsStalactitesArea = "b8a7c68b040695a40b3a87b9676f7b50";
         //Level6
         public const string AcidFogArea = "f4dc3f53090627945b83f16ebf3146a6";
         public const string CloakofDreamsArea = "6c116b31887c6284fbd41c070f6422f6";

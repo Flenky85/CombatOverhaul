@@ -13,7 +13,7 @@ using Kingmaker.UnitLogic.Mechanics.Actions;
 using Kingmaker.UnitLogic.Mechanics.Components;
 using System.Linq;
 
-namespace CombatOverhaul.Blueprints.Abilities.Spells.Level7
+namespace CombatOverhaul.Blueprints.Abilities.Spells.Level6
 {
     [AutoRegister]
     internal static class PoisonBreathAbilityTweaks
@@ -27,7 +27,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Spells.Level7
                     m_BaseValueType = ContextRankBaseValueType.CasterLevel,
                     m_Progression = ContextRankProgression.AsIs,
                     m_UseMax = true,
-                    m_Max = 16
+                    m_Max = 14
                 })
                 .EditComponent<AbilityEffectRunAction>(c =>
                 {
@@ -67,7 +67,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Spells.Level7
                 .SetDescriptionValue(
                     "You expel a cone-shaped burst of toxic mist from your mouth, subjecting everyone " +
                     "caught in the area to a deadly poison, as per the poison spell.\n " +
-                    "Additionally, the targets takes 1d4 points of acid damage per caster level (maximum 16d4). A successful " +
+                    "Additionally, the targets takes 1d4 points of acid damage per caster level (maximum 14d4). A successful " +
                     "Fortitude save halves this damage."
                 )
                 .Configure();

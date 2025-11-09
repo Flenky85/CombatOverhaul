@@ -17,21 +17,19 @@ namespace CombatOverhaul.Blueprints.Abilities.Spells.Level3
             AbilityConfigurator.For(AbilitiesGuids.FeatherStepMass)
                 .EditComponent<AbilityEffectRunAction>(c =>
                 {
-                    var cond = (Conditional)c.Actions.Actions[0];
-                    var apply = (ContextActionApplyBuff)cond.IfFalse.Actions[0];
-
+                    var apply = (ContextActionApplyBuff)c.Actions.Actions[0];
                     apply.UseDurationSeconds = false;
                     apply.DurationValue.Rate = DurationRate.Rounds;
-                    apply.DurationValue.DiceType = DiceType.Zero;
+                    apply.DurationValue.DiceType = DiceType.D3;
                     apply.DurationValue.DiceCountValue = new ContextValue
                     {
                         ValueType = ContextValueType.Simple,
-                        Value = 0
+                        Value = 2
                     };
                     apply.DurationValue.BonusValue = new ContextValue
                     {
                         ValueType = ContextValueType.Simple,
-                        Value = 6
+                        Value = 0
                     };
                 })
                 .SetDuration6RoundsShared()
