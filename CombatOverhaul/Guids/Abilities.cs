@@ -1,8 +1,4 @@
-﻿using BlueprintCore.Utils;
-using Kingmaker.Blueprints;
-using Kingmaker.UnitLogic.Abilities.Blueprints;
-
-namespace CombatOverhaul.Guids
+﻿namespace CombatOverhaul.Guids
 {
     internal static class AbilitiesGuids
     {
@@ -40,7 +36,7 @@ namespace CombatOverhaul.Guids
         public const string PowerOfFaith4 = "1785979af3db14f428a8a70943ea3852";
         public const string PowerOfFaith5 = "c89c4918529156a4d8636ed9060dc5cd";
         public const string ShiningLight = "6aeff8f6d01adff40866f292f7655472";
-
+        
         //Spells
         //Level 1
         public const string BurningHands = "4783c3709a74a794dbe7c8e7e0b1b038";
@@ -104,6 +100,16 @@ namespace CombatOverhaul.Guids
         public const string FeatherStep = "f3c0b267dd17a2a45a40805e31fe3cd1";
         public const string Longstrider = "14c90900b690cac429b229efdf416127";
         public const string MagicFang = "403cf599412299a4f9d5d925c7b9fb33";
+        public const string BlessWeapon = "831e942864e924846a30d2e0678e438b";
+        public const string BlessWeaponCast = "de954d4cbf995864ba8662e67a473f93";
+        public const string ChallengeEvil = "57aae1aa36b8022479e1cd39f3a85ef9";
+        public const string ProtectionFromChaosEvil = "c28f7234f5fb8c943a77621ad96ad8f9";
+        public const string ProtectionFromChaosChaosEvil = "b70104f09b3da794da923fbf248befc5";
+        public const string ProtectionFromEvilChaosEvil = "07dccc8e4c4489c4d9de721dddaf12cc";
+        public const string VeilOfHeaven = "72d9f5adda6387a40a63c49d7781bbbf";
+        public const string VeilOfHeavenSwift = "e26b8cd66e11d354f9509e0e7ee0089e";
+        public const string VeilOfPositiveEnergy = "6bb0533cd457d1f4eaccc73ab7680fb2";
+        public const string VeilOfPositiveEnergySwift = "02a98da52a022534b94604dfb06e6fe9";
         //Level 2
         public const string BoneFists = "0da2046b4517427bb9b2e304ea6342bf";
         public const string MortalTerror = "8bc127ed66044685957e54f19d8dbdb7";
@@ -194,6 +200,12 @@ namespace CombatOverhaul.Guids
         public const string PoxPustules = "bc153808ef4884a4594bc9bec2299b69";
         public const string SickeningEntanglement = "6c7467f0344004d48848a43d8c078bf8";
         public const string WinterGrasp = "406c6e4a631b43ce8f7a77844b75bf75";
+        public const string AuraOfGreaterCourage = "acb787cf9f76e924a9a93bbd011af040";
+        public const string BestowGrace = "042aaa117e89c4d4b8cb41478dd3fca3";
+        public const string BestowGraceCast = "431f783e1a020cd46ab37b8666a92bd3";
+        public const string ProtectionFromChaosEvilCommunal = "3026de673d4d8fe45baf40e0b5edd718";
+        public const string ProtectionFromChaosCommunalChaosEvil = "b6da529f710491b4fa789a5838c1ae8f";
+        public const string ProtectionFromEvilCommunalChaosEvil = "224f03e74d1dd4648a81242c01e65f41";
         //Level 3
         public const string AnimateDeadLesser = "57fcf8016cf04da4a8b33d2add14de7e";
         public const string BatteringBlast = "0a2f7c6aa81bc6548ac7780d8b70bcbc";
@@ -289,6 +301,7 @@ namespace CombatOverhaul.Guids
         public const string SpikeGrowth = "29b0f9026ad05e14789d84e867cc6dff";
         public const string SpitVenom = "9779c8578acd919419f563c33d7b2af5";
         public const string LifeBlast = "a8666d26bbbd9b640958284e0eee3602";
+        public const string HolyWhisper = "5f1ca17be3ba44949be427f18e696d9b";
         //Level 4
         public const string AcidPit = "1407fb5054d087d47a4c40134c809f12";
         public const string AnimalAspectGreaterBase = "c9c56af3b25be3942aa0ffd12f11cf35";
@@ -384,6 +397,8 @@ namespace CombatOverhaul.Guids
         public const string SpikeStones = "d1afa8bc28c99104da7d784115552de5";
         public const string ThirstingEntangle = "b844a29343974aeab1d37d38db2f530e";
         public const string ThornBody = "2daf9c5112f16d54ab3cd6904c705c59";
+        public const string HolySword = "bea9deffd3ab6734c9534153ddc70bde";
+        public const string OathOfPeace = "cb3d70cc98b5f1540bddfff6f9667f73";
         //Level 5
         public const string AcidicSpray = "c543eef6d725b184ea8669dd09b3894c";
         public const string AnimalGrowth = "56923211d2ac95e43b8ac5031bab74d8";
@@ -468,6 +483,7 @@ namespace CombatOverhaul.Guids
         public const string TidalSurge = "50bdf209dede4ce1acc722d5fdfcf53c";
         public const string TidalSurgeCone = "ba954ab0a0144afea612ff16177511af";
         public const string TidalSurgeLine = "224269cbe09b4f439f71d9d3ebff1959";
+        public const string ResoundingBlow = "9047cb1797639924487ec0ad566a3fea";
         //Level6
         public const string AcidFog = "dbf99b00cd35d0a4491c6cc9e771b487";
         public const string BansheeBlast = "d42c6d3f29e07b6409d670792d72bc82";
