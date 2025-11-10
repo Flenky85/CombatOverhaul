@@ -20,15 +20,24 @@ namespace CombatOverhaul.Resources
             //Paladin
             new RegenRule(AbilitiesResourcesGuids.LayOnHands, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.SmiteEvil, flat: 1, percentOfMax: 0f),
-            new RegenRule(AbilitiesResourcesGuids.WeaponBond, flat: 1, percentOfMax: 0f, BuffsGuids.WeaponBondBuff),
             new RegenRule(AbilitiesResourcesGuids.DivineGuardianTroth, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.ChannelEnergyHospitaler, flat: 1, percentOfMax: 0f),
-            new RegenRule(AbilitiesResourcesGuids.MartyrPerformance, flat: 1, percentOfMax: 0f, BuffsGuids.MartyrGreatnessBuff, BuffsGuids.MartyrCourageBuff, BuffsGuids.MartyrHeroicsBuff),
             new RegenRule(AbilitiesResourcesGuids.Stonestrike, flat: 1, percentOfMax: 0f),
-            new RegenRule(AbilitiesResourcesGuids.StonelordDefesniveStance, flat: 1, percentOfMax: 0f, BuffsGuids.StonelordDefensiveStanceBuff, BuffsGuids.Fatigued, BuffsGuids.Exhausted),
             new RegenRule(AbilitiesResourcesGuids.AllIsDarkness, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.TorturedCrusadeLayOnHands, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.ShiningLight, flat: 1, percentOfMax: 0f),
+
+            new RegenRule(AbilitiesResourcesGuids.WeaponBond, flat: 1, percentOfMax: 0f, 
+                BuffsGuids.WeaponBondBuff),
+            new RegenRule(AbilitiesResourcesGuids.StonelordDefesniveStance, flat: 1, percentOfMax: 0f, 
+                BuffsGuids.StonelordDefensiveStanceBuff, BuffsGuids.Fatigued, BuffsGuids.Exhausted),
+            new RegenRule(AbilitiesResourcesGuids.MartyrPerformance, flat: 1, percentOfMax: 0f, 
+                BuffsGuids.MartyrGreatnessBuff, BuffsGuids.MartyrCourageBuff, BuffsGuids.MartyrHeroicsBuff),
+            new RegenRule(AbilitiesResourcesGuids.ShamanHexAuraOfPurityResource, flat: 1, percentOfMax: 0f,
+                BuffsGuids.ShamanHexAuraOfPurityBuff),
+            new RegenRule(AbilitiesResourcesGuids.ShamanHexAirBarrierResource, flat: 1, percentOfMax: 0f,
+                BuffsGuids.ShamanHexAirBarrierBuff),
+
         };
 
         public static void TryApply(UnitEntityData unit)

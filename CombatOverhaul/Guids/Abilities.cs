@@ -36,7 +36,41 @@
         public const string PowerOfFaith4 = "1785979af3db14f428a8a70943ea3852";
         public const string PowerOfFaith5 = "c89c4918529156a4d8636ed9060dc5cd";
         public const string ShiningLight = "6aeff8f6d01adff40866f292f7655472";
-        
+
+        //Shaman
+        public const string ShamanHexAmelioratingBaseAbility = "2b35e887d852cb949a1d8e308efe8065";
+        public const string ShamanHexAmelioratingDazzleAbility = "ff1cf8952b8551f4c9fbe32966f9a945";
+        public const string ShamanHexAmelioratingFatuguedAbility = "8bc94d17348204041ab8863d4f841a99";
+        public const string ShamanHexAmelioratingShakenAbility = "5e02868509087b248a2c6daad16e9aef";
+        public const string ShamanHexAmelioratingSickenedAbility = "137c8f8182413dc4e80abe2a9d0313b5";
+        public const string ShamanHexDraconicResilienceAbility = "9802c5950219c6c41a9293076e221d12";
+        public const string ShamanHexEvilEyeAbility = "66a62322b44f25c418472df9a77f5b3a";
+        public const string ShamanHexEvilEyeACAbility = "e66d3b4d6669f9f4ea79056d4a525098";
+        public const string ShamanHexEvilEyeAttackAbility = "3e427e1fb78631c4b9f17e39bc19c96f";
+        public const string ShamanHexEvilEyeSavesAbility = "c2fa8c5d307efbb41a15d55373f414e2";
+        public const string ShamanHexFortuneAbility = "c91f9e996c0af364dae41569cb9586e7";
+        public const string ShamanHexFuryAbility = "313c37a6410ac514b835490cf768794f";
+        public const string ShamanHexHealingAbility = "3d4c6361e60fa664db01d5709baaa812";
+        public const string ShamanHexMisfortuneAbility = "8b9ffc4cd53b82f44ab7c0ddca85877d";
+        public const string ShamanHexProtectiveLuckAbility = "e3eddc31b2430b7408c62f313efea4bc";
+        public const string ShamanHexWardAbility = "07e1c038726e0824eabaa39e6038a854";
+        public const string ShamanHexBattleWardAbility = "29b3a96956eaf8d4cb42205ee233a158";
+        public const string ShamanHexHamperingHexAbility = "8e7f48a657b6380429dc1fc685096288";
+        public const string ShamanHexBoneLockAbility = "98293e0bfb86f4f418dcfbe7bf7f8fc2";
+        public const string ShamanHexBoneWardAbility = "1d33fcbc7f5175446bb9577e0f7811b3";
+        public const string ShamanHexFearfulGazeAbility = "a824b1806059bd54db0b5b0093472f21";
+        public const string ShamanHexFireNimbusAbility = "487981678b77e0b4aa5ff0328f50ecb2";
+        public const string ShamanHexFlameCurseAbility = "ba28f4a77f3741c4187b283d42e22554";
+        public const string ShamanHexWardOfFlamesAbility = "e80c565458d9c0c4ea1323dc8cf122d9";
+        public const string ShamanHexHypothermiaAbility = "4de66387a2c36624385930b0f5e596af";
+        public const string ShamanHexEntanglingCurseAbility = "dcabd85e723bac941bc5807a6a953e89";
+        public const string ShamanHexMetalCurseAbility = "ff2f3177d34778b41b5bfe0b140cba42";
+        public const string ShamanHexBeckoningChillAbility = "5617c38bde7d56f4094b2fc714399566";
+        public const string ShamanHexAirBarrierAbility = "3e14f46a35228b946af0c1fe79870e54";
+        public const string ShamanHexWindWardAbility = "1b1e0ae5916e6564ba3f0e2ab4fc403a";
+        public const string ShamanBattleSpiritTrueAbility = "3e1a13fdca87e9c49b2fac4556e5a948";
+
+
         //Spells
         //Level 1
         public const string BurningHands = "4783c3709a74a794dbe7c8e7e0b1b038";

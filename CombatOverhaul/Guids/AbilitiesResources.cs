@@ -14,5 +14,9 @@
         public const string AllIsDarkness = "7b5115b376fd4987b2c070da20ba91ea";
         public const string TorturedCrusadeLayOnHands = "47a984229de549869278b7c78a075e53";
         public const string ShiningLight = "7892a17840adb5741839512a1694cf47";
+
+        //Shaman
+        public const string ShamanHexAuraOfPurityResource = "bf5e9b0c62f7d624da1e171e1bc19978";
+        public const string ShamanHexAirBarrierResource = "f044ad5e15b16334fa0e2dd13fed1335";
     }
 }

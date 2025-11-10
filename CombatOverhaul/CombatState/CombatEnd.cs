@@ -4,6 +4,7 @@ using CombatOverhaul.Magic.UI.ManaDisplay;
 using HarmonyLib;
 using Kingmaker;
 using Kingmaker.Blueprints;
+using Kingmaker.Controllers.Rest;
 using Kingmaker.UnitLogic;
 using System;
 using TurnBased.Controllers;
@@ -18,6 +19,7 @@ namespace CombatOverhaul.CombatState
         {
             try
             {
+
                 var g = Game.Instance;
                 if (g == null || g.Player == null) return;
 
@@ -33,11 +35,17 @@ namespace CombatOverhaul.CombatState
                     if (coll == null || !coll.ContainsResource(res)) continue;
 
                     int maxMana = ManaCalc.CalcMaxMana(u);
-                    SetResourceAmount(coll, res, maxMana);     // res ya es ManaResource.Mana
+                    SetResourceAmount(coll, res, maxMana);     
                     ManaEvents.Raise(u, maxMana, maxMana);
 
                     Debug.Log($"[CO][Mana] CombatEnd -> '{u.CharacterName}' mana = {maxMana}/{maxMana}");
 
+                }
+                var rc = RestController.Instance;
+                if (rc != null)
+                {
+                    rc.Reset();
+                    rc.ApplyRest(party);
                 }
 
             }

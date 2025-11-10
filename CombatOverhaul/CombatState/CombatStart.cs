@@ -4,6 +4,7 @@ using CombatOverhaul.Magic.UI.ManaDisplay;
 using HarmonyLib;
 using Kingmaker;
 using Kingmaker.Blueprints;
+using Kingmaker.Controllers.Rest;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.UnitLogic;
 using System;
@@ -30,7 +31,12 @@ namespace CombatOverhaul.CombatState
                 {
                     return;
                 }
-
+                var rc = RestController.Instance;
+                if (rc != null)
+                {
+                    rc.Reset();                 
+                    rc.ApplyRest(party); 
+                }
                 var res = ManaResource.Mana;
                 if (res == null)
                 {
