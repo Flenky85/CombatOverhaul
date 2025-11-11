@@ -69,7 +69,48 @@
         public const string ShamanHexAirBarrierAbility = "3e14f46a35228b946af0c1fe79870e54";
         public const string ShamanHexWindWardAbility = "1b1e0ae5916e6564ba3f0e2ab4fc403a";
         public const string ShamanBattleSpiritTrueAbility = "3e1a13fdca87e9c49b2fac4556e5a948";
-
+        public const string ShamanBattleSpiritGreaterAbility = "0b1e0b7f61ca8874b8639a62b6b9a84e";
+        public const string ShamanBattleSpiritGreaterAbilityAberrations = "e488446a33fe4c798101c41530967565";
+        public const string ShamanBattleSpiritGreaterAbilityAnimals = "de283e96457f4434aeb91c73bb1a9498";
+        public const string ShamanBattleSpiritGreaterAbilityConstruct = "59e36a2185e4467e8a7b6cc9d1c91167";
+        public const string ShamanBattleSpiritGreaterAbilityDragons = "f1b6015e2a20498994840cf9035b036f";
+        public const string ShamanBattleSpiritGreaterAbilityFey = "5597c883314947a39cb8bcc4bf6a1ee0";
+        public const string ShamanBattleSpiritGreaterAbilityHumanoid = "e899ec50a91147a2b682ec3d1aadf936";
+        public const string ShamanBattleSpiritGreaterAbilityHumanoidGiant = "cd61a0873ec340798c43749fbaa61bce";
+        public const string ShamanBattleSpiritGreaterAbilityHumanoidReptilian = "058c3d09453643fcb04feb51a347e28e";
+        public const string ShamanBattleSpiritGreaterAbilityMagicalBeast = "8c9fa54842454298a54997b6d6c43d38";
+        public const string ShamanBattleSpiritGreaterAbilityMonstrousHumanoid = "e278c60dd5304f679784da352ac2218b";
+        public const string ShamanBattleSpiritGreaterAbilityOutsiderChaotic = "2f69fac6fbc14770909131f3c04c6574";
+        public const string ShamanBattleSpiritGreaterAbilityOutsiderEvil = "52405eccf27248c3a9f540295e408aee";
+        public const string ShamanBattleSpiritGreaterAbilityOutsiderGood = "8af52fb32e0a4e28b8f0ce1f00a91d33";
+        public const string ShamanBattleSpiritGreaterAbilityOutsiderLawful = "a4e5b1d369c147409c6f07665aa7bb3d";
+        public const string ShamanBattleSpiritGreaterAbilityOutsiderNeutral = "fd89a97d71114539b86dbbb4b4b6a5f7";
+        public const string ShamanBattleSpiritGreaterAbilityPlant = "a6bde92f6ef34e7fb0d12575c6bf20b1";
+        public const string ShamanBattleSpiritGreaterAbilityUndead = "c6000e1fd5674087a7c6c167278f91a8";
+        public const string ShamanBattleSpiritGreaterAbilityVermin = "6bb6de1eafe84c64954587f716e5e84a";
+        public const string ShamanBoneSpiritBaseAbility = "5f8f5dfb271b07442b362b404577938a";
+        public const string ShamanBoneSpiritGreaterAbility = "adfb3b7f4dc833e4db95225461941ec5";
+        public const string ShamanFlameSpiritTrueAbility = "6295f0998dc04bc42be9cc1b7b102100";
+        public const string ShamanFlameSpiritGreaterAbility = "457cc54f39b8d2c4cad5499ec88a19d2";
+        public const string ShamanFlameSpiritBaseAbility = "23d6896fa89514f4f9169f1efca522ca";
+        public const string ShamanStonesSpiritTrueAbility = "795473fc50546de40a09ae94249cd401";
+        public const string ShamanStonesSpiritGreaterAbility = "143da184e04d9d74f84ac658c7a555a3";
+        public const string ShamanStonesSpiritBaseAbility = "e392a4ae875eadb4b96bf47610f2c289";
+        public const string ShamanWavesSpiritTrueAbility = "ae8b51e4ff65b79499382efcb6035c22";
+        public const string ShamanWavesSpiritGreaterAbility = "12a47459b76c5614aa4eda78567df192";
+        public const string ShamanWavesSpiritBaseAbility = "4caf93b755c91d447967f5deaecbd530";
+        public const string ShamanWindSpiritTrueAbility = "c4663617663b8c64399d855118083fd7";
+        public const string ShamanWindSpiritGreaterAbility = "bfd4f3ba12d4a134096acaf006397439";
+        public const string ShamanWindSpiritBaseAbility = "2a7312bd211f69e4595eb880680147b8";
+        public const string ShamanFrostSpiritTrueAbility = "254475e56b3e4c5429b26436a5449ef9";
+        public const string ShamanFrostSpiritGreaterAbility = "ccd73edafefed184e807c003ce33e9f6";
+        public const string ShamanFrostSpiritBaseAbility = "6b7d6e1302002384bb452f3bc5e5696a";
+        public const string ShamanLifeSpiritChannelEnergy = "0fb4bb4eae14fe84e8b45d8ea207c4e1";
+        public const string ShamanLifeSpiritChannelPositiveHarm = "6c947d7f7ecc9ae43826bb513f6504bb";
+        public const string ShamanLifeSpiritTrueAbility = "fadbf6b8aab64254394abe1fbc08cb2c";
+        public const string ShamanNatureSpiritBaseAbility = "fcfbb29dc29e9a24d99d498bd45a93e5";
+        public const string ShamanBonesSpiritAnimateDead = "5d65a816392f4fde8d6b0e5fcb785341";
+        public const string ShadowShamanShadowsAbility = "085b4d4d0c5747bb8b1173e914c24d20";
 
         //Spells
         //Level 1

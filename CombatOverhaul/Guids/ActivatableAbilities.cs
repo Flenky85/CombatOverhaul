@@ -9,5 +9,6 @@
 
         //Shaman
         public const string ShamanHexAuraOfPurityActivatableAbility = "70b02595962addf49b9e51c191546f98";
+        public const string ShamanBoneSpiritTrueAbility = "5304d66c1a3f4cf4890b960509d3881d";
     }
 }

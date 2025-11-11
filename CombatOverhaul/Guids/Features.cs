@@ -44,6 +44,5 @@
         public const string SecondChance = "dad3bd49a6bb4c5f871a8c6888201452";
         public const string ShiningLightAditionalUse = "f1339b083cf65644ca8dbbfa836adb24";
         public const string ShiningLight = "a6da390e9deeca2468ca0786a0ba225c";
-        
     }
 }
