@@ -20,6 +20,7 @@ namespace CombatOverhaul.Blueprints.BuffsMovement
                 //BuffsGuids.WildShapeElementalAirLargeBuff,
                 //BuffsGuids.WildShapeElementalAirMediumBuff,
                 //BuffsGuids.WildShapeElementalAirSmallBuff,
+                BuffsGuids.KiSuddenSpeedBuff,
             };
 
             foreach (var id in buffs)

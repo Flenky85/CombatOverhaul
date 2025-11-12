@@ -43,5 +43,25 @@
         public const string ShamanLifeSpiritChannelEnergyResource = "027cb4deb3e668b46904dde64f5d06b1";
         public const string ShamanNatureSpiritBaseResource = "6d983585afc9fec498902fd99a4031ba";
         public const string ShadowShamanShadowsResource = "e3d68c634bc04749850a4d3bfe73bed8";
+        public const string ShamanWeaponPoolResourse = "ecf700928d1e3a647a92c095f5de1999";
+        public const string SPiritWardenChannelResource = "d4a66a2d91b7e5d469a73a4acef12de2";
+        public const string WitchDoctorChannelEnergyResource = "ac099428fc0d7934bbcff77291682202";
+        public const string ShamanPlagueSpiritBaseResource = "974e3455bdbc435292e98f6f8e97eab4";
+
+        //Hellknight
+        public const string SmiteChaosResource = "94749042eebb5e04a9fe9bfb67ae69a3";
+        public const string HellknightDisciplineCommandResource = "a25e4d6a9a041d948aa95847ab6715fe";
+        public const string HellknightDisciplineOnslaughtResource = "c46d7514c29114d4f9b6605fb888d429";
+        public const string HellKnightOrderOfTheGodclawResource = "01fc99f99d293404d87bc8b7a03ddb22";
+        public const string HellknightDisciplineTrackResource = "e866de268a9969147bdb56a4d56e6b5c";
+        public const string HellknightDisciplineWrackResource = "65cd62baa62ffdf43a86f3ce18d7f6af";
+        public const string HellKnightOrderOfTheRackResource = "553e894d17eea52429f912219ea531b2";
+
+        //Monk
+        public const string KiPowerResource = "9d9c90a9a1f52d04799294bf91c80a82";
+        public const string StunningFistResource = "d2bae584db4bf4f4f86dd9d15ae56558";
+        public const string PerfectStrikeResource = "b6c1efe47c946ab48bea52df06146f97";
+
+
     }
 }

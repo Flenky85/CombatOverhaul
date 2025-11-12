@@ -55,6 +55,9 @@ namespace CombatOverhaul.Resources
             new RegenRule(AbilitiesResourcesGuids.ShamanLifeSpiritTrueResource, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.ShamanNatureSpiritBaseResource, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.ShadowShamanShadowsResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.SPiritWardenChannelResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.WitchDoctorChannelEnergyResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.ShamanPlagueSpiritBaseResource, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.ShamanHexAuraOfPurityResource, flat: 1, percentOfMax: 0f,
                 BuffsGuids.ShamanHexAuraOfPurityBuff),
             new RegenRule(AbilitiesResourcesGuids.ShamanHexAirBarrierResource, flat: 1, percentOfMax: 0f,
@@ -67,6 +70,21 @@ namespace CombatOverhaul.Resources
                 BuffsGuids.ShamanBattleSpiritGreaterBuffControl),
             new RegenRule(AbilitiesResourcesGuids.ShamanBoneSpiritTrueResource, flat: 1, percentOfMax: 0f,
                 BuffsGuids.ShamanBoneSpiritTrueBuff),
+            new RegenRule(AbilitiesResourcesGuids.ShamanWeaponPoolResourse, flat: 1, percentOfMax: 0f,
+                BuffsGuids.ShamanWeaponEnchantDurationBuff),
+
+            //Hellknight
+            new RegenRule(AbilitiesResourcesGuids.SmiteChaosResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.HellknightDisciplineCommandResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.HellknightDisciplineOnslaughtResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.HellKnightOrderOfTheGodclawResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.HellknightDisciplineTrackResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.HellknightDisciplineWrackResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.HellKnightOrderOfTheRackResource, flat: 1, percentOfMax: 0f),
+
+            //Monk
+            new RegenRule(AbilitiesResourcesGuids.KiPowerResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.StunningFistResource, flat: 1, percentOfMax: 0f),
         };
 
         public static void TryApply(UnitEntityData unit)

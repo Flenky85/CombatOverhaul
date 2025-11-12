@@ -3,7 +3,6 @@
     internal static class AbilitiesGuids
     {
         //Commons
-        public const string CrushingBlow = "957a10e303269324dbf1a70513f37559";
         public const string SunderArmor = "fa9bfb9fd997faf49a108c4b17a00504";
 
         //Others
@@ -111,6 +110,49 @@
         public const string ShamanNatureSpiritBaseAbility = "fcfbb29dc29e9a24d99d498bd45a93e5";
         public const string ShamanBonesSpiritAnimateDead = "5d65a816392f4fde8d6b0e5fcb785341";
         public const string ShadowShamanShadowsAbility = "085b4d4d0c5747bb8b1173e914c24d20";
+        public const string ShamanWeaponSwitchAbility = "a1799c1abdf619147b4774bb433f76ad";
+        public const string SpiritWardenChannelPositiveHarm = "17e5f3fa4754bba4391c02fba1142465";
+        public const string WitchDoctorChannelEnergy = "d470eb6b3b31fde4bb44ec753de0b862";
+        public const string WitchDoctorChannelPositiveHarm = "193cef80f7287e648874d3df1eb81159";
+        public const string PlagueCaressAbilityCast = "a074d9b3d0b74cd58e6f40a7edd2777c";
+        public const string PlagueCaressAbility = "e5d4bc0e13e64231939e47d83741bbf1";
+
+        //Hellknight
+        public const string SmiteChaosAbility = "a4df3ed7ef5aa9148a69e8364ad359c5";
+        public const string HellknightCommandAbility = "97b3e5738b5db4e49a0274294d22148e";
+        public const string HellknightCommandGreaterApproach = "7e8627ca0ec19a6499b818843de0b923";
+        public const string HellknightCommandGreaterFall = "e720d9932f2f374429524c426d362942";
+        public const string HellknightCommandGreaterFlee = "e79bc406d19f69447b9dae2efc6803ab";
+        public const string HellknightCommandGreaterHalt = "1539f8f5c193179468cd957afa2a4b7a";
+        public const string HellknightDisciplineOnslaughtAbility = "56bab6ab4e7389847bbd953ed57e77eb";
+        public const string HellKnightOrderOfTheGodclawTier1Ability = "a16c18d7cdd320340986b7da211f7e01";
+        public const string HellKnightOrderOfTheGodclawTier2Ability = "dadd940dc654196409ccfc5a131761c9";
+        public const string HellKnightOrderOfTheGodclawTier3Ability = "7b765982e4e0aeb469fbb12c669d8679";
+        public const string HellknightDisciplineTrackAbility = "c1518d028ca60fd4fbfa9cb38d63c8b1";
+        public const string HellknightDisciplineTrackAbility2 = "11d5589cf924c464899f1d95a5a5848e";
+        public const string HellknightDisciplineWrackAbility = "86b0de263fd30504a9fa7be981cf140b";
+        public const string HellKnightOrderOfTheRackAbility = "2714684e63581ed41b3b13b62d648621";
+
+        //Monk
+        public const string KiExtraAttack = "7f6ea312f5dad364fa4a896d7db39fdd";
+        public const string KiBarskin = "6dc679bdc40092e4c86933c337481a0f";
+        public const string KiTrueStrike = "61da79969661b1349b042aa99623439d";
+        public const string KiSuddenSpeed = "8c98b8f3ac90fa245afe14116e48c7da";
+        public const string KiScorchingRay = "450a8d492a3342742917c3a3b357f25e";
+        public const string KiAbudantStep = "336a841704b7e2341b51f89fc9491f54";
+        public const string KiPoisonCast = "d4b5f47fbe1074d4e9127dd08f21abda";
+        public const string KiSpitVenom = "a9e6e105350562f45b41a8ebea1d8d87";
+        public const string KiRestoration = "81d2a0b908e7bb74790a6ecdf5795a69";
+        public const string KiWholenessOfBody = "f5f25b1319eef254f9197e71a969c03b";
+        public const string KiColdIceStrike = "b1a1b7d59e4b6c44cb4e622baa171eb6";
+        public const string KiShoutMonk = "6e423d7de48eef74b999ebc8a62df8b8";
+        public const string KiQuiveringPalm = "4de518e69f9b8094fb996b1599d00314";
+        public const string StunningFistAbility = "732ae7773baf15447a6737ae6547fc1e";
+        public const string StunningFistFatigueAbility = "32f92fea1ab81c843a436a49f522bfa1";
+        public const string StunningFistSickenedAbility = "c81906c75821cbe4c897fa11bdaeee01";
+        public const string CrushingBlowAbility = "957a10e303269324dbf1a70513f37559";
+        public const string DragonRoarAbility = "7e87f6e176b28d54a98b3490f8cba9db";
+        public const string PerfectStrikeAbility = "bc656f51e407aad40bc8d974f3d5b04a";
 
         //Spells
         //Level 1

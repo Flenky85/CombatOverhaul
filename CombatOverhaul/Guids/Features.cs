@@ -44,5 +44,9 @@
         public const string SecondChance = "dad3bd49a6bb4c5f871a8c6888201452";
         public const string ShiningLightAditionalUse = "f1339b083cf65644ca8dbbfa836adb24";
         public const string ShiningLight = "a6da390e9deeca2468ca0786a0ba225c";
+        //Shaman
+        public const string SpiritWardenRebukeSpirits = "302cd70a0bb2b5440abf7616b17fc4c1";
+        public const string WitchDoctorChannelPositiveFeature = "eb388d17f07e0b44d9f83ada0148cc69";
+
     }
 }
