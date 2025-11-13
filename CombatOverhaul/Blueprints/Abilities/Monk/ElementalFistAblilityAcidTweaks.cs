@@ -5,12 +5,12 @@ using Kingmaker.UnitLogic.Abilities.Components;
 namespace CombatOverhaul.Blueprints.Abilities.Monk
 {
     [AutoRegister]
-    internal static class DragonRoarAbility
+    internal static class ElementalFistAblilityAcidTweaks
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.DragonRoarAbility)
-                .EditComponent<AbilityResourceLogic>(c => { c.Amount = 6; })
+            AbilityConfigurator.For(AbilitiesGuids.ElementalFistAblilityAcid)
+                .EditComponent<AbilityResourceLogic>(c => { c.Amount = 2; })
                 .Configure();
         }
     }

@@ -10,7 +10,15 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.KiQuiveringPalm)
+            var abilites = new[]
+            {
+                AbilitiesGuids.KiQuiveringPalm,
+                AbilitiesGuids.DrunkenKiQuiveringPalm,
+                AbilitiesGuids.ScaledFistQuiveringPalm,
+            };
+            foreach (var id in abilites)
+            {
+                AbilityConfigurator.For(id)
                 .EditComponent<AbilityResourceLogic>(c => { c.Amount = 8; })
                 .SetDescriptionValue(
                     "A monk can set up vibrations within the body of another creature that can thereafter be fatal if the monk so desires. " +
@@ -18,6 +26,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                     "+ the monk's Wis modifier) or die. Using this ability is a standard action that costs 8 ki points."
                 )
                 .Configure();
+            }
         }
     }
 }

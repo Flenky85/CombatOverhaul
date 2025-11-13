@@ -20,7 +20,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                     " stunned for 1 round(until just before your next turn). A stunned character drops everything held, can't take actions, " +
                     "loses any Dexterity bonus to AC, and takes a –2 penalty to AC. Constructs, oozes, plants, undead, incorporeal creatures, " +
                     "and creatures immune to critical hits cannot be stunned.\n" +
-                    "This ability consumes 3 charges; the ability begins with 3 charges, gains 1 additional charge " +
+                    "This ability consumes 3 charges; the ability begins with 4 charges, gains 1 additional charge " +
                     "every five levels thereafter. Recover 1 charge each round."
                 )
                 .Configure();

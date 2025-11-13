@@ -10,7 +10,15 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.KiExtraAttack)
+            var abilites = new[]
+            {
+                AbilitiesGuids.KiExtraAttack,
+                AbilitiesGuids.DrunkenKiExtraAttack,
+                AbilitiesGuids.ScaledFistExtraAttack,
+            };
+            foreach (var id in abilites)
+            {
+                AbilityConfigurator.For(id)
                 .EditComponent<AbilityResourceLogic>(c => { c.Amount = 3; })
                 .SetDescriptionValue(
                     "By spending 3 point from his ki pool as a swift action, a monk can make one additional " +
@@ -19,6 +27,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                     "those from haste and similar effects."
                 )
                 .Configure();
+            }
         }
     }
 }

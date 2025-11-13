@@ -11,7 +11,15 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.KiWholenessOfBody)
+            var abilites = new[]
+            {
+                AbilitiesGuids.KiWholenessOfBody,
+                AbilitiesGuids.DrunkenKiWholenessOfBody,
+                AbilitiesGuids.ScaledFistWholenessOfBody,
+            };
+            foreach (var id in abilites)
+            {
+                AbilityConfigurator.For(id)
                 .SetActionType(UnitCommand.CommandType.Swift)
                 .SetIsFullRoundAction(false)
                 .EditComponent<AbilityResourceLogic>(c => { c.Amount = 4; })
@@ -20,6 +28,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                     "number of hit points of damage equal to his monk level."
                 )
                 .Configure();
+            }
         }
     }
 }

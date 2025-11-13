@@ -61,6 +61,8 @@
         public const string KiPowerResource = "9d9c90a9a1f52d04799294bf91c80a82";
         public const string StunningFistResource = "d2bae584db4bf4f4f86dd9d15ae56558";
         public const string PerfectStrikeResource = "b6c1efe47c946ab48bea52df06146f97";
+        public const string ElementalFistAbilityResource = "e6d2c30ef1904162acf703661130db95";
+        public const string DrunkenKiPowerResource = "fd01f3f969a04febab7877a17aebb812";
 
 
     }

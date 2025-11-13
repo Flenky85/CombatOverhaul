@@ -10,7 +10,15 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.KiSpitVenom)
+            var abilites = new[]
+            {
+                AbilitiesGuids.KiSpitVenom,
+                AbilitiesGuids.DrunkenKiSpitVenom,
+                AbilitiesGuids.ScaledFistSpitVenom,
+            };
+            foreach (var id in abilites)
+            {
+                AbilityConfigurator.For(id)
                 .EditComponent<AbilityResourceLogic>(c => { c.Amount = 4; })
                 .SetDescriptionValue(
                     "A monk with this ki power can spend 4 points from his ki pool as a standard action to infect the " +
@@ -18,6 +26,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                     "Constitution damage per round for 6 rounds."
                 )
                 .Configure();
+            }
         }
     }
 }

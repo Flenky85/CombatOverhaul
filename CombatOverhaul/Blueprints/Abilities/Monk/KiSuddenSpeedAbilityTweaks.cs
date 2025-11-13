@@ -13,7 +13,15 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.KiSuddenSpeed)
+            var abilites = new[]
+            {
+                AbilitiesGuids.KiSuddenSpeed,
+                AbilitiesGuids.DrunkenKiSuddenSpeed,
+                AbilitiesGuids.ScaledFistSuddenSpeed,
+            };
+            foreach (var id in abilites)
+            {
+                AbilityConfigurator.For(id)
                 .EditComponent<AbilityResourceLogic>(c => { c.Amount = 3; })
                 .EditComponent<AbilityEffectRunAction>(c =>
                 {
@@ -30,6 +38,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                     "himself a sudden burst of speed. This increases the monk's base land speed by 20 feet for 6 rounds."
                 )
                 .Configure();
+            }
         }
     }
 }

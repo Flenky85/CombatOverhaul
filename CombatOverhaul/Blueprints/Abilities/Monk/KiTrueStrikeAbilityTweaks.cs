@@ -11,7 +11,15 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.KiTrueStrike)
+            var abilites = new[]
+            {
+                AbilitiesGuids.KiTrueStrike,
+                AbilitiesGuids.DrunkenKiTrueStrike,
+                AbilitiesGuids.ScaledFistTrueStrike,
+            };
+            foreach (var id in abilites)
+            {
+                AbilityConfigurator.For(id)
                 .SetActionType(UnitCommand.CommandType.Swift)
                 .SetIsFullRoundAction(false)
                 .EditComponent<AbilityResourceLogic>(c => { c.Amount = 3; })
@@ -23,6 +31,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                     "concealed target."
                 )
                 .Configure();
+            }
         }
     }
 }

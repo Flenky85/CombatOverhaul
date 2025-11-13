@@ -1,11 +1,7 @@
 ﻿using BlueprintCore.Blueprints.CustomConfigurators.UnitLogic.Abilities;
 using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
-using Kingmaker.Enums;
-using Kingmaker.RuleSystem;
 using Kingmaker.UnitLogic.Abilities.Components;
-using Kingmaker.UnitLogic.Mechanics;
-using Kingmaker.UnitLogic.Mechanics.Actions;
 using Kingmaker.UnitLogic.Mechanics.Components;
 
 namespace CombatOverhaul.Blueprints.Abilities.Monk
@@ -15,7 +11,15 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.KiShoutMonk)
+            var abilites = new[]
+            {
+                AbilitiesGuids.KiShoutMonk,
+                AbilitiesGuids.DrunkenKiShout,
+                AbilitiesGuids.ScaledFistShout,
+            };
+            foreach (var id in abilites)
+            {
+                AbilityConfigurator.For(id)
                 .EditComponent<ContextRankConfig>(c =>
                 {
                     c.m_UseMax = true;
@@ -30,6 +34,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                     "the damage by half and negates the stun."
                 )
                 .Configure();
+            }
         }
     }
 }

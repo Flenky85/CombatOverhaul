@@ -11,7 +11,15 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.KiRestoration)
+            var abilites = new[]
+            {
+                AbilitiesGuids.KiRestoration,
+                AbilitiesGuids.DrunkenKiRestoration,
+                AbilitiesGuids.ScaledFistRestoration,
+            };
+            foreach (var id in abilites)
+            {
+                AbilityConfigurator.For(id)
                 .SetActionType(UnitCommand.CommandType.Swift)
                 .SetIsFullRoundAction(false)
                 .EditComponent<AbilityResourceLogic>(c => { c.Amount = 4; })
@@ -22,6 +30,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                     "drained from a single ability score.It also eliminates any fatigue or exhaustion suffered by the target."
                 )
                 .Configure();
+            }
         }
     }
 }

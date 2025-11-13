@@ -15,7 +15,15 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.KiScorchingRay)
+            var abilites = new[]
+            {
+                AbilitiesGuids.KiScorchingRay,
+                AbilitiesGuids.DrunkenKiScorchingRay,
+                AbilitiesGuids.ScaledFistScorchingRay,
+            };
+            foreach (var id in abilites)
+            {
+                AbilityConfigurator.For(id)
                 .EditComponent<AbilityEffectRunAction>(c =>
                 {
                     var deal = (ContextActionDealDamage)c.Actions.Actions[0];
@@ -45,6 +53,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                     "touch attack to hit and deals 2d8 fire damage."
                 )
                 .Configure();
+            }
         }
     }
 }

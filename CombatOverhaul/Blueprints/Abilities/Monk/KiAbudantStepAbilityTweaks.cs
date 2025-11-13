@@ -11,7 +11,15 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.KiAbudantStep)
+            var abilites = new[]
+            {               
+                AbilitiesGuids.KiAbudantStep,
+                AbilitiesGuids.DrunkenKiAbudantStep,
+                AbilitiesGuids.ScaledFistAbudantStep,
+            };
+            foreach (var id in abilites)
+            {
+                AbilityConfigurator.For(id)
                 .SetActionType(UnitCommand.CommandType.Swift)
                 .SetIsFullRoundAction(false)
                 .EditComponent<AbilityResourceLogic>(c => { c.Amount = 4; })
@@ -21,6 +29,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                     "with him when he uses this ability."
                 )
                 .Configure();
+            }
         }
     }
 }

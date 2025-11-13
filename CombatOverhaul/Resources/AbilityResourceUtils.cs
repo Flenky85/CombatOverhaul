@@ -85,6 +85,9 @@ namespace CombatOverhaul.Resources
             //Monk
             new RegenRule(AbilitiesResourcesGuids.KiPowerResource, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.StunningFistResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.PerfectStrikeResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.ElementalFistAbilityResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.DrunkenKiPowerResource, flat: 1, percentOfMax: 0f),
         };
 
         public static void TryApply(UnitEntityData unit)

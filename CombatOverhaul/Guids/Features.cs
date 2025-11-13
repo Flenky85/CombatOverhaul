@@ -47,6 +47,8 @@
         //Shaman
         public const string SpiritWardenRebukeSpirits = "302cd70a0bb2b5440abf7616b17fc4c1";
         public const string WitchDoctorChannelPositiveFeature = "eb388d17f07e0b44d9f83ada0148cc69";
+        //Monk
+        public const string MonkFastMovement = "ac18d5741dfb2f541b222e3a416c5942";
 
     }
 }

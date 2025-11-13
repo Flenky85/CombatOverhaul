@@ -13,7 +13,15 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.KiColdIceStrike)
+            var abilites = new[]
+            {
+                AbilitiesGuids.KiColdIceStrike,
+                AbilitiesGuids.DrunkenKiColdIceStrike,
+                AbilitiesGuids.ScaledFistColdIceStrike,
+            };
+            foreach (var id in abilites)
+            {
+                AbilityConfigurator.For(id)
                 .EditComponent<AbilityEffectRunAction>(c =>
                 {
                     var deal = (ContextActionDealDamage)c.Actions.Actions[0];
@@ -30,6 +38,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                     "The line deals 1d6 points of cold damage per caster level (maximum 14d8)."
                 )
                 .Configure();
+            }
         }
     }
 }

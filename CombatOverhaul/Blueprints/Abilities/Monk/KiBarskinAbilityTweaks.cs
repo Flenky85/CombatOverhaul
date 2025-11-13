@@ -14,7 +14,15 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.KiBarskin)
+            var abilites = new[]
+            {
+                AbilitiesGuids.KiBarskin,
+                AbilitiesGuids.DrunkenKiBarskin,
+                AbilitiesGuids.ScaledFistBarkskin,
+            };
+            foreach (var id in abilites)
+            {
+                AbilityConfigurator.For(id)
                 .SetActionType(UnitCommand.CommandType.Swift)
                 .SetIsFullRoundAction(false)
                 .EditComponent<AbilityEffectRunAction>(c =>
@@ -35,6 +43,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                     "by 1 for every three caster levels above 3rd, to a maximum of +5 at 12th level."
                 )
                 .Configure();
+            }
         }
     }
 }
