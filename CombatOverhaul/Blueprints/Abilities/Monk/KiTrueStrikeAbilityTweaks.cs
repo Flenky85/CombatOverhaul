@@ -16,6 +16,8 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                 AbilitiesGuids.KiTrueStrike,
                 AbilitiesGuids.DrunkenKiTrueStrike,
                 AbilitiesGuids.ScaledFistTrueStrike,
+                AbilitiesGuids.SenseiAdviceTrueStrikeSingle,
+                AbilitiesGuids.SenseiAdviceTrueStrikeMass,
             };
             foreach (var id in abilites)
             {

@@ -48,6 +48,9 @@
         public const string WitchDoctorChannelEnergyResource = "ac099428fc0d7934bbcff77291682202";
         public const string ShamanPlagueSpiritBaseResource = "974e3455bdbc435292e98f6f8e97eab4";
 
+        //Witch
+        public const string WitchHexAuraOfPurityResource = "d7b6b2797253a5c478c957ba30bede47";
+
         //Hellknight
         public const string SmiteChaosResource = "94749042eebb5e04a9fe9bfb67ae69a3";
         public const string HellknightDisciplineCommandResource = "a25e4d6a9a041d948aa95847ab6715fe";
@@ -63,6 +66,11 @@
         public const string PerfectStrikeResource = "b6c1efe47c946ab48bea52df06146f97";
         public const string ElementalFistAbilityResource = "e6d2c30ef1904162acf703661130db95";
         public const string DrunkenKiPowerResource = "fd01f3f969a04febab7877a17aebb812";
+        public const string ScaledFistPowerResource = "7d002c1025fbfe2458f1509bf7a89ce1";
+        public const string SenseiPerformanceResource = "ac5600c9642692145b7eb4553a703c1a";
+
+        //Bard
+        public const string BardicPerformanceResource = "e190ba276831b5c4fa28737e5e49e6a6";
 
 
     }

@@ -15,6 +15,8 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                 AbilitiesGuids.KiExtraAttack,
                 AbilitiesGuids.DrunkenKiExtraAttack,
                 AbilitiesGuids.ScaledFistExtraAttack,
+                AbilitiesGuids.SenseiAdviceExtraAttackSingle,
+                AbilitiesGuids.SenseiAdviceExtraAttackMass,
             };
             foreach (var id in abilites)
             {

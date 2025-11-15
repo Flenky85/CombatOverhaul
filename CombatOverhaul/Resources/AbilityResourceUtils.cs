@@ -73,6 +73,10 @@ namespace CombatOverhaul.Resources
             new RegenRule(AbilitiesResourcesGuids.ShamanWeaponPoolResourse, flat: 1, percentOfMax: 0f,
                 BuffsGuids.ShamanWeaponEnchantDurationBuff),
 
+            //Witch
+            new RegenRule(AbilitiesResourcesGuids.WitchHexAuraOfPurityResource, flat: 1, percentOfMax: 0f,
+                BuffsGuids.WitchHexAuraOfPurityBuff),
+
             //Hellknight
             new RegenRule(AbilitiesResourcesGuids.SmiteChaosResource, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.HellknightDisciplineCommandResource, flat: 1, percentOfMax: 0f),
@@ -88,6 +92,11 @@ namespace CombatOverhaul.Resources
             new RegenRule(AbilitiesResourcesGuids.PerfectStrikeResource, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.ElementalFistAbilityResource, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.DrunkenKiPowerResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.ScaledFistPowerResource, flat: 1, percentOfMax: 0f),
+            
+            //Bard
+            new RegenRule(AbilitiesResourcesGuids.SenseiPerformanceResource, flat: 1, percentOfMax: 0f,
+                BuffsGuids.InspireCourageBuff, BuffsGuids.InspireCompetenceBuff, BuffsGuids.InspireGreatnessBuff),
         };
 
         public static void TryApply(UnitEntityData unit)

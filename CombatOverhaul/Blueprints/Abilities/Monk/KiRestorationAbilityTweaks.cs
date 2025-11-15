@@ -16,6 +16,8 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                 AbilitiesGuids.KiRestoration,
                 AbilitiesGuids.DrunkenKiRestoration,
                 AbilitiesGuids.ScaledFistRestoration,
+                AbilitiesGuids.SenseiAdviceRestorationSingle,
+                AbilitiesGuids.SenseiAdviceRestorationMass,
             };
             foreach (var id in abilites)
             {

@@ -19,6 +19,8 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                 AbilitiesGuids.KiBarskin,
                 AbilitiesGuids.DrunkenKiBarskin,
                 AbilitiesGuids.ScaledFistBarkskin,
+                AbilitiesGuids.SenseiAdviceBarskinSingle,
+                AbilitiesGuids.SenseiAdviceBarskinMass,
             };
             foreach (var id in abilites)
             {

@@ -47,6 +47,10 @@
         public const string ShamanBoneSpiritTrueBuff = "c46933f0ece8ba0469f96c7d91076d27";
         public const string ShamanWeaponEnchantDurationBuff = "caf254364965b604195fdea6717aa027";
 
+        //Witch
+        public const string WitchHexAuraOfPurityBuff = "00fa5d21a0ab5474f9f3dfc8e0f6e89f";
+        public const string WitchHexHoarfrostBuff = "11a4a94204505d84e97154b2fdda234c";
+
         //Druid
         public const string WildShapeElementalAirHugeBuff = "eb52d24d6f60fc742b32fe943b919180";
         public const string WildShapeElementalAirLargeBuff = "814bc75e74f969641bf110addf076ff9";
@@ -72,6 +76,11 @@
 
         //Monk
         public const string KiSuddenSpeedBuff = "8f05a04203b4fda4fa2d29fadf16f647";
+
+        //Bard
+        public const string InspireCourageBuff = "b4027a834204042409248889cc8abf67";
+        public const string InspireCompetenceBuff = "f58e8500ebc8594499bd804b0277cdd8";
+        public const string InspireGreatnessBuff = "8618d4515685b6d4197f254b7f56a68c";
 
         //Spells
         //Level 1

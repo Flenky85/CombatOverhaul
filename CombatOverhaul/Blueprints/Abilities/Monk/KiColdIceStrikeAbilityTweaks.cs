@@ -25,7 +25,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                 .EditComponent<AbilityEffectRunAction>(c =>
                 {
                     var deal = (ContextActionDealDamage)c.Actions.Actions[0];
-                    deal.Value.DiceType = DiceType.D8;
+                    deal.Value.DiceType = DiceType.D6;
                 })
                 .EditComponent<ContextRankConfig>(cfg =>
                 {
@@ -35,7 +35,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                 .SetDescriptionValue(
                     "A monk with this ki power can spend 6 points from his ki pool as a swift action to create a " +
                     "shredding flurry of ice slivers, which blast from his hand in a line. " +
-                    "The line deals 1d6 points of cold damage per caster level (maximum 14d8)."
+                    "The line deals 1d6 points of cold damage per caster level (maximum 14d6)."
                 )
                 .Configure();
             }

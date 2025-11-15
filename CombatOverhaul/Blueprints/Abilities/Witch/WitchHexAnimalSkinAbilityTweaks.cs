@@ -3,28 +3,20 @@ using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
 using Kingmaker.RuleSystem;
 using Kingmaker.UnitLogic.Abilities.Components;
+using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Actions;
 
-namespace CombatOverhaul.Blueprints.Abilities.Monk
+namespace CombatOverhaul.Blueprints.Abilities.Witch
 {
     [AutoRegister]
-    internal static class KiSuddenSpeedAbilityTweaks
+    internal static class WitchHexAnimalSkinAbilityTweaks
     {
         public static void Register()
         {
-            var abilites = new[]
-            {
-                AbilitiesGuids.KiSuddenSpeed,
-                AbilitiesGuids.DrunkenKiSuddenSpeed,
-                AbilitiesGuids.ScaledFistSuddenSpeed,
-                AbilitiesGuids.SenseiAdviceSuddenSpeedSingle,
-                AbilitiesGuids.SenseiAdviceSuddenSpeedMass,
-            };
-            foreach (var id in abilites)
-            {
-                AbilityConfigurator.For(id)
-                .EditComponent<AbilityResourceLogic>(c => { c.Amount = 3; })
+            AbilityConfigurator.For(AbilitiesGuids.WitchHexAnimalSkinAbility)
+                .SetActionType(UnitCommand.CommandType.Swift)
+                .SetIsFullRoundAction(false)
                 .EditComponent<AbilityEffectRunAction>(c =>
                 {
                     var apply = (ContextActionApplyBuff)c.Actions.Actions[0];
@@ -32,15 +24,9 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                     apply.DurationValue.DiceType = DiceType.Zero;
                     apply.DurationValue.DiceCountValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 0 };
                     apply.DurationValue.BonusValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 6 };
-                    apply.DurationValue.m_IsExtendable = false;
                 })
                 .SetDuration6RoundsShared()
-                .SetDescriptionValue(
-                    "A monk with this ki power can spend 3 point from his ki pool as a swift action to grant " +
-                    "himself a sudden burst of speed. This increases the monk's base land speed by 20 feet for 6 rounds."
-                )
                 .Configure();
-            }
         }
     }
 }

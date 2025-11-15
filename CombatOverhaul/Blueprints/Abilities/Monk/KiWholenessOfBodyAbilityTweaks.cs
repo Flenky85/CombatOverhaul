@@ -16,6 +16,8 @@ namespace CombatOverhaul.Blueprints.Abilities.Monk
                 AbilitiesGuids.KiWholenessOfBody,
                 AbilitiesGuids.DrunkenKiWholenessOfBody,
                 AbilitiesGuids.ScaledFistWholenessOfBody,
+                AbilitiesGuids.SenseiAdviceWholenessOfBodySingle,
+                AbilitiesGuids.SenseiAdviceWholenessOfBodyMass,
             };
             foreach (var id in abilites)
             {

@@ -117,6 +117,43 @@
         public const string PlagueCaressAbilityCast = "a074d9b3d0b74cd58e6f40a7edd2777c";
         public const string PlagueCaressAbility = "e5d4bc0e13e64231939e47d83741bbf1";
 
+        //Witch
+        public const string WitchHexAmelioratingBaseAbility = "48f55c7834a2fe845928337f091a0932";
+        public const string WitchHexAmelioratingDazzleAbility = "c9097a1d0685f2f468ab63c1138815ad";
+        public const string WitchHexAmelioratingFatuguedAbility = "b1505c6512a0f2c4581dfa6af14e9d5c";
+        public const string WitchHexAmelioratingShakenAbility = "43738e1ea3c328549bcdd81883841e05";
+        public const string WitchHexAmelioratingSickenedAbility = "e98cf086294d6134bb76d35e090cb059";
+        public const string WitchHexEvilEyeAbility = "d25c72a92dd8d38449a6a371ef36413e";
+        public const string WitchHexEvilEyeACAbility = "899b08dfc31868e4cb2c6287df9d355c";
+        public const string WitchHexEvilEyeAttackAbility = "954650e8a7542e642819716bb78bee86";
+        public const string WitchHexEvilEyeSavesAbility = "ba52aed3017521a4abafcbae4ee06d10";
+        public const string WitchHexFortuneAbility = "eaf7077a8ff35644883df6d4f7b2084c";
+        public const string WitchHexHealingAbility = "ed4fbfcdb0f5dcb41b76d27ed00701af";
+        public const string WitchHexMisfortuneAbility = "46cf5c995494e784c8d9a1696f9c61a7";
+        public const string WitchHexProtectiveLuckAbility = "e7ecd11651b4df34897f33271a8d1cfc";
+        public const string WitchHexWardAbility = "5adb5a0650f5b2049bab1afe822bd3bd";
+        public const string WitchHexDeliciousFrightAbility = "e7489733ac7ccca40917d9364b406adb";
+        public const string WitchHexAnimalSkinAbility = "3cae80cecdc2fb84b86587032132d48f";
+        public const string WitchHexAnimalServantAbility = "4a511e1dfeec46c4b867bf61b15eae2b";
+        public const string WitchHexDeathCurseAbility = "d560ab2a1b0613649833a0d92d6cfc6b";
+        public const string WitchHexVulnerabilityCurseAbility = "8f0eb58c2d6aeab4e8523ec85b4b2bc7";
+        public const string WitchHexLayToRestAbility = "1bb5466b9bfcb5e47b9f667dad5784f9";
+        public const string WitchHexHoarfrostAbility = "7244a24f0c186ce4b8a89fd26feded50";
+        public const string WitchHexRegenerativeSinewAbility = "40d201c6fbbb46e46a63dec8508de65a";
+        public const string WitchHexRegenerativeSinewFastHealingAbility = "b5c4c51cc9993b14b9dc0f0c54199d09";
+        public const string WitchHexRegenerativeSinewRestorationAbility = "0a6effb356101cc46aa0bed8c3ab6fd4";
+        public const string WitchHexAgonyAbility = "0d38e470e350ce34f869c20002d45763";
+        public const string WitchHexBeastsGiftAbility = "b5816eb8a1c295b42b1edb0b9f48dfd8";
+        public const string WitchHexBeastsGiftBiteAbility = "fcaaf1f25440a8f40ae424c7708e9a0f";
+        public const string WitchHexBeastsGiftClawAbility = "3108e18055b46b84f8a57898ad5ad075";
+        public const string WitchHexMajorHealingAbility = "3408c351753aa9049af25af31ebef624";
+        public const string WitchHexMajorAmelioratingBaseAbility = "5fa471f18a914f743b1200b7520c215d";
+        public const string WitchHexMajorAmelioratingBlindedAbility = "e946e3fdc42ea65408daee0f029b4100";
+        public const string WitchHexMajorAmelioratingCurseAbility = "0e8f3d24a2cea644e91273f6c551152d";
+        public const string WitchHexMajorAmelioratingDiseaseAbility = "05bba992bea833349a246fd47042748c";
+        public const string WitchHexMajorAmelioratingPoisonAbility = "1411baa7c0e58f547b76b6b13e5443f3";
+        public const string WitchHexLifeGiverAbility = "cedc4959ab311d548881844eecddf57a";
+
         //Hellknight
         public const string SmiteChaosAbility = "a4df3ed7ef5aa9148a69e8364ad359c5";
         public const string HellknightCommandAbility = "97b3e5738b5db4e49a0274294d22148e";
@@ -190,6 +227,45 @@
         public const string DrunkenTechniqueFirewaterBreathAbility = "8b8918498ead4b2d90cfc6f2671fdbbe";
         public const string DrunkenPowerAbility1d8 = "753540142c0344c187c62f28dadd7d9e";
         public const string DrunkenTechniqueCaydenTrickAbility = "399e24f473af44698425b3ef45c8de75";
+        public const string ScaledFistDraconicFuryAcidAbility = "0ad72a265688d3c40bc7c967801e056f";
+        public const string ScaledFistDraconicFuryElectricityAbility = "e5d62d1a0deea44489c659c63d5b2682";
+        public const string ScaledFistDraconicFuryFireAbility = "a405b9c06947ac24f84ec044e869919c";
+        public const string ScaledFistDraconicFuryColdAbility = "9ae37b34f8d9dbc42a9651fc16465c99";
+        public const string ScaledFistBlackBreathWeaponAbility = "45fe18c8dcd11e54e8499646b9389029";
+        public const string ScaledFistBlueBreathWeaponAbility = "9bfed63e0b9bfa1478c521f0527fb772";
+        public const string ScaledFistBrassBreathWeaponAbility = "f0bd350c96848364d8c8f7d3167499e9";
+        public const string ScaledFistBronzeBreathWeaponAbility = "38b32df1eb0aa45409b114ed345a1631";
+        public const string ScaledFistCopperBreathWeaponAbility = "0019e0810a828a049b4c37a7effa2385";
+        public const string ScaledFistGoldBreathWeaponAbility = "625958680ce6de844a996bde77c99e5b";
+        public const string ScaledFistGreenBreathWeaponAbility = "cf128ce20d9ebdc46804e471b24ce71c";
+        public const string ScaledFistRedBreathWeaponAbility = "aec48af6d05577248a91b69ed843e4cf";
+        public const string ScaledFistSilverBreathWeaponAbility = "b08e7d0bdd3830f4f8292668b1ffac2e";
+        public const string ScaledFistWhiteBreathWeaponAbility = "5a2accb17ffde8b4dafb8c8f7e00b711";
+        public const string SenseiAdviceSuddenSpeedSingle = "62071f9b0fada4f459a96ee0457745a3";
+        public const string SenseiAdviceExtraAttackSingle = "7c4ed296557c0414dbace78fcc415e46";
+        public const string SenseiAdviceBarskinSingle = "fd268041665a99f469b979046a463e2d";
+        public const string SenseiAdviceTrueStrikeSingle = "9615ccc21a817e8418062a49eae51b8b";
+        public const string SenseiAdviceWholenessOfBodySingle = "c6484ec9a9d805a44a33281fd4652998";
+        public const string SenseiAdviceRestorationSingle = "8ddfed5bc95560e4d83756c8e5e2c33d";
+        public const string SenseiAdviceEvasionSingle = "e01a15767bdfb334b828a5a4298679a6";
+        public const string SenseiAdviceFastMovementSingle = "e10a3ddcacc8370419022c89df3d9e80";
+        public const string SenseiAdvicePurityOfBodySingle = "194910d95cdcc9b4b987c368a6467cc6";
+        public const string SenseiAdviceImprovedEvasionSingle = "ddfec2580a9fda1458efe75fbbd1a9a2";
+        public const string SenseiAdviceEvasionMass = "dacf302d91f32234aba6b95f35e39ba5";
+        public const string SenseiAdviceFastMovementMass = "6c2f17e3aecf4304bb1d3bc60cc9d9f3";
+        public const string SenseiAdvicePurityOfBodyMass = "502d92213efc1dd4a8a322ce6d7a95b5";
+        public const string SenseiAdviceBarskinMass = "7e82395f05961e14cbc14a75d3a94f0f";
+        public const string SenseiAdviceDiamondBodyMass = "59ff834c7b4452a48ba8853f0e235f2c";
+        public const string SenseiAdviceDiamondSoulMass = "e7e4c7a4368a2ca40b6a89d4c4a1f275";
+        public const string SenseiAdviceRestorationMass = "0b129e96521e54e44b061df1ddb3b486";
+        public const string SenseiAdviceSuddenSpeedMass = "af6aa2b6398b8a749898fd71175d73f2";
+        public const string SenseiAdviceTrueStrikeMass = "6f4bc76e64e557745a1fb04d958a65fe";
+        public const string SenseiAdviceWholenessOfBodyMass = "dff4b9cb0b24c9842a971c4176088f11";
+        public const string SenseiAdviceExtraAttackMass = "66a86834a98b15544b5c1b66328083a8";
+        public const string SoheiKiWeaponAbility = "6dc830b2210ec944aa407fd024b3d3b3";
+        public const string SoheiMonasticMountAbility = "15029d70cc507ae4cb480a7092775302";
+        public const string BonesOfStoneAbility = "282411eed5f0fbe4eb4c1b01cc80c0a5";
+        public const string SoulOfStoneAbility = "b53ee7514922ab84581063ab3bb4ed2a";
 
         //Spells
         //Level 1
@@ -264,6 +340,7 @@
         public const string VeilOfHeavenSwift = "e26b8cd66e11d354f9509e0e7ee0089e";
         public const string VeilOfPositiveEnergy = "6bb0533cd457d1f4eaccc73ab7680fb2";
         public const string VeilOfPositiveEnergySwift = "02a98da52a022534b94604dfb06e6fe9";
+        public const string IllOmen = "ca577309cedc4f1daf6fe5795fb2619b";
         //Level 2
         public const string BoneFists = "0da2046b4517427bb9b2e304ea6342bf";
         public const string MortalTerror = "8bc127ed66044685957e54f19d8dbdb7";
@@ -360,6 +437,7 @@
         public const string ProtectionFromChaosEvilCommunal = "3026de673d4d8fe45baf40e0b5edd718";
         public const string ProtectionFromChaosCommunalChaosEvil = "b6da529f710491b4fa789a5838c1ae8f";
         public const string ProtectionFromEvilCommunalChaosEvil = "224f03e74d1dd4648a81242c01e65f41";
+        public const string Fester = "2dbe271c979d9104c8e2e6b42e208e32";
         //Level 3
         public const string AnimateDeadLesser = "57fcf8016cf04da4a8b33d2add14de7e";
         public const string BatteringBlast = "0a2f7c6aa81bc6548ac7780d8b70bcbc";
@@ -720,6 +798,7 @@
         public const string InspiringRecoveryBurst = "2763a0d6d73dd564895887eb0fd3d147";
         public const string PoisonBreath = "b5be90707c17a9643b90d90b7c4096e2";
         public const string PrimalRegression = "07d577a74441a3a44890e3006efcf604";
+        public const string FesterMass = "52b8b14360a87104482b2735c7fc8606";
         //Level7
         public const string Repulsion = "cb55ae9517a444548d3457f91f829679";
         public const string CausticEruption = "8c29e953190cc67429dc9c701b16b7c2";

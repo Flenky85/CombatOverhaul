@@ -3,16 +3,16 @@ using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
 using Kingmaker.UnitLogic.Commands.Base;
 
-namespace CombatOverhaul.Blueprints.Abilities.Shaman
+namespace CombatOverhaul.Blueprints.Abilities.Witch
 {
     [AutoRegister]
-    internal static class ShamanHexHealingAbilityTweaks
+    internal static class WitchHexHealingAbilityTweaks
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.ShamanHexHealingAbility)
+            AbilityConfigurator.For(AbilitiesGuids.WitchHexHealingAbility)
                 .SetDescriptionValue(
-                    "This acts as a cure light wounds spell, using the shaman's caster level. " +
+                    "This acts as a cure light wounds spell, using the witch's caster level. " +
                     "Once a creature has benefited from the healing hex, it cannot benefit from " +
                     "it again on new combat. At 5th level, this hex acts like cure moderate wounds."
                 )

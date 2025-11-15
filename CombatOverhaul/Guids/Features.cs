@@ -49,6 +49,10 @@
         public const string WitchDoctorChannelPositiveFeature = "eb388d17f07e0b44d9f83ada0148cc69";
         //Monk
         public const string MonkFastMovement = "ac18d5741dfb2f541b222e3a416c5942";
+        public const string SenseiMysticWisdom = "4356b5d6d34489747bba68d43924a857";
+        public const string SenseiAdvice = "aed2367e51118bf4c846dc118d72e153";
+        //Bard
+        public const string BardicPerformanceResourceFact = "b92bfc201c6a79e49afd0b5cfbfc269f";
 
     }
 }
