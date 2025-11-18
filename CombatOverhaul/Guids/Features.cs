@@ -47,12 +47,26 @@
         //Shaman
         public const string SpiritWardenRebukeSpirits = "302cd70a0bb2b5440abf7616b17fc4c1";
         public const string WitchDoctorChannelPositiveFeature = "eb388d17f07e0b44d9f83ada0148cc69";
+        //Witch
+        public const string HagboundWitchVileCurseFeature = "1e205c95881c20946bd70c4f993040ec";
+        public const string HexChannelerChannelSelection = "c464ab12993745c44a7d21f386562cb6";
+        public const string SunderHopeFeature = "be778d85e96d4c21860a301f4153ba3f";
+        //Wizard
+        public const string UniversalistSchoolExtendReachFeature = "541bb8d595532ec419343b7a93cdb449";
+        public const string AbjurationResistanceFeature = "1abe070e7a00ddd48b8a141d71f79e70";
+        public const string ElementalWallFeature = "de877714f4d224949b403205e8582de4";
+        public const string TransmutationSchoolChangeShapeFeatureAdd = "de877714f4d224949b403205e8582de4";
+        public const string NecromancySchoolGreaterFeature = "82371e899df830e4bb955429d89b755c";
+        public const string ArcaneBombsAcidFeature = "e34406825b1d5b145a12af91f1844df3";
+        //Oracle
+        public const string LameCurseFeatureLevel1 = "077dd0c839f5dfd498cb2e34835fb06d";
         //Monk
         public const string MonkFastMovement = "ac18d5741dfb2f541b222e3a416c5942";
         public const string SenseiMysticWisdom = "4356b5d6d34489747bba68d43924a857";
         public const string SenseiAdvice = "aed2367e51118bf4c846dc118d72e153";
         //Bard
         public const string BardicPerformanceResourceFact = "b92bfc201c6a79e49afd0b5cfbfc269f";
+
 
     }
 }

@@ -74,8 +74,33 @@ namespace CombatOverhaul.Resources
                 BuffsGuids.ShamanWeaponEnchantDurationBuff),
 
             //Witch
+            new RegenRule(AbilitiesResourcesGuids.HexChannelerChannelResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.LeyLineGuardianConduitSurgeResource, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.WitchHexAuraOfPurityResource, flat: 1, percentOfMax: 0f,
                 BuffsGuids.WitchHexAuraOfPurityBuff),
+
+            //Wizard
+            new RegenRule(AbilitiesResourcesGuids.UniversalistSchoolGreaterResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.ConjurationDimensionalStepsResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.ElementalWallResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.NecromancySchoolTurnUndeadResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.ArcaneBombsResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.ProtectiveWardResource, flat: 1, percentOfMax: 0f,
+                BuffsGuids.ProtectiveWardBuff),
+            new RegenRule(AbilitiesResourcesGuids.NecromancySchoolGreaterResource, flat: 1, percentOfMax: 0f,
+                BuffsGuids.NecromancySchoolGreaterBuff),
+            new RegenRule(AbilitiesResourcesGuids.IllusionSchoolGreaterResource, flat: 1, percentOfMax: 0f,
+                BuffsGuids.InvisibilityGreaterBuff),
+            new RegenRule(AbilitiesResourcesGuids.DivinationSchoolGreaterResource, flat: 1, percentOfMax: 0f,
+                BuffsGuids.DivinationSchoolForetellAidBuff, BuffsGuids.DivinationSchoolForetellHinderBuff),
+            new RegenRule(AbilitiesResourcesGuids.EnchantmentSchoolGreaterResource, flat: 1, percentOfMax: 0f,
+                BuffsGuids.EnchantmentSchoolGreaterBuff),
+            new RegenRule(AbilitiesResourcesGuids.TransmutationSchoolChangeShapeResource, flat: 1, percentOfMax: 0f,
+                BuffsGuids.TransmutationSchoolChangeShapeLeopardBuffLevel1, BuffsGuids.TransmutationSchoolChangeShapeElementalAirBuffLevel1, 
+                BuffsGuids.TransmutationSchoolChangeShapeElementalEarthBuffLevel1, BuffsGuids.TransmutationSchoolChangeShapeElementalFireBuffLevel1, 
+                BuffsGuids.TransmutationSchoolChangeShapeElementalWaterBuffLevel1, BuffsGuids.TransmutationSchoolChangeShapeBearBuffLevel2,
+                BuffsGuids.TransmutationSchoolChangeShapeElementalAirBuffLevel2, BuffsGuids.TransmutationSchoolChangeShapeElementalEarthBuffLevel2, 
+                BuffsGuids.TransmutationSchoolChangeShapeElementalFireBuffLevel2, BuffsGuids.TransmutationSchoolChangeShapeElementalWaterBuffLevel2),
 
             //Hellknight
             new RegenRule(AbilitiesResourcesGuids.SmiteChaosResource, flat: 1, percentOfMax: 0f),

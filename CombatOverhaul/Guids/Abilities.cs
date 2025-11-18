@@ -153,6 +153,49 @@
         public const string WitchHexMajorAmelioratingDiseaseAbility = "05bba992bea833349a246fd47042748c";
         public const string WitchHexMajorAmelioratingPoisonAbility = "1411baa7c0e58f547b76b6b13e5443f3";
         public const string WitchHexLifeGiverAbility = "cedc4959ab311d548881844eecddf57a";
+        public const string LeyLineGuardianConduitSurgeAbility = "19cc043b11226f44ba959aedc68a5a74";
+        public const string HexChannelerChannelNegativeEnergy = "fb2df4978dd4fd745a7aaecfd1068512";
+        public const string HexChannelerChannelNegativeHeal = "b0ad6982a41ed5245bd622c276d88580";
+        public const string HexChannelerChannelEnergy = "75edd403e824aa048ab5d4827b803b08";
+        public const string HexChannelerChannelPositiveHarm = "fb917ad147d846e42ad22c8e14f44b79";
+
+        //Wizard
+        public const string UniversalistSchoolBaseAbility = "864146bb3e41e3644b18e1ee4cc26acf";
+        public const string UniversalistSchoolExtendAbility = "ab22d619d0987f24cbf228c89e348c70";
+        public const string UniversalistSchoolReachAbility = "e019cc29aee65ee44ab9a0c5d8182dad";
+        public const string UniversalistSchoolEmpowerAbility = "49bb78da6f5e2d34a8ddd4a0d2128970";
+        public const string UniversalistSchoolMaximizeAbility = "46967f365fb3ef54da4bd37df1e9fe2b";
+        public const string UniversalistSchoolQuickenAbility = "e2e134c6fc3fed24f8ddca2c34b955be";
+        public const string ProtectiveWardAbility = "2433d465095a9984398a0482b1af0877";
+        public const string ConjurationAcidDartAbility = "697291ff99d3fbb448be5b60b5f2a30c";
+        public const string ConjurationDimensionalStepsAbility = "ec7a2151c5a3fd145810da51c0e82041";
+        public const string DivinationSchoolBaseAbilityCast = "0997652c1d8eb164caae8a462401a25d";
+        public const string EnchantmentSchoolBaseAbilityCast = "7b3cb9ad9ef68cd43837c6db054f7d9f";
+        public const string ForceMissileAbility = "3d55cc710cc497843bb51788057cd93f";
+        public const string ElementalWallAcidAbility = "1e418794638cf95409f6e33c8c3dbe1a";
+        public const string ElementalWallColdAbility = "e377feb2ecec95e478e0565da621ea55";
+        public const string ElementalWallElectricityAbility = "8ba05ef69b06ea04c9430427a95685f6";
+        public const string ElementalWallFireAbility = "77d255c06e4c6a745b807400793cf7b1";
+        public const string TelekineticFist = "810992c76efdde84db707a0444cf9a1c";
+        public const string IllusionSchoolBaseAbility = "9b4d07751dd104243a94b495c571c9dd";
+        public const string IllusionSchoolGreaterAbility = "8ba47f5bfecc69347b89d677fa0ccaf1";
+        public const string TurnUndeadNecromancy = "71b8898b1d26d654b9a3eeac87e3e2f8";
+        public const string NecromancySchoolBaseAbility = "39af648796b7b9b4ab6321898ebb5fff";
+        public const string SpellblastBomb1 = "92c85c3d81852394685068a1d6fcc8e0";
+        public const string SpellblastBomb2 = "f55155e1505beb04c9ea957fc91a416b";
+        public const string SpellblastBomb3 = "9d489e7faaae5a44e9a6d56c97c7ff3c";
+        public const string SpellblastBomb4 = "2625c63697790a54db505f03f51f00ed";
+        public const string SpellblastBomb5 = "530bca5204f72764090885777f23709e";
+        public const string SpellblastBomb6 = "01b4c4a24b943b0488a38202f0cb4dc3";
+        public const string SpellblastBomb7 = "1b8dc9b20efda4b46ae787917671088d";
+        public const string SpellblastBomb8 = "7f684d5998dc13246b1002ec16d717ed";
+        public const string SpellblastBomb9 = "0c5873e1c95ac5e4a9bf2d801b81efcd";
+        public const string ArcaneBombsAcidAbility = "03b305962d8a9c2478deb76e1015fc9a";
+        public const string ArcaneBombsColdAbility = "9e305d3c312fa0f4296e3174f0a7cfd8";
+        public const string ArcaneBombsElectricityAbility = "feff1b48642214c45a6cb13f683f3552";
+        public const string ArcaneBombsFireAbility = "cd65a240f32aa7441a0f10b1a86ed520";
+        public const string SummonShadowsAbility = "3d5f60d501a740fb95879e2894265c7a";
+        public const string ShadowFormAbility = "23dda4dbf20844cd92e63ee973404eab";
 
         //Hellknight
         public const string SmiteChaosAbility = "a4df3ed7ef5aa9148a69e8364ad359c5";

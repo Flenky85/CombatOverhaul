@@ -50,6 +50,21 @@
 
         //Witch
         public const string WitchHexAuraOfPurityResource = "d7b6b2797253a5c478c957ba30bede47";
+        public const string HexChannelerChannelResource = "707f3cc2e103a8d40ab79ff49664b2bf";
+        public const string LeyLineGuardianConduitSurgeResource = "79a4f5ad64f30954cb79ebf878ee1fd3";
+
+        //Wizard
+        public const string UniversalistSchoolGreaterResource = "42fd5b455f986f94293b15b13f38d6a5";
+        public const string ProtectiveWardResource = "870a9cc29d8d0e945b7fbd7926378197";
+        public const string ConjurationDimensionalStepsResource = "43418252eaf4ac0478e93f32d13f6f7c";
+        public const string DivinationSchoolGreaterResource = "2aa6b409a9fcb794d80719f038abe665";
+        public const string EnchantmentSchoolGreaterResource = "8b3e3b9126ba1734fb7b52bdfa4aa05a";
+        public const string ElementalWallResource = "88f0ef09ac10fd9478d632a41d3c244f";
+        public const string TransmutationSchoolChangeShapeResource = "bf214cd0561aebb43a789ff83f12928b";
+        public const string IllusionSchoolGreaterResource = "ccd9239740802bd4eab4cb751467205d";
+        public const string NecromancySchoolTurnUndeadResource = "16394ff73175b5745957750040a2c99e";
+        public const string NecromancySchoolGreaterResource = "1f8d0149a43e01242bd7a7351bd1d3e9";
+        public const string ArcaneBombsResource = "95b3e53bac4ae234a86868ca9820235b";
 
         //Hellknight
         public const string SmiteChaosResource = "94749042eebb5e04a9fe9bfb67ae69a3";

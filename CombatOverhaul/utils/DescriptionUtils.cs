@@ -74,6 +74,15 @@ namespace CombatOverhaul.Utils
                 PutResolved(bp.m_Description, v);
             });
         }
+        public static ProgressionConfigurator SetDescriptionValue(
+            this ProgressionConfigurator cfg, string text, bool tagEncyclopedia = true)
+        {
+            return cfg.OnConfigure(bp =>
+            {
+                var v = Process(text, tagEncyclopedia);
+                PutResolved(bp.m_Description, v);
+            });
+        }
 
         public static AbilityConfigurator SetDurationValue(
             this AbilityConfigurator cfg, string text, bool tagEncyclopedia = false)

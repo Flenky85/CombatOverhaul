@@ -51,6 +51,24 @@
         public const string WitchHexAuraOfPurityBuff = "00fa5d21a0ab5474f9f3dfc8e0f6e89f";
         public const string WitchHexHoarfrostBuff = "11a4a94204505d84e97154b2fdda234c";
 
+        //Wizard
+        public const string ProtectiveWardBuff = "7567cd41c56f96d4c9554e4bdbef6438";
+        public const string DivinationSchoolForetellAidBuff = "faf473e3a977fd4428cd3f1a526346d2";
+        public const string DivinationSchoolForetellHinderBuff = "8b14b290c3282a54398d799e52ad7a5a";
+        public const string EnchantmentSchoolGreaterBuff = "8b3e3b9126ba1734fb7b52bdfa4aa05a";
+        public const string TransmutationSchoolChangeShapeLeopardBuffLevel1 = "87470b99cdc206147a100112a7dc4e3c";
+        public const string TransmutationSchoolChangeShapeElementalAirBuffLevel1 = "3689b69a30d6d7c48b90e28228fb7b7c";
+        public const string TransmutationSchoolChangeShapeElementalEarthBuffLevel1 = "073918bcdc83a82418af6816d719ca7c";
+        public const string TransmutationSchoolChangeShapeElementalFireBuffLevel1 = "51107ed2162aa8542834362c3a10c74c";
+        public const string TransmutationSchoolChangeShapeElementalWaterBuffLevel1 = "a543c3c5e909af8479044c34d0f3f33b";
+        public const string TransmutationSchoolChangeShapeBearBuffLevel2 = "a5d38d44a92ff4a44b9583d1d196ba64";
+        public const string TransmutationSchoolChangeShapeElementalAirBuffLevel2 = "2b2060036a20108448299f3ee2b14015";
+        public const string TransmutationSchoolChangeShapeElementalEarthBuffLevel2 = "66906f2ff64be8e4eb8f87b04501b7c4";
+        public const string TransmutationSchoolChangeShapeElementalFireBuffLevel2 = "8c026422d0be0684fa2ba0986fa901db";
+        public const string TransmutationSchoolChangeShapeElementalWaterBuffLevel2 = "872961d85b9cd9444b57560aeeb6e383";
+        public const string InvisibilityGreaterBuff = "e6b35473a237a6045969253beb09777c";
+        public const string NecromancySchoolGreaterBuff = "750e4a94522ea4d43a86eb9c648f39ff";
+
         //Druid
         public const string WildShapeElementalAirHugeBuff = "eb52d24d6f60fc742b32fe943b919180";
         public const string WildShapeElementalAirLargeBuff = "814bc75e74f969641bf110addf076ff9";
