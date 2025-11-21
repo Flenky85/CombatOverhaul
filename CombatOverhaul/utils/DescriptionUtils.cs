@@ -109,6 +109,7 @@ namespace CombatOverhaul.Utils
         private const string Key_Duration_6Rounds = "CO.Duration.6Rounds";
         private const string Key_Duration_4Rounds = "CO.Duration.4Rounds";
         private const string Key_Duration_3Rounds = "CO.Duration.3Rounds";
+        private const string Key_Duration_1Rounds = "CO.Duration.1Rounds";
         private const string Key_Duration_3d3Rounds = "CO.Duration.3d3Rounds";
         private const string Key_Duration_2d4Rounds = "CO.Duration.2d4Rounds";
         private const string Key_Duration_2d3Rounds = "CO.Duration.2d3Rounds";
@@ -150,6 +151,13 @@ namespace CombatOverhaul.Utils
             return cfg.OnConfigure(bp =>
             {
                 bp.LocalizedDuration = LsFromKey(Key_Duration_3Rounds, "3 rounds");
+            });
+        }
+        public static AbilityConfigurator SetDuration1RoundsShared(this AbilityConfigurator cfg)
+        {
+            return cfg.OnConfigure(bp =>
+            {
+                bp.LocalizedDuration = LsFromKey(Key_Duration_1Rounds, "1 rounds");
             });
         }
         public static AbilityConfigurator SetDuration3d3RoundsShared(this AbilityConfigurator cfg)

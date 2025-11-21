@@ -2,6 +2,9 @@
 {
     internal static class AbilityAreaEffectGuids
     {
+        //Cleric
+        public const string RuneDomainGreaterArea = "e26de8b0164db23458eb64c21fac2846";
+
         //Spells
         //Level3
         public const string SpikeGrowthArea = "16e0e4c6a16f68c49832340b93706499";

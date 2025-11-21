@@ -66,6 +66,33 @@
         public const string NecromancySchoolGreaterResource = "1f8d0149a43e01242bd7a7351bd1d3e9";
         public const string ArcaneBombsResource = "95b3e53bac4ae234a86868ca9820235b";
 
+        //Cleric
+        public const string ChannelEnergyResource = "5e2bba3e07c37be42909a12945c27de7";
+        public const string CommunityDomainGreaterResource = "d10996c87b2aa3942bf65167436fa228";
+        public const string ArtificeDomainBaseResource = "d2c3c7c7efbc71c438dc4e0c3f216407";
+        public const string ChaosDomainGreaterResource = "c55c470a0262f3f4993e3618e4fd5114";
+        public const string GoodDomainGreaterResource = "8d45a527ce4d3ec47853faaa972c2362";
+        public const string GloryDomainGreaterResource = "7840479c243f05244a3dc9ac9fc43182";
+        public const string CharmDomainGreaterResource = "d49f0e3460fd52d4e9660a8ce52142a0";
+        public const string DarknessDomainGreaterResource = "55efb511a2290b94bb218e2d56a51f1f";
+        public const string DestructionDomainGreaterResource = "98f07eabe9cb4f34cb1127de625f4bee";
+        public const string EvilDomainGreaterResource = "db334ce9b929481458819f1ffd7e930e";
+        public const string KnowledgeDomainGreaterResource = "34f0a288ff5106645a88440b800686ca";
+        public const string LawDomainGreaterResource = "de7945c4cc6a0a24790941d7e2b85838";
+        public const string LiberationDomainGreaterResource = "d19e900012a69954c93f3b7533bc3911";
+        public const string LuckDomainGreaterResource = "b209ca75fbea5144c9d73ecb29055a08";
+        public const string MadnessDomainGreaterResource = "3289ee86c57f6134d81770865c315e8b";
+        public const string MagicDomainGreaterResource = "3aecc0c5d17390443b30774309145854";
+        public const string NobilityDomainGreaterResource = "cb3efe82596c908418c0dba4ef6f4210";
+        public const string PlantDomainGreaterResource = "881d696940ec99041aefafd5b2fda189";
+        public const string ProtectionDomainGreaterResource = "f3d878f77d0ee854b864f5ea1c80e752";
+        public const string ReposeDomainGreaterResource = "aefe627a3a2f8d94ea9d2b3961261282";
+        public const string RuneDomainGreaterResource = "f179b35a846d87b45bf4322752bc6d17";
+        public const string SunDomainGreaterResource = "6bea29e2257fa6742923ba757435aba8";
+        public const string TravelDomainGreaterResource = "657bfb21544642e4f8aef532c9f04ac2";
+        public const string TrickeryDomainGreaterResource = "520ad6381e09f8349a237ac4b247082e";
+        public const string WeatherDomainGreaterResource = "5c88b557e79eaee41a4190712b178970";
+
         //Hellknight
         public const string SmiteChaosResource = "94749042eebb5e04a9fe9bfb67ae69a3";
         public const string HellknightDisciplineCommandResource = "a25e4d6a9a041d948aa95847ab6715fe";

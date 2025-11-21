@@ -58,6 +58,9 @@
         public const string TransmutationSchoolChangeShapeFeatureAdd = "de877714f4d224949b403205e8582de4";
         public const string NecromancySchoolGreaterFeature = "82371e899df830e4bb955429d89b755c";
         public const string ArcaneBombsAcidFeature = "e34406825b1d5b145a12af91f1844df3";
+        //Clreic
+        public const string ChannelEnergyFeature = "a79013ff4bcd4864cb669622a29ddafb";
+        public const string ChannelNegativeFeature = "3adb2c906e031ee41a01bfc1d5fb7eea";
         //Oracle
         public const string LameCurseFeatureLevel1 = "077dd0c839f5dfd498cb2e34835fb06d";
         //Monk

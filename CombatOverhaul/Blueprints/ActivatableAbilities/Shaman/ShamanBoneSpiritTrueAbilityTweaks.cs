@@ -3,7 +3,7 @@ using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
 using Kingmaker.UnitLogic.Commands.Base;
 
-namespace CombatOverhaul.Blueprints.ActivatableAbilities
+namespace CombatOverhaul.Blueprints.ActivatableAbilities.Shaman
 {
     [AutoRegister]
     internal static class ShamanBoneSpiritTrueAbilityTweaks

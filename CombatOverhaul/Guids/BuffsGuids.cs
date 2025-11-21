@@ -69,6 +69,17 @@
         public const string InvisibilityGreaterBuff = "e6b35473a237a6045969253beb09777c";
         public const string NecromancySchoolGreaterBuff = "750e4a94522ea4d43a86eb9c648f39ff";
 
+        //Cleric
+        public const string ArtificeDomainBaseBuff = "af772f43b1e59e043968796b6b534057";
+        public const string DeathDomainBaseBuff = "86b2c4ce787ea2e46986869b7a188f25";
+        public const string DestructionDomainGreaterBuff = "532eea2709f3fd8498102726dfca6ec7";
+        public const string LiberationDomainGreaterBuff = "aa561f70d2260524e82c794d6140677c";
+        public const string PlantDomainGreaterBuff = "58d86cc848805024abbbefd6abe2d433";
+        public const string ProtectionDomainGreaterBuff = "20a4033ef90e66041b16817c7e03bf5c";
+        public const string ReposeDomainGreaterBuff = "ed6064c44abb2474ebabb26c58db3e2a";
+        public const string SunDomainGreaterBuff = "1389631f36e53704aba0e1c66ebbd393";
+        public const string TrickeryDomainGreaterBuff = "869e06144e5716a4a847c75ba9f48c0c";
+
         //Druid
         public const string WildShapeElementalAirHugeBuff = "eb52d24d6f60fc742b32fe943b919180";
         public const string WildShapeElementalAirLargeBuff = "814bc75e74f969641bf110addf076ff9";
