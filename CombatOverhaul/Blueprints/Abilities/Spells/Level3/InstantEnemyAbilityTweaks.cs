@@ -3,20 +3,17 @@ using CombatOverhaul.Guids;
 using CombatOverhaul.Utils;
 using Kingmaker.RuleSystem;
 using Kingmaker.UnitLogic.Abilities.Components;
-using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Actions;
 
-namespace CombatOverhaul.Blueprints.Abilities.Spells.Level1
+namespace CombatOverhaul.Blueprints.Abilities.Spells.Level3
 {
     [AutoRegister]
-    internal static class MagicFangAbilityTweaks
+    internal static class InstantEnemyAbilityTweaks
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.MagicFang)
-                .SetActionType(UnitCommand.CommandType.Swift)
-                .SetIsFullRoundAction(false)
+            AbilityConfigurator.For(AbilitiesGuids.InstantEnemy)
                 .EditComponent<AbilityEffectRunAction>(c =>
                 {
                     var apply = (ContextActionApplyBuff)c.Actions.Actions[0];

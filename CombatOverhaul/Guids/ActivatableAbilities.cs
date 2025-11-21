@@ -20,5 +20,8 @@
         public const string ReposeDomainGreaterToggleAbility = "d5a60f157610ab34cb72a98b4fc78953";
         public const string SunDomainGreaterToggleAbility = "cb5652d2e74cac14498c2793b1bca857";
         public const string TrickeryDomainGreaterToggleAbility = "574b97e5b1d391348b162c62b49bc4fd";
+
+        //Rogue
+        public const string MasterStrikeToggleAbility = "926bff1386d58824688363a3eeb98260";
     }
 }

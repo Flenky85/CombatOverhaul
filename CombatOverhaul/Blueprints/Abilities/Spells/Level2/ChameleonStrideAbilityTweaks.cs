@@ -7,14 +7,14 @@ using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Actions;
 
-namespace CombatOverhaul.Blueprints.Abilities.Spells.Level1
+namespace CombatOverhaul.Blueprints.Abilities.Spells.Level2
 {
     [AutoRegister]
-    internal static class MagicFangAbilityTweaks
+    internal static class ChameleonStrideAbilityTweaks
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.MagicFang)
+            AbilityConfigurator.For(AbilitiesGuids.ChameleonStride)
                 .SetActionType(UnitCommand.CommandType.Swift)
                 .SetIsFullRoundAction(false)
                 .EditComponent<AbilityEffectRunAction>(c =>

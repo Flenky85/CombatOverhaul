@@ -266,6 +266,50 @@
         public const string AngelfireApostleVersatileChannelResurrection = "ad3aa8d5ef1c870448c23aae301a45b6";
         public const string AngelfireApostleCleansingFlamesAbility = "778bd83be4d52cf44951f6cba779a398";
 
+        //Rogue
+        public const string HuntersSurpriseAbility = "0bd6b945523c0264f9ddfd0aad3791e8";
+        public const string FinesseTrainingSelection = "b78d146cea711a84598f0acef69462ea";
+        public const string FinesseTrainingBite = "bcebc021271be1e45b012729f22dadcc";
+        public const string FinesseTrainingClaw = "6b2dee734f5db0043b15ed3d0f49d32d";
+        public const string FinesseTrainingDagger = "50c7baae70624e24089d32d090e9cdb6";
+        public const string FinesseTrainingDuelingSword = "2dd8ca4a7c061b14c95f04b7adda1cd6";
+        public const string FinesseTrainingElvenCurvedBlade = "04f3b956e5a5cf649bce83774e0bfe4a";
+        public const string FinesseTrainingEstoc = "964fc3337a0bc2747a37810c4655d979";
+        public const string FinesseTrainingGore = "698582a35d02415fb9b28c9623d0a0e9";
+        public const string FinesseTrainingHandaxe = "b768e9f6643cd464ea6f578d7090c64c";
+        public const string FinesseTrainingHoof = "738a5f7aab6b4c57997af440e8864e54";
+        public const string FinesseTrainingKama = "c8d9f3aa6b081494a9c9b2489c8ead95";
+        public const string FinesseTrainingKukri = "80bca19f64a359146ba8e26ebf615190";
+        public const string FinesseTrainingLightHammer = "b865aa952f8fdd348a635fcd276b758f";
+        public const string FinesseTrainingLightMace = "21ac913e0a93ca546bb500d8cbfbb9ba";
+        public const string FinesseTrainingLightPick = "21014d5e244acbd458e4cf39e92cf484";
+        public const string FinesseTrainingLightShield = "bbe497b750f698c4eb99bcf97240a0d1";
+        public const string FinesseTrainingNunchaku = "1dbee208949633b4fb850d78602b80c1";
+        public const string FinesseTrainingPunchingDagger = "a591ea5d2af6a9c4eac84ddeac0e204e";
+        public const string FinesseTrainingRapier = "c14d36ec2c807ef418ce77b8d93fa3c5";
+        public const string FinesseTrainingSai = "72724581b38799a42904f6a6db745dd6";
+        public const string FinesseTrainingSawtoothSabre = "9143942781ef437a9ab0243d9b667aa1";
+        public const string FinesseTrainingShortsword = "71fb4704ad838ad4d91ed429b8936313";
+        public const string FinesseTrainingSickle = "5dc60a449311b3544be118bf89b1f446";
+        public const string FinesseTrainingSlam = "3411b8c822dc4e148f4725a391e714df";
+        public const string FinesseTrainingSpike = "cd6c01da07794725b207a8a47385ff78";
+        public const string FinesseTrainingSpikedLightShield = "d5729de76e4e4b8380d5aa1d39b1ad11";
+        public const string FinesseTrainingStarknife = "c3340113cd32b5f44bc75544241701eb";
+        public const string FinesseTrainingTail = "ba5616910c9b4545bf9846b7dea024f3";
+        public const string FinesseTrainingTalon = "f1017d46f56547a3b10dc9b9b5b8da5a";
+        public const string FinesseTrainingTentacle = "59ba33d61ab94872813900e403ccc078";
+        public const string FinesseTrainingUnarmed = "641dc4bbfb8c13b43a879ba9a2e196b3";
+        public const string FinesseTrainingWing = "5daed3f734554e25b6fd7b412320a5cb";
+
+        //Ranger
+        public const string QuarryAbility = "e93dfca6f025e6d4e9583e688c147aca";
+        public const string MasterHunterAbility = "8a57e1072da4f6f4faaa55b7b7dc633c";
+        public const string MasterSpyAbility = "0f63708586ba7ef45b78f4205e2109f7";
+        public const string FlamewardenWeaponAbility = "2d62167ffe9c12446bd1c402ea356812";
+        public const string FlamewardenEmbersCast = "8c95de0803fdfbd458fa7c0d29d5d8b9";
+        public const string FreebooterMasterHunterAbility = "6dae5142147f45bd9108ea620ffe755e";
+        public const string StormwalkerWeaponAbility = "9437fe797361e4e41b37655a5597f0c9";
+
         //Hellknight
         public const string SmiteChaosAbility = "a4df3ed7ef5aa9148a69e8364ad359c5";
         public const string HellknightCommandAbility = "97b3e5738b5db4e49a0274294d22148e";
@@ -453,6 +497,7 @@
         public const string VeilOfPositiveEnergy = "6bb0533cd457d1f4eaccc73ab7680fb2";
         public const string VeilOfPositiveEnergySwift = "02a98da52a022534b94604dfb06e6fe9";
         public const string IllOmen = "ca577309cedc4f1daf6fe5795fb2619b";
+        public const string LeadBlades = "779179912e6c6fe458fa4cfb90d96e10";
         //Level 2
         public const string BoneFists = "0da2046b4517427bb9b2e304ea6342bf";
         public const string MortalTerror = "8bc127ed66044685957e54f19d8dbdb7";
@@ -550,6 +595,7 @@
         public const string ProtectionFromChaosCommunalChaosEvil = "b6da529f710491b4fa789a5838c1ae8f";
         public const string ProtectionFromEvilCommunalChaosEvil = "224f03e74d1dd4648a81242c01e65f41";
         public const string Fester = "2dbe271c979d9104c8e2e6b42e208e32";
+        public const string ChameleonStride = "27bf851c585817c4fbd079c970a162fa";
         //Level 3
         public const string AnimateDeadLesser = "57fcf8016cf04da4a8b33d2add14de7e";
         public const string BatteringBlast = "0a2f7c6aa81bc6548ac7780d8b70bcbc";
@@ -646,6 +692,8 @@
         public const string SpitVenom = "9779c8578acd919419f563c33d7b2af5";
         public const string LifeBlast = "a8666d26bbbd9b640958284e0eee3602";
         public const string HolyWhisper = "5f1ca17be3ba44949be427f18e696d9b";
+        public const string ChameleonStrideGreater = "7ec0ffdd8779c344f85337109af0c6c5";
+        public const string InstantEnemy = "42c78009dd5cb8e429b27c13d92152b7";
         //Level 4
         public const string AcidPit = "1407fb5054d087d47a4c40134c809f12";
         public const string AnimalAspectGreaterBase = "c9c56af3b25be3942aa0ffd12f11cf35";

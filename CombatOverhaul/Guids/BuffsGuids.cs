@@ -80,6 +80,10 @@
         public const string SunDomainGreaterBuff = "1389631f36e53704aba0e1c66ebbd393";
         public const string TrickeryDomainGreaterBuff = "869e06144e5716a4a847c75ba9f48c0c";
 
+        //Ranger
+        public const string FlamewardenWeaponBuff = "7ee3cb8407d3a1748ac4ed1258638cc7";
+        public const string StormwalkerWeaponBuff = "f7eb6971aa7c81343937edffd2cfba0e";
+
         //Druid
         public const string WildShapeElementalAirHugeBuff = "eb52d24d6f60fc742b32fe943b919180";
         public const string WildShapeElementalAirLargeBuff = "814bc75e74f969641bf110addf076ff9";

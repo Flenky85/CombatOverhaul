@@ -102,6 +102,14 @@ namespace CombatOverhaul.Resources
                 BuffsGuids.TransmutationSchoolChangeShapeElementalAirBuffLevel2, BuffsGuids.TransmutationSchoolChangeShapeElementalEarthBuffLevel2, 
                 BuffsGuids.TransmutationSchoolChangeShapeElementalFireBuffLevel2, BuffsGuids.TransmutationSchoolChangeShapeElementalWaterBuffLevel2),
 
+            //Ranguer
+            new RegenRule(AbilitiesResourcesGuids.MasterSpyResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.FreebooterMasterHunterResource, flat: 1, percentOfMax: 0f),
+            new RegenRule(AbilitiesResourcesGuids.FlamewardenWeaponResource, flat: 1, percentOfMax: 0f,
+                BuffsGuids.FlamewardenWeaponBuff),
+            new RegenRule(AbilitiesResourcesGuids.StormwalkerWeaponResource, flat: 1, percentOfMax: 0f,
+                BuffsGuids.StormwalkerWeaponBuff),
+
             //Cleric
             new RegenRule(AbilitiesResourcesGuids.ChannelEnergyResource, flat: 1, percentOfMax: 0f),
             new RegenRule(AbilitiesResourcesGuids.CommunityDomainGreaterResource, flat: 1, percentOfMax: 0f),

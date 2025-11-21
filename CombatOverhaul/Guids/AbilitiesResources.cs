@@ -93,6 +93,12 @@
         public const string TrickeryDomainGreaterResource = "520ad6381e09f8349a237ac4b247082e";
         public const string WeatherDomainGreaterResource = "5c88b557e79eaee41a4190712b178970";
 
+        //Ranguer
+        public const string MasterSpyResource = "f371ca29e0091c446b8141f8ae312b62";
+        public const string FlamewardenWeaponResource = "d3ab4e5bc9f57ab40a05e6f86d5bfd46";
+        public const string FreebooterMasterHunterResource = "2b4ebf146edf44a1a0c0c815f9f50a8b";
+        public const string StormwalkerWeaponResource = "6bc707c120d6d38498ccb70767d55a69";
+
         //Hellknight
         public const string SmiteChaosResource = "94749042eebb5e04a9fe9bfb67ae69a3";
         public const string HellknightDisciplineCommandResource = "a25e4d6a9a041d948aa95847ab6715fe";

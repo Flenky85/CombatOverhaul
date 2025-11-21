@@ -53,7 +53,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Shaman
                 })
                 .SetDuration3RoundsShared()
                 .SetDescriptionValue(
-                    "At 1st level a spirit hunter can, as a swift action, grant a +1 enhancement bonus for 1 minute to any weapon she " +
+                    "At 1st level a spirit hunter can, as a swift action, grant a +1 enhancement bonus for 3 rounds to any weapon she " +
                     "is holding. For every four levels beyond 1st, the weapon gains another +1 enhancement bonus, to a maximum of +5 " +
                     "at 17th level. These bonuses can be added to the weapon, stacking with existing weapon enhancement to a maximum " +
                     "of +5. Effects of multiple uses of this ability don't stack.\n" +

@@ -10,11 +10,11 @@ using Kingmaker.UnitLogic.Mechanics.Actions;
 namespace CombatOverhaul.Blueprints.Abilities.Spells.Level1
 {
     [AutoRegister]
-    internal static class MagicFangAbilityTweaks
+    internal static class LeadBladesAbilityTweaks
     {
         public static void Register()
         {
-            AbilityConfigurator.For(AbilitiesGuids.MagicFang)
+            AbilityConfigurator.For(AbilitiesGuids.LeadBlades)
                 .SetActionType(UnitCommand.CommandType.Swift)
                 .SetIsFullRoundAction(false)
                 .EditComponent<AbilityEffectRunAction>(c =>
