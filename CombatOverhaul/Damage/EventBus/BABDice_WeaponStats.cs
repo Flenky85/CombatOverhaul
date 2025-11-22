@@ -1,6 +1,4 @@
-﻿using CombatOverhaul.Damage;
-using CombatOverhaul.Utils;
-using Kingmaker.PubSubSystem;
+﻿using Kingmaker.PubSubSystem;
 using Kingmaker.RuleSystem.Rules;
 using System;
 using UnityEngine;
@@ -12,7 +10,7 @@ namespace CombatOverhaul.Damage.EventBus
         ISubscriber, IGlobalSubscriber
     {
         private const int StepPerDie = 4;
-        private const int MaxSteps = 3;
+        private const int MaxSteps = 7;
 
         public void OnEventAboutToTrigger(RuleCalculateWeaponStats evt)
         {
