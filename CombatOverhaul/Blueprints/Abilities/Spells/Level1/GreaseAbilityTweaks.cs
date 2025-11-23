@@ -18,11 +18,11 @@ namespace CombatOverhaul.Blueprints.Abilities.Spells.Level1
                 {
                     var spawn = (ContextActionSpawnAreaEffect)c.Actions.Actions[0];
                     spawn.DurationValue.Rate = DurationRate.Rounds;
-                    spawn.DurationValue.DiceType = DiceType.D3;
+                    spawn.DurationValue.DiceType = DiceType.D2;
                     spawn.DurationValue.DiceCountValue = new ContextValue
                     {
                         ValueType = ContextValueType.Simple,
-                        Value = 2
+                        Value = 1
                     };
                     spawn.DurationValue.BonusValue = new ContextValue
                     {
@@ -30,7 +30,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Spells.Level1
                         Value = 0
                     };
                 })
-                .SetDuration2d3RoundsShared()
+                .SetDuration1d2RoundsShared()
                 .Configure();
         }
     }

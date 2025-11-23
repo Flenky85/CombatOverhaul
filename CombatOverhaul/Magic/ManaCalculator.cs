@@ -22,8 +22,10 @@ namespace CombatOverhaul.Magic
 
         private const float BONUS_PCT_PER_MOD = 0.00f; 
 
-        private const float REGEN_PCT_OF_MAX = 0.33f;  
+        private const float REGEN_PCT_OF_MAX = 0.20f;  
         private const int REGEN_MIN_FLAT = 1;
+
+        private const float REGEN_WIS_BONUS_PER_MOD = 0.05f;
 
         public static CasterBuckets GetBuckets(UnitEntityData unit)
         {
@@ -80,6 +82,14 @@ namespace CombatOverhaul.Magic
             if (max <= 0) return 0;
 
             int regen = (int)Math.Round(max * REGEN_PCT_OF_MAX, MidpointRounding.AwayFromZero);
+
+            int wisMod = GetStatMod(unit, StatType.Wisdom);
+            if (wisMod > 0)
+            {
+                float bonusFactor = 1f + wisMod * REGEN_WIS_BONUS_PER_MOD;
+                regen = (int)Math.Round(regen * bonusFactor, MidpointRounding.AwayFromZero);
+            }
+
             if (regen < REGEN_MIN_FLAT) regen = REGEN_MIN_FLAT;
             return regen;
         }

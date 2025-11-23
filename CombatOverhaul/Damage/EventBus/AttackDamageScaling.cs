@@ -1,6 +1,7 @@
 ﻿using CombatOverhaul.Guids;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
+using Kingmaker.Designers.Mechanics.Buffs;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.Enums;
 using Kingmaker.Items;
@@ -21,6 +22,8 @@ namespace CombatOverhaul.Damage.EventBus
         private const float SingleMain_PerPoint = 0.10f;
         private const float DualPrimary_PerPoint = 0.10f;
         private const float DualOffhand_PerPoint = 0.05f;
+
+        private const float ExtraAttackMultiplier = 0.30f;
 
         private const int Naturals_WithManufactured_Offset = 2;
         private const bool ExcludePrecision = false;
@@ -82,6 +85,7 @@ namespace CombatOverhaul.Damage.EventBus
             public int DexMod;
 
             public bool IsFirstAttack;
+            public bool IsExtraAttack;
         }
 
         public void OnEventAboutToTrigger(RuleCalculateDamage evt)
@@ -137,6 +141,10 @@ namespace CombatOverhaul.Damage.EventBus
                 }
 
                 int total = strPercent + dexPercent;
+                if (ctx.IsExtraAttack)
+                {
+                    total = ApplyExtraAttackScaling(total);
+                }
                 if (total == 0) return;
 
                 var bundle = evt.ParentRule?.DamageBundle;
@@ -199,6 +207,7 @@ namespace CombatOverhaul.Damage.EventBus
             ctx.DexMod = attacker?.Stats?.Dexterity?.Bonus ?? 0;
 
             ctx.IsFirstAttack = GetIsFirstAttack(evt);
+            ctx.IsExtraAttack = GetIsExtraAttack(evt);
 
             return ctx;
         }
@@ -356,6 +365,65 @@ namespace CombatOverhaul.Damage.EventBus
         private static int RoundPct(float x)
         {
             return (int)Math.Round(x, MidpointRounding.AwayFromZero);
+        }
+        private static int ApplyExtraAttackScaling(int currentPercent)
+        {
+            float newPercent = (ExtraAttackMultiplier * (1f + currentPercent / 100f) - 1f) * 100f;
+            return RoundPct(newPercent);
+        }
+        private static int GetExtraAttacksFromBuffs(UnitEntityData unit)
+        {
+            if (unit == null || unit.Buffs == null)
+                return 0;
+
+            int extra = 0;
+
+            foreach (var buff in unit.Buffs)
+            {
+                var bp = buff?.Blueprint;
+                if (bp == null) continue;
+
+                var comps = bp.GetComponents<BuffExtraAttack>();
+                if (comps == null) continue;
+
+                foreach (var c in comps)
+                {
+                    if (c == null) continue;
+                    extra += Math.Max(0, c.Number);
+                }
+            }
+
+            return extra;
+        }
+        private static bool GetIsExtraAttack(RuleCalculateDamage evt)
+        {
+            if (!(evt?.ParentRule is RuleDealDamage rd))
+                return false;
+
+            var attackRoll = rd.AttackRoll;
+            var raw = attackRoll?.RuleAttackWithWeapon;
+            if (raw == null)
+                return false;
+
+            if (raw.ExtraAttack)
+                return true;
+
+            if (!raw.IsFullAttack)
+                return false;
+
+            var initiator = evt.Initiator;
+            int extra = GetExtraAttacksFromBuffs(initiator);
+            if (extra <= 0)
+                return false;
+
+            if (raw.AttacksCount <= 0)
+                return false;
+
+            int firstExtraIndex = raw.AttacksCount - extra;
+            if (firstExtraIndex < 0)
+                firstExtraIndex = 0;
+
+            return raw.AttackNumber >= firstExtraIndex;
         }
     }
 }

@@ -28,21 +28,21 @@ namespace CombatOverhaul.Blueprints.Abilities.Spells.Level1
                     applyA.DurationValue.Rate = DurationRate.Rounds;
                     applyA.DurationValue.DiceType = DiceType.Zero;
                     applyA.DurationValue.DiceCountValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 0 };
-                    applyA.DurationValue.BonusValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 6 };
+                    applyA.DurationValue.BonusValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 3 };
 
                     var applyB = (ContextActionApplyBuff)nested.IfFalse.Actions[0];
                     applyB.DurationValue.Rate = DurationRate.Rounds;
                     applyB.DurationValue.DiceType = DiceType.Zero;
                     applyB.DurationValue.DiceCountValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 0 };
-                    applyB.DurationValue.BonusValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 6 };
+                    applyB.DurationValue.BonusValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 3 };
 
                     var applyC = (ContextActionApplyBuff)inner.IfFalse.Actions[0];
                     applyC.DurationValue.Rate = DurationRate.Rounds;
                     applyC.DurationValue.DiceType = DiceType.Zero;
                     applyC.DurationValue.DiceCountValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 0 };
-                    applyC.DurationValue.BonusValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 6 };
+                    applyC.DurationValue.BonusValue = new ContextValue { ValueType = ContextValueType.Simple, Value = 3 };
                 })
-                .SetDuration6RoundsShared()
+                .SetDuration3RoundsShared()
                 .Configure();
         }
     }
