@@ -18,7 +18,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Spells.Level2
                  {
                      var spawn = (ContextActionSpawnAreaEffect)c.Actions.Actions[0];
                      spawn.DurationValue.Rate = DurationRate.Rounds;
-                     spawn.DurationValue.DiceType = DiceType.D2;
+                     spawn.DurationValue.DiceType = DiceType.One;
                      spawn.DurationValue.DiceCountValue = new ContextValue
                      {
                          ValueType = ContextValueType.Simple,
@@ -30,7 +30,7 @@ namespace CombatOverhaul.Blueprints.Abilities.Spells.Level2
                          Value = 0
                      };
                  })
-                .SetDuration1d2RoundsShared()
+                .SetDuration1RoundsShared()
                 .Configure();
         }
     }

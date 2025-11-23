@@ -24,12 +24,12 @@ namespace CombatOverhaul.Blueprints.Abilities.Spells.Level3
                     {
                         m_IsExtendable = extendable,
                         Rate = DurationRate.Rounds,
-                        DiceType = DiceType.D3,
-                        DiceCountValue = ContextValues.Constant(2),
+                        DiceType = DiceType.D2,
+                        DiceCountValue = ContextValues.Constant(1),
                         BonusValue = ContextValues.Constant(0)
                     };
                 })
-                .SetDuration2d3RoundsShared()
+                .SetDuration1d2RoundsShared()
                 .Configure();
         }
     }

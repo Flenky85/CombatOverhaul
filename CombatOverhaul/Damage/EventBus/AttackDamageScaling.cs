@@ -30,10 +30,10 @@ namespace CombatOverhaul.Damage.EventBus
 
         private static readonly float[] NaturalPct = {
             0.00f,  // 0
-            0.30f,  // 1 natural
+            0.10f,  // 1 natural
             0.10f,  // 2
-            0.066f, // 3
-            0.05f,  // 4
+            0.10f,  // 3
+            0.10f,  // 4
         };
 
         //Feats
@@ -141,10 +141,17 @@ namespace CombatOverhaul.Damage.EventBus
                 }
 
                 int total = strPercent + dexPercent;
-                if (ctx.IsExtraAttack)
+                if (ctx.IsExtraAttack && !ctx.IsNaturalHit)
                 {
                     total = ApplyExtraAttackScaling(total);
                 }
+                
+                if (ctx.IsNaturalHit)
+                {
+                    int naturals = CountNaturalWeapons(ctx.Attacker);
+                    total = ApplyNaturalMultiAttackScaling(total, naturals);
+                }
+
                 if (total == 0) return;
 
                 var bundle = evt.ParentRule?.DamageBundle;
@@ -366,11 +373,27 @@ namespace CombatOverhaul.Damage.EventBus
         {
             return (int)Math.Round(x, MidpointRounding.AwayFromZero);
         }
+
         private static int ApplyExtraAttackScaling(int currentPercent)
         {
             float newPercent = (ExtraAttackMultiplier * (1f + currentPercent / 100f) - 1f) * 100f;
             return RoundPct(newPercent);
         }
+        private static int ApplyNaturalMultiAttackScaling(int currentPercent, int naturals)
+        {
+            if (naturals <= 1)
+                return currentPercent;
+            var multiplier = naturals switch
+            {
+                2 => 0.60f,
+                3 => 0.45f,
+                4 => 0.35f,
+                _ => 0.30f,
+            };
+            float newPercent = (multiplier * (1f + currentPercent / 100f) - 1f) * 100f;
+            return RoundPct(newPercent);
+        }
+
         private static int GetExtraAttacksFromBuffs(UnitEntityData unit)
         {
             if (unit == null || unit.Buffs == null)
